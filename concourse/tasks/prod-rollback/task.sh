@@ -9,8 +9,6 @@ ROOT_FOLDER="$( pwd )"
 export REPO_RESOURCE=repo
 export TOOLS_RESOURCE=tools
 export KEYVAL_RESOURCE=keyval
-export KEYVALOUTPUT_RESOURCE=keyvalout
-export OUTPUT_RESOURCE=out
 
 echo "Root folder is [${ROOT_FOLDER}]"
 echo "Repo resource folder is [${REPO_RESOURCE}]"
@@ -25,10 +23,13 @@ start_docker || echo "Failed to start docker... Hopefully you know what you're d
 # shellcheck source=/dev/null
 source "${ROOT_FOLDER}/${TOOLS_RESOURCE}/concourse/tasks/pipeline.sh"
 
-echo "${MESSAGE}"
+echo "Deploying the built application on prod environment"
 cd "${ROOT_FOLDER}/${REPO_RESOURCE}" || exit
 
-# shellcheck source=/dev/null
-. "${SCRIPTS_OUTPUT_FOLDER}/${SCRIPT_TO_RUN}"
+echo "Loading git key to enable tag deletion"
+export TMPDIR=/tmp
+echo "${GIT_PRIVATE_KEY}" > "${TMPDIR}/git-resource-private-key"
+load_pubkey
 
-passKeyValProperties
+# shellcheck source=/dev/null
+. "${SCRIPTS_OUTPUT_FOLDER}"/prod_rollback.sh

@@ -8,11 +8,8 @@ inputs:
   - name: tools
   - name: repo
   - name: keyval
-outputs:
-  - name: out
-  - name: keyvalout
 caches:
   - path: gradle
   - path: maven
 run:
-  path: tools/concourse/tasks/build-and-upload/task.sh
+  path: tools/concourse/tasks/prod-rollback/task.sh
