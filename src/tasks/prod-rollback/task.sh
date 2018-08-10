@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -o errexit
+set -o errtrace
+set -o pipefail
+
+export ROOT_FOLDER
+ROOT_FOLDER="$( pwd )"
+export REPO_RESOURCE=repo
+export CONCOURSE_SCRIPTS_RESOURCE=tools
+export KEYVAL_RESOURCE=keyval
+
+echo "Root folder is [${ROOT_FOLDER}]"
+echo "Repo resource folder is [${REPO_RESOURCE}]"
+echo "Tools resource folder is [${CONCOURSE_SCRIPTS_RESOURCE}]"
+echo "KeyVal resource folder is [${KEYVAL_RESOURCE}]"
+
+# If you're using some other image with Docker change these lines
+# shellcheck source=/dev/null
+[ -f /docker-lib.sh ] && source /docker-lib.sh || echo "Failed to source docker-lib.sh... Hopefully you know what you're doing"
+if [ -n "$(type -t timeout)" ] && [ "$(type -t timeout)" = function ]; then timeout 10s start_docker || echo "Failed to start docker... Hopefully you know what you're doing"; fi
+if [ -n "$(type -t gtimeout)" ] && [ "$(type -t gtimeout)" = function ]; then gtimeout 10s start_docker || echo "Failed to start docker... Hopefully you know what you're doing"; fi
+
+# shellcheck source=/dev/null
+source "${ROOT_FOLDER}/${CONCOURSE_SCRIPTS_RESOURCE}/concourse/tasks/pipeline.sh"
+
+echo "Deploying the built application on prod environment"
+cd "${ROOT_FOLDER}/${REPO_RESOURCE}" || exit
+
+echo "Loading git key to enable tag deletion"
+export TMPDIR=/tmp
+echo "${GIT_PRIVATE_KEY}" > "${TMPDIR}/git-resource-private-key"
+load_pubkey
+
+# shellcheck source=/dev/null
+. "${SCRIPTS_OUTPUT_FOLDER}"/prod_rollback.sh
