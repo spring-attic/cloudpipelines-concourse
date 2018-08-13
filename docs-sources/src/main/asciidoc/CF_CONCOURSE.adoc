@@ -5,7 +5,7 @@ IMPORTANT: In this chapter, we assume that you deploy your application
 to Cloud Foundry PaaS.
 
 [[concourse]]
-The Spring Cloud Pipelines repository contains opinionated
+The Cloud Pipelines repository contains opinionated
 Concourse pipeline definitions. Those jobs form an empty pipeline and an
 opinionated sample pipeline one that you can use in your company.
 

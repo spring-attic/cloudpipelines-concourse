@@ -1,0 +1,24 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: cloudpipelines/pipeline-base
+    tag: latest
+
+inputs:
+  - name: version
+  - name: concourse
+  - name: scripts
+
+outputs:
+  - name: updated-version
+  - name: keyvalout
+
+run:
+  path: concourse/src/tasks/generate-version/task.sh
+
+params:
+  GIT_EMAIL:
+  GIT_NAME:

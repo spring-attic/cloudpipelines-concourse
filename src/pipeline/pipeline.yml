@@ -1,0 +1,368 @@
+---
+resources:
+- name: repo
+  type: git
+  source:
+    uri: ((app-url))
+    branch: ((app-branch))
+    private_key: ((github-private-key))
+
+- name: version
+  type: git
+  source:
+    uri: ((app-url))
+    branch: ((version-branch))
+    private_key: ((github-private-key))
+
+- name: concourse
+  type: git
+  source:
+    uri: ((concourse-scripts-url))
+    branch: ((concourse-branch))
+
+- name: scripts
+  type: git
+  source:
+    uri: ((scripts-url))
+    branch: ((scripts-branch))
+
+- name: keyval
+  type: keyval
+
+resource_types:
+  - name: keyval
+    type: docker-image
+    source:
+      repository: swce/keyval-resource
+
+jobs:
+- name: generate-version
+  public: true
+  plan:
+  - aggregate:
+    - get: tools
+    - get: version
+  - task: generate-version
+    privileged: true
+    file: concourse/src/tasks/generate-version/task.yml
+    params:
+      GIT_EMAIL: ((git-email))
+      GIT_NAME: ((git-name))
+  - put: version
+    params:
+      repository: updated-version
+  - put: keyval
+    params:
+      file: keyvalout/keyval.properties
+
+- name: build-and-upload
+  serial: true
+  public: false
+  plan:
+  - aggregate:
+    - get: tools
+    - get: repo
+    - get: keyval
+      passed:
+      - generate-version
+      trigger: true
+  - task: build-and-upload
+    privileged: true
+    file: concourse/src/tasks/build-and-upload/task.yml
+    params:
+      <<: *common-params
+  - put: repo
+    params:
+      repository: out
+      tag: out/tag
+      only_tag: true
+  - put: keyval
+    params:
+      file: keyvalout/keyval.properties
+
+- name: test-deploy
+  serial: true
+  public: false
+  plan:
+  - aggregate:
+    - get: tools
+    - get: repo
+    - get: keyval
+      passed:
+      - build-and-upload
+      trigger: true
+  - task: test-deploy
+    privileged: true
+    file: concourse/src/tasks/task.yml
+    params:
+      MESSAGE: "Deploying the built application on test environment"
+      SCRIPT_TO_RUN: "test_deploy.sh"
+      <<: *common-params
+      <<: *paas-test-params
+      PAAS_HOSTNAME_UUID: ((paas-hostname-uuid))
+  - put: keyval
+    params:
+      file: keyvalout/keyval.properties
+
+- name: test-smoke
+  serial: true
+  public: false
+  plan:
+  - aggregate:
+    - get: tools
+    - get: repo
+    - get: keyval
+      passed:
+      - test-deploy
+      trigger: true
+  - task: test-smoke
+    privileged: true
+    file: concourse/src/tasks/task.yml
+    params:
+      MESSAGE: "Testing the built application on test environment"
+      SCRIPT_TO_RUN: "test_smoke.sh"
+      <<: *common-params
+      <<: *paas-test-params
+  - put: keyval
+    params:
+      file: keyvalout/keyval.properties
+
+- name: test-rollback-deploy
+  serial: true
+  public: false
+  plan:
+  - aggregate:
+    - get: tools
+    - get: repo
+    - get: keyval
+      passed:
+      - test-smoke
+      trigger: true
+  - task: test-rollback-deploy
+    privileged: true
+    file: concourse/src/tasks/task.yml
+    params:
+      MESSAGE: "Deploying the built application on test environment"
+      SCRIPT_TO_RUN: "test_rollback_deploy.sh"
+      <<: *common-params
+      <<: *paas-test-params
+      PAAS_HOSTNAME_UUID: ((paas-hostname-uuid))
+  - put: keyval
+    params:
+      file: keyvalout/keyval.properties
+
+- name: test-rollback-smoke
+  serial: true
+  public: false
+  plan:
+  - aggregate:
+    - get: tools
+    - get: repo
+    - get: keyval
+      passed:
+      - test-rollback-deploy
+      trigger: true
+  - task: test-rollback-smoke
+    privileged: true
+    file: concourse/src/tasks/task.yml
+    params:
+      MESSAGE: "Testing the rolled back built application on test environment"
+      SCRIPT_TO_RUN: "test_rollback_smoke.sh"
+      <<: *common-params
+      <<: *paas-test-params
+  - put: keyval
+    params:
+      file: keyvalout/keyval.properties
+
+- name: stage-deploy
+  serial: true
+  public: false
+  plan:
+  - aggregate:
+    - get: tools
+    - get: repo
+    - get: keyval
+      passed:
+      - test-rollback-smoke
+      trigger: true
+  - task: stage-deploy
+    privileged: true
+    file: concourse/src/tasks/task.yml
+    params:
+      MESSAGE: "Deploying the built application on test environment"
+      SCRIPT_TO_RUN: "stage_deploy.sh"
+      <<: *common-params
+      <<: *paas-stage-params
+      PAAS_HOSTNAME_UUID: ((paas-hostname-uuid))
+  - put: keyval
+    params:
+      file: keyvalout/keyval.properties
+
+- name: stage-e2e
+  serial: true
+  public: false
+  plan:
+  - aggregate:
+    - get: tools
+    - get: repo
+    - get: keyval
+      passed:
+      - stage-deploy
+      trigger: true
+  - task: stage-e2e
+    privileged: true
+    file: concourse/src/tasks/task.yml
+    params:
+      MESSAGE: "Testing the built application on stage environment"
+      SCRIPT_TO_RUN: "stage_e2e.sh"
+      <<: *common-params
+      <<: *paas-stage-params
+  - put: keyval
+    params:
+      file: keyvalout/keyval.properties
+
+- name: prod-deploy
+  serial: true
+  public: false
+  plan:
+  - aggregate:
+    - get: tools
+    - get: repo
+    - get: keyval
+      passed:
+      - stage-e2e
+      trigger: true
+  - task: prod-deploy
+    privileged: true
+    file: concourse/src/tasks/prod-deploy/task.yml
+    params:
+      <<: *common-params
+      <<: *paas-prod-params
+      PAAS_HOSTNAME_UUID: ((paas-hostname-uuid))
+  - put: repo
+    params:
+      repository: out
+      tag: out/tag
+      only_tag: true
+  - put: keyval
+    params:
+      file: keyvalout/keyval.properties
+
+
+- name: prod-complete
+  serial: true
+  public: false
+  plan:
+  - aggregate:
+    - get: tools
+    - get: repo
+    - get: keyval
+      passed:
+      - prod-deploy
+      trigger: false
+  - task: prod-complete
+    privileged: true
+    file: concourse/src/tasks/task.yml
+    params:
+      MESSAGE: "Completing the switch over"
+      SCRIPT_TO_RUN: "prod_complete.sh"
+      <<: *common-params
+      <<: *paas-prod-params
+
+- name: prod-rollback
+  serial: true
+  public: false
+  plan:
+  - aggregate:
+    - get: tools
+    - get: repo
+    - get: keyval
+      passed:
+      - prod-deploy
+      trigger: false
+  - task: prod-rollback
+    privileged: true
+    file: concourse/src/tasks/prod-rollback/task.yml
+    params:
+      <<: *common-params
+      <<: *paas-prod-params
+      PAAS_HOSTNAME_UUID: ((paas-hostname-uuid))
+      GIT_PRIVATE_KEY: ((github-private-key))
+
+common-params: &common-params
+  _JAVA_OPTIONS: -Djava.security.egd=file:/dev/./urandom
+  BUILD_OPTIONS: ((build-options))
+  GIT_EMAIL: ((git-email))
+  GIT_NAME: ((git-name))
+  M2_SETTINGS_REPO_ID: ((m2-settings-repo-id))
+  M2_SETTINGS_REPO_PASSWORD: ((m2-settings-repo-password))
+  M2_SETTINGS_REPO_USERNAME: ((m2-settings-repo-username))
+  PAAS_TYPE: ((paas-type))
+  REPO_WITH_BINARIES_FOR_UPLOAD: ((repo-with-binaries-for-upload))
+  REPO_WITH_BINARIES: ((repo-with-binaries))
+  PIPELINE_DESCRIPTOR: ((pipeline-descriptor))
+  PROJECT_NAME: ((project-name))
+  PROJECT_TYPE: ((project-type))
+  # remove::start[K8S]
+  KUBERNETES-MINIKUBE: ((kubernetes-minikube))
+  MYSQL_ROOT_PASSWORD: ((mysql-root-password))
+  MYSQL_USER: ((mysql-user))
+  MYSQL_PASSWORD: ((mysql-password))
+  DOCKER_USERNAME: ((docker-username))
+  DOCKER_PASSWORD: ((docker-password))
+  DOCKER_SERVER_ID: ((docker-server-id))
+  DOCKER_EMAIL: ((docker-email))
+  DOCKER_REGISTRY_ORGANIZATION: ((docker-registry-organization))
+  DOCKER_REGISTRY_URL: ((docker-registry-url))
+  # remove::end[K8S]
+
+paas-prod-params: &paas-prod-params
+  PAAS_PROD_API_URL: ((paas-prod-api-url))
+  # remove::start[CF]
+  PAAS_PROD_ORG: ((paas-prod-org))
+  PAAS_PROD_PASSWORD: ((paas-prod-password))
+  PAAS_PROD_SPACE: ((paas-prod-space))
+  PAAS_PROD_USERNAME: ((paas-prod-username))
+  # remove::end[CF]
+  # remove::start[K8S]
+  PAAS_PROD_CA: ((paas-prod-ca))
+  PAAS_PROD_CLIENT_TOKEN: ((paas-prod-client-token))
+  PAAS_PROD_SYSTEM_NAME: ((paas-prod-system-name))
+  PAAS_PROD_CLUSTER_NAME: ((paas-prod-cluster-name))
+  PAAS_PROD_CLUSTER_USERNAME: ((paas-prod-cluster-username))
+  PAAS_PROD_NAMESPACE: ((paas-prod-namespace))
+  # remove::end[K8S]
+
+paas-stage-params: &paas-stage-params
+  PAAS_STAGE_API_URL: ((paas-stage-api-url))
+  # remove::start[CF]
+  PAAS_STAGE_ORG: ((paas-stage-org))
+  PAAS_STAGE_PASSWORD: ((paas-stage-password))
+  PAAS_STAGE_SPACE: ((paas-stage-space))
+  PAAS_STAGE_USERNAME: ((paas-stage-username))
+  # remove::end[CF]
+  # remove::start[K8S]
+  PAAS_STAGE_CA: ((paas-stage-ca))
+  PAAS_STAGE_CLIENT_TOKEN: ((paas-stage-client-token))
+  PAAS_STAGE_SYSTEM_NAME: ((paas-stage-system-name))
+  PAAS_STAGE_CLUSTER_NAME: ((paas-stage-cluster-name))
+  PAAS_STAGE_CLUSTER_USERNAME: ((paas-stage-cluster-username))
+  PAAS_STAGE_NAMESPACE: ((paas-stage-namespace))
+  # remove::end[K8S]
+
+paas-test-params: &paas-test-params
+  PAAS_TEST_API_URL: ((paas-test-api-url))
+  # remove::start[CF]
+  PAAS_TEST_ORG: ((paas-test-org))
+  PAAS_TEST_PASSWORD: ((paas-test-password))
+  PAAS_TEST_SPACE_PREFIX: ((paas-test-space-prefix))
+  PAAS_TEST_USERNAME: ((paas-test-username))
+  # remove::end[CF]
+  # remove::start[K8S]
+  PAAS_TEST_CA: ((paas-test-ca))
+  PAAS_TEST_CLIENT_TOKEN: ((paas-test-client-token))
+  PAAS_TEST_SYSTEM_NAME: ((paas-test-system-name))
+  PAAS_TEST_CLUSTER_NAME: ((paas-test-cluster-name))
+  PAAS_TEST_CLUSTER_USERNAME: ((paas-test-cluster-username))
+  PAAS_TEST_NAMESPACE: ((paas-test-namespace))
+  # remove::end[K8S]

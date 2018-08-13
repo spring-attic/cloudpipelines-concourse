@@ -1,7 +1,7 @@
 [[concourse-faq]]
 == Concourse FAQ
 
-This section covers the most commonly asked questions about using Concourse with Spring Cloud Pipeline:
+This section covers the most commonly asked questions about using Concourse with Cloud Pipelines:
 
 Can I use the pipeline for some other repos?::
 Yes To do so, change the `app-url` in `credentials.yml`!

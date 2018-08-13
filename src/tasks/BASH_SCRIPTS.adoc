@@ -1,0 +1,18 @@
+= SCRIPTS
+
+include::zsdoc/pipeline.sh.adoc[]
+
+include::zsdoc/generate-settings.sh.adoc[]
+
+include::zsdoc/resource-utils.sh.adoc[]
+
+include::zsdoc/task.sh.adoc[]
+
+include::generate-version/zsdoc/task.sh.adoc[]
+
+include::build-and-upload/zsdoc/task.sh.adoc[]
+
+include::prod-deploy/zsdoc/task.sh.adoc[]
+
+include::prod-rollback/zsdoc/task.sh.adoc[]
+

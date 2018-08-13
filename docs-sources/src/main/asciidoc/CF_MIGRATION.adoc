@@ -1,22 +1,22 @@
 == Step-by-step Cloud Foundry Migration
 
-This section details how to migrate applications such that they become compatible with  Spring Cloud Pipelines.
+This section details how to migrate applications such that they become compatible with  Cloud Pipelines.
 
 === Preview
 
 https://docs.google.com/presentation/d/e/2PACX-1vSsEHn8cJfz8oWIwwUhdULt7nZzz3bBLK7OqM8UInkZ0LbQBCpPdhMoxsYGPe_90h9OvCu7dFlAimMJ/pub?start=false&loop=false&delayms=3000[Click here] to
 check out the slides by https://twitter.com/ciberkleid[Cora Iberkleid] where she
-migrates a set of applications to be compliant with Spring Cloud Pipelines.
+migrates a set of applications to be compliant with Cloud Pipelines.
 
 === Introduction
 
-This tutorial covers refactoring applications to be compatible with, and take advantage of, Spring Cloud Pipelines.
+This tutorial covers refactoring applications to be compatible with, and take advantage of, Cloud Pipelines.
 
 As an example, we use a simple three-tier application, shown in the following image:
 
 image::{cf-migration-root-docs}/use_case_logical.png[title="Use Case - Logical View"]
 
-At the end of this tutorial, you will be able to quickly create a Concourse pipeline for each application and run successfully through a full lifecycle, from source code commit to production deployment, following the lifecycle stages for testing and deployment recommended by Spring Cloud Pipelines. You will be able to improve application code bases with organized test coverage, a contract-based API, and a versioned database schema, letting Spring Cloud Pipelines carry out stubbed testing and ensure backward compatibility for API and database schema changes.
+At the end of this tutorial, you will be able to quickly create a Concourse pipeline for each application and run successfully through a full lifecycle, from source code commit to production deployment, following the lifecycle stages for testing and deployment recommended by Cloud Pipelines. You will be able to improve application code bases with organized test coverage, a contract-based API, and a versioned database schema, letting Cloud Pipelines carry out stubbed testing and ensure backward compatibility for API and database schema changes.
 
 === Sample Application -- Initial State
 
@@ -34,13 +34,13 @@ image::{cf-migration-root-docs}/use_case_implementation.png[title="Use Case - Im
 
 Throughout this tutorial, we add Concourse and JFrog Bintray to manage the application lifecycle.
 
-We also refactor the applications so that they become compatible with Spring Cloud Pipelines requirements and recommendations, including adding and organizing tests and introducing database versioning by using Flyway and introducing API contracts by using Spring Cloud Contract.
+We also refactor the applications so that they become compatible with Cloud Pipelines requirements and recommendations, including adding and organizing tests and introducing database versioning by using Flyway and introducing API contracts by using Spring Cloud Contract.
 
 === Tutorial -- Toolset
 
 Throughout this tutorial, we use the following tools:
 
-* *GitHub*: Sample application source code and configuration repositories, a sample stubrunner application repository, and the Spring Cloud Pipelines code base, including the following:
+* *GitHub*: Sample application source code and configuration repositories, a sample stubrunner application repository, and the Cloud Pipelines code base, including the following:
 ** https://github.com/ciberkleid/greeting-ui[`greeting-ui`]
 ** https://github.com/ciberkleid/fortune-service[`fortune-service`]
 ** https://github.com/ciberkleid/app-config[`app-confi`g]
@@ -56,10 +56,10 @@ Throughout this tutorial, we use the following tools:
 We separate the migration steps into three stages:
 
 . *Scaffolding*
-** Minimal refactoring to be compatible with basic Spring Cloud Pipelines requirements.
+** Minimal refactoring to be compatible with basic Cloud Pipelines requirements.
 ** At the end of this stage, each application has a corresponding pipeline on Concourse. The pipelines successfully build the applications, store the artifacts in Bintray, tag the GitHub repositories, and deploy the applications to the Test, Stage, and Prod spaces in Cloud Foundry.
 . *Tests*
-** Add and organize tests to be compatible with Spring Cloud Pipelines recommendations.
+** Add and organize tests to be compatible with Cloud Pipelines recommendations.
 ** Incorporate flyway for database schema versioning and initial data loading.
 ** At the end of this stage, the pipelines trigger unit and integration tests during the Build stage, smoke tests in the Test environment, and end-to-end tests in the Stage environment. The pipelines also ensure backward compatibility for the database, such that you can safely roll back the backend service application, even after the database schema has been updated.
 . *Contracts*
@@ -100,7 +100,7 @@ Finally, create a directory called `$SCP_HOME/credentials`. Leave it empty for n
 [[tutorial-stage-one]]
 ==== Stage One: Scaffolding
 
-In this stage, we make minimal changes to satisfy basic Spring Cloud Pipelines requirements so that the applications can run through the entire pipeline without error. We make "`scaffolding`" changes only -- no code changes.
+In this stage, we make minimal changes to satisfy basic Cloud Pipelines requirements so that the applications can run through the entire pipeline without error. We make "`scaffolding`" changes only -- no code changes.
 
 IMPORTANT: You must complete the steps in this stage for both `greeting-ui` and `fortune-service`.
 
@@ -192,7 +192,7 @@ Edit the application `pom.xml` files. Make sure that the Bintray URLs match the 
 ----
 ====
 
-Though not required by Spring Cloud Pipelines, it makes sense to also configure your local maven settings with the credentials to your Bintray maven repository. To do so, edit your maven settings file (usually `~/.m2/settings.xml`). If the file does not exist, create it.
+Though not required by Cloud Pipelines, it makes sense to also configure your local maven settings with the credentials to your Bintray maven repository. To do so, edit your maven settings file (usually `~/.m2/settings.xml`). If the file does not exist, create it.
 
 Note that the `id` must match the `id` specified in the previous step. Also, make sure to use your username and API token (not your account password) instead of the sample values shown in the following example:
 
@@ -220,21 +220,21 @@ Push the changes you made in the preceding step to GitHub. You should be pushing
 * A modified `.gitignore` file
 * A modified `pom.xml` file
 
-===== 1.6 Add a Spring Cloud Pipelines Credentials File
+===== 1.6 Add a Cloud Pipelines Credentials File
 
 In `$SCP_HOME/credentials`, make two copies of the `$SCP_HOME/spring-cloud-pipelines/concourse/credentials-sample-cf.yml` file. Rename them as `credentials-fortune-service.yml` and `credentials-greeting-ui.yml`.
 
 CAUTION: These files will contain credentials to your GitHub repository, your Bintray repository, and your Cloud Foundry foundation. Hence, we opt to put them in a separate directory. You may choose to store these files in a private Git repository, but do not push them to a public repository.
 
-Edit the Git properties of each credentials file. Make sure to replace the sample values shown in our example. For `tools-branch`, you can use a fixed release (use v1.0.0.M8 or later for Cloud Foundry). Leave the other values as they are. We update those in later steps. The following listing shows a credentials file:
+Edit the Git properties of each credentials file. Make sure to replace the sample values shown in our example. For `concourse-branch`, you can use a fixed release (use v1.0.0.M8 or later for Cloud Foundry). Leave the other values as they are. We update those in later steps. The following listing shows a credentials file:
 
 ====
 [source,yml]
 ----
 app-url: git@github.com:ciberkleid/fortune-service.git
 app-branch: sc-pipelines
-tools-scripts-url: https://github.com/spring-cloud/spring-cloud-pipelines.git
-tools-branch: master
+concourse-scripts-url: https://github.com/cloudpipelines/scripts.git
+concourse-branch: master
 build-options: ""
 
 github-private-key: |
@@ -335,7 +335,7 @@ applications:
 
 The `TRUST_CERTS` variable is used by the Pivotal Spring Cloud Services (Config Server, Service Registry, and Circuit Breaker Dashboard), which we use in this example. The value specified in the preceding example assumes deployment to Pivotal Web Services. Update it accordingly if you are deploying to a different Cloud Foundry foundation, or you can leave it out altogether if you are replacing the Pivotal Spring Cloud Services with alternative implementations (for example, deploying the services as applications and exposing them as user-provided services).
 
-If you wishi, you can add additional values to the manifest files -- for example, if additional values are useful for any manual deployment you may still want to do or if you need additional values in your Spring Cloud Pipelines deployment. For example, the following file could be an alternative `manifest.yml` for `fortune-service`:
+If you wishi, you can add additional values to the manifest files -- for example, if additional values are useful for any manual deployment you may still want to do or if you need additional values in your Cloud Pipelines deployment. For example, the following file could be an alternative `manifest.yml` for `fortune-service`:
 
 ====
 [source,yml]
@@ -362,15 +362,15 @@ applications:
 ----
 ====
 
-Note that Spring Cloud Pipelines ignores `random-route` and `path`. `instances` is honored in stage and prod but is overridden with a value of 1 for test.
+Note that Cloud Pipelines ignores `random-route` and `path`. `instances` is honored in stage and prod but is overridden with a value of 1 for test.
 
-===== 1.9 Add the Spring Cloud Pipelines Manifest
+===== 1.9 Add the Cloud Pipelines Manifest
 
-The Cloud Foundry manifest created in the previous step includes the logical names of the services to which the applications should be bound, but it does not describe how the services can be provisioned. Hence, we add a second manifest file so that Spring Cloud Pipelines can provision the services.
+The Cloud Foundry manifest created in the previous step includes the logical names of the services to which the applications should be bound, but it does not describe how the services can be provisioned. Hence, we add a second manifest file so that Cloud Pipelines can provision the services.
 
-Add a file called `sc-pipelines.yml` to each application and include the same list of services as in the corresponding `manifest.yml`. Add the necessary details such that Spring Cloud Pipelines can construct a `cf create-service` command.
+Add a file called `sc-pipelines.yml` to each application and include the same list of services as in the corresponding `manifest.yml`. Add the necessary details such that Cloud Pipelines can construct a `cf create-service` command.
 
-NOTE: The `type: broker' parameter in the next example instructs Spring Cloud Pipelines to provision a service by using `cf create-service'. Other service types are also supported: cups, syslog, route, app, and stubrunner.
+NOTE: The `type: broker' parameter in the next example instructs Cloud Pipelines to provision a service by using `cf create-service'. Other service types are also supported: cups, syslog, route, app, and stubrunner.
 
 More specifically, for `greeting-ui`, create an `sc-pipelines.yml` file with the following content:
 
@@ -446,7 +446,7 @@ test:
 
 The values in the preceding two examples assume deployment to Pivotal Web Services. If you are deploying to a different Cloud Foundry foundation, update the values accordingly. Also, make sure to replace the `config-server` URI with the address of your fork of the https://github.com/ciberkleid/app-config[`app-config`] repository.
 
-TIP: Notice the `useExisting: true` parameter in the preceding example. By default, Spring Cloud Pipelines deletes and re-creates services in the `test` space. To override this behavior and re-use existing services, we set `useExisting: true`. This is helpful in cases where services  may take time to provision and initialize, where there is no risk in re-using them between pipeline runs, or where it is desirable to retain the service instance from the last pipeline run (for example, a database migration).
+TIP: Notice the `useExisting: true` parameter in the preceding example. By default, Cloud Pipelines deletes and re-creates services in the `test` space. To override this behavior and re-use existing services, we set `useExisting: true`. This is helpful in cases where services  may take time to provision and initialize, where there is no risk in re-using them between pipeline runs, or where it is desirable to retain the service instance from the last pipeline run (for example, a database migration).
 
 ===== 1.10 Push changes to GitHub
 
@@ -457,7 +457,7 @@ Push the preceding changes to GitHub. You should be pushing the following to eac
 
 ===== 1.11 Create Cloud Foundry Orgs and Spaces
 
-Spring Cloud Pipelines requires that the Cloud Foundry test, stage, and prod spaces exist before a pipeline is run. If you wish, you can use different foundations, orgs, and users for each. For simplicity, in this example, we use a single foundation (PWS), a single org, and a single user.
+Cloud Pipelines requires that the Cloud Foundry test, stage, and prod spaces exist before a pipeline is run. If you wish, you can use different foundations, orgs, and users for each. For simplicity, in this example, we use a single foundation (PWS), a single org, and a single user.
 
 
 You can name the orgs and spaces anything you like. Each app requires its own test space. The stage and prod spaces are shared.
@@ -476,17 +476,17 @@ cf create-space scp-prod
 
 ===== 1.12 Create Cloud Foundry Stage and Prod Service Instances
 
-Spring Cloud Pipelines dynamically creates the services in the test spaces, as defined by the `sc-pipelines.yml` file we created previously. Optionally, you can add a second section to the `sc-pipelines.yml` file for the stage environment, and these are created dynamically as well. However, you must always crate prod manually.
+Cloud Pipelines dynamically creates the services in the test spaces, as defined by the `sc-pipelines.yml` file we created previously. Optionally, you can add a second section to the `sc-pipelines.yml` file for the stage environment, and these are created dynamically as well. However, you must always crate prod manually.
 
 For this example, we create both the stage and prod services manually.
 
 Create the services listed in the application manifest files in both `scp-stage` and `scp-prod`.
 
-===== 1.13 Update the Spring Cloud Pipelines Credentials File
+===== 1.13 Update the Cloud Pipelines Credentials File
 
 Update the `greeting-ui` and `fortune-service` credentials files with Cloud Foundry information. Replace values in the next example as appropriate for your Cloud Foundry environment.
 
-Notice that the test space name specified is a prefix, unlike the stage and prod space names, which are literals. Spring Cloud Pipelines append the application name to the test space name, thereby matching the test space names we created manually. The stage and prod space names are not prefixes and are not altered by Spring Cloud Pipelines.
+Notice that the test space name specified is a prefix, unlike the stage and prod space names, which are literals. Cloud Pipelines append the application name to the test space name, thereby matching the test space names we created manually. The stage and prod space names are not prefixes and are not altered by Cloud Pipelines.
 
 Note also the `paas-hostname-uuid`. The value is included in each created route. This value is optional, but it is useful in shared or multi-tenant environments (such as PWS), as it helps to ensure routes are unique. Change it to a unique uuid.
 
@@ -540,7 +540,7 @@ Notice that the five services declared in its manifest files (`sc-pipelines.yml`
 
 What have we accomplished?
 
-* By adding the basic scaffolding needed to enable Spring Cloud Pipelines to manage the lifecycle of `greeting-ui` and `fortune-service` from source code commit to production deploy, we have made it possible for the application development teams to instantly and easily create pipelines for each application by using a common, standardized template.
+* By adding the basic scaffolding needed to enable Cloud Pipelines to manage the lifecycle of `greeting-ui` and `fortune-service` from source code commit to production deploy, we have made it possible for the application development teams to instantly and easily create pipelines for each application by using a common, standardized template.
 * We can count on the pipelines to:
 ** Automatically provision services in test spaces and, optionally, in stage spaces as well.
 ** Dynamically clean up the test spaces between pipeline executions.
@@ -553,7 +553,7 @@ These accomplishments are extremely valuable. However, to derive confidence and 
 [[tutorial-stage-two]]
 ==== Stage Two: Tests
 
-In this stage, we enable Spring Cloud Pipelines to execute tests so that we can increase confidence in the code being deployed. We do so by adding test profiles to the `pom.xml` files and then organizing or adding tests in a way that corresponds to the profiles. By doing so, we establish standards around testing across development teams in the enterprise.
+In this stage, we enable Cloud Pipelines to execute tests so that we can increase confidence in the code being deployed. We do so by adding test profiles to the `pom.xml` files and then organizing or adding tests in a way that corresponds to the profiles. By doing so, we establish standards around testing across development teams in the enterprise.
 
 We will also enable database schema versioning in this stage, thereby providing the foundation for rollback testing during schema changes.
 
@@ -1094,7 +1094,7 @@ We also no longer need the `Fortune` entity constructors, so we can comment thes
 
 With that, we have completed the setup for Flyway, and our database schema is now versioned. From this point onward, Spring Boot calls `Flyway.migrate()` to perform the database migration. As long as we follow Flyway conventions for future schema changes, Flyway takes care of tracking the schema version and migrating the database for us.
 
-From a rollback perspective, Spring Cloud Pipelines includes two jobs in the `test` phase (`test-rollback-deploy` and `test-rollback-smoke`), wherein it validates that the latest prod jar works against the newly updated database. The purpose is to ensure that we can roll back the application in prod if a problem is discovered after the prod database schema has been updated and avoid the burden of rolling back the database.
+From a rollback perspective, Cloud Pipelines includes two jobs in the `test` phase (`test-rollback-deploy` and `test-rollback-smoke`), wherein it validates that the latest prod jar works against the newly updated database. The purpose is to ensure that we can roll back the application in prod if a problem is discovered after the prod database schema has been updated and avoid the burden of rolling back the database.
 
 See https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html#howto-use-a-higher-level-database-migration-tool[Spring Boot database initialization with Flyway] for further information, including Flyway configuration options.
 
@@ -1139,11 +1139,11 @@ image::{cf-migration-root-docs}/fortune_service_flyway_schema_info.png[title="fo
 
 What have we accomplished?
 
-* Increased the effectiveness of the pipelines and our confidence in them by integrating our applications with the testing strategy built into Spring Cloud Pipelines.
+* Increased the effectiveness of the pipelines and our confidence in them by integrating our applications with the testing strategy built into Cloud Pipelines.
 * Established a standard approach to organizing tests, which brings consistency within and across development teams.
 * Enabled auto-managed database versioning and backward compatibility testing that alleviates database schema management throughout the release management lifecycle.
 
-We can now add any unit, integration, smoke, and end-to-end tests to our code base and have a high level of reliability and confidence in our pipelines. We are also better positioned to ensure that our development teams conform to these practices, given the structure established by Spring Cloud Pipelines and the fast feedback and visibility we gain from the pipelines as they execute the tests.
+We can now add any unit, integration, smoke, and end-to-end tests to our code base and have a high level of reliability and confidence in our pipelines. We are also better positioned to ensure that our development teams conform to these practices, given the structure established by Cloud Pipelines and the fast feedback and visibility we gain from the pipelines as they execute the tests.
 
 However, we could benefit further by incorporating contracts to define and test the API integration points between applications. We do this in Stage Three of the application migration.
 
@@ -1308,7 +1308,7 @@ image::{cf-migration-root-docs}/fortune_service_generated_tests.png[title="Gener
 
 ===== 3.4 Enable backward compatibility API check
 
-To enable Spring Cloud Pipelines to catch any breaking API changes during the the API compatibility check in the `build-and-upload` job, we add the Spring Cloud Contract Maven plugin to the `apicompatibility` profile as well.
+To enable Cloud Pipelines to catch any breaking API changes during the the API compatibility check in the `build-and-upload` job, we add the Spring Cloud Contract Maven plugin to the `apicompatibility` profile as well.
 
 In this case, we want the plugin to generate tests based on contracts outside of the project (the ones from the latest prod version), so we configure the plugin to download the latest prod stub jar, which contains the old contract. The plugin uses the old contract and the specified base class (which, in our example, is the same as the one in the previous step) to generate contract tests. These tests are run against the new code to validate that it is still compatible with consumers that comply with the prior contract. This ensures backward compatibility for the API.
 
@@ -1365,7 +1365,7 @@ The following listing shows the complete profile:
 ----
 ====
 
-Spring Cloud Pipelines dynamically injects the values for `${repo.with.binaries}` and `${latest.production.version}`. You can run this locally by providing these values manually as system properties in the Maven command.
+Cloud Pipelines dynamically injects the values for `${repo.with.binaries}` and `${latest.production.version}`. You can run this locally by providing these values manually as system properties in the Maven command.
 
 ===== 3.5 Push Changes to GitHub
 
@@ -1472,7 +1472,7 @@ image::{cf-migration-root-docs}/greeting_ui_test_flow.png[title="greeting-ui Tes
 
 As in the build phase, without stubs, we expect the response to be the Hystrix fallback response that is hard-coded in `greeting-ui`. With stubs, however, we can expect the response that was declared in the contract.
 
-We rely on Spring Cloud Pipelines to:
+We rely on Cloud Pipelines to:
 
 * Deploy a stub runner application.
 * Provide the stub runner application with the necessary information to download the stubs.
@@ -1488,7 +1488,7 @@ The following steps describe how to configure stubs for smoke tests.
 
 ====== Provide a Stand-alone Stub Runner App Jar
 
-In the <<tutorial-prep,Prep step>> for this tutorial, you cloned the https://github.com/spring-cloud-samples/cloudfoundry-stub-runner-boot[`cloudfoundry-stub-runner-boot`] repo to your local machine. The next step is to build this application and upload it to Bintray to make the jar available to Spring Cloud Pipelines.
+In the <<tutorial-prep,Prep step>> for this tutorial, you cloned the https://github.com/spring-cloud-samples/cloudfoundry-stub-runner-boot[`cloudfoundry-stub-runner-boot`] repo to your local machine. The next step is to build this application and upload it to Bintray to make the jar available to Cloud Pipelines.
 
 As mentioned in <<tutorial-stage-one>> of this tutorial, Bintray requires that a package exist before any application artifacts can be uploaded. Log into the Bintray UI and create a package for `cloudfoundry-stub-runner-boot`. If you forked this repo, you can use the `Import from GitHub` option. Otherwise, create the package manually and choose any license (for example, Apache 2.0).
 
@@ -1552,7 +1552,7 @@ Now that we have a jar file and a manifest file for our stub runner application,
 
 Notice that `name` matches the name of the application in `manifest-stubrunner.yml`, `coordinates` corresponds to the jar coordinates of the Maven repository, and `pathToManifest` matches our chosen fie name for the stub runner application manifest.
 
-Note also the `type` is set to `stubrunner`, which Spring Cloud Pipelines will recognize as a stanalone stub runner app and treat accordingly.
+Note also the `type` is set to `stubrunner`, which Cloud Pipelines will recognize as a stanalone stub runner app and treat accordingly.
 
 ====== Provide Stub Configuration for the Stub Runner Application
 
@@ -1574,10 +1574,10 @@ To accomplish this, we put stub and port configuration information into the prop
 ----
 ====
 
-Spring Cloud Pipelines uses this information in two ways:
+Cloud Pipelines uses this information in two ways:
 
 * It provides this information to the stub runner application through the application's environment variables.
-** Spring Cloud Pipelines also provides the `$REPO_WITH_BINARIES` as an environment variable for the stub runner application.
+** Cloud Pipelines also provides the `$REPO_WITH_BINARIES` as an environment variable for the stub runner application.
 ** The stub runner application uses this information to download the stub from Bintray and expose it on the specified port.
 * It opens the additional port specified on the stub runner app and map a new route to it.
 ** The format for each route is `<stub-runner-app-name>-<hostname-uuid>-<env>-<app-name>-<port>.<domain>`.
@@ -1589,7 +1589,7 @@ image::{cf-migration-root-docs}/greeting_ui_stub_runner_eureka_registration.png[
 
 This completes the process of configuring the stand-alone stub runner application.
 
-NOTE: You can automate the port configuration by Spring Cloud Pipelines in the future such that you need not include the port in `stubrunner.ids`. However, for the moment, we are required to specify the port each stub should use.
+NOTE: You can automate the port configuration by Cloud Pipelines in the future such that you need not include the port in `stubrunner.ids`. However, for the moment, we are required to specify the port each stub should use.
 
 ====== Edit Smoke Tests to Align with the Contract
 
@@ -1669,7 +1669,7 @@ By implementing a contract-driven approach with auto-generation of tests and stu
 
 === Conclusion
 
-This concludes the tutorial on migrating apps for Spring Cloud Pipelines for Cloud Foundry.
+This concludes the tutorial on migrating apps for Cloud Pipelines for Cloud Foundry.
 
 Moving forward, the refactoring work shown here can be incorporated into your and your team's standard practices. We recommend the following practices:
 
@@ -1680,7 +1680,7 @@ Moving forward, the refactoring work shown here can be incorporated into your an
 * Include a pipeline descriptor (`sc-manifest.yml`) in your app repository.
 * Create an empty `version` branch in your application repository.
 * Include artifact repository configuration in the `pom.xml` file.
-* Align your Cloud Foundry spaces with the Spring Cloud Pipelines model (isolated test space and shared stage and prod spaces).
+* Align your Cloud Foundry spaces with the Cloud Pipelines model (isolated test space and shared stage and prod spaces).
 
 *Better*
 
@@ -1692,7 +1692,7 @@ Moving forward, the refactoring work shown here can be incorporated into your an
 * Use a database migration tool, such as Flyway.
 * Use contract-based API programming.
 
-Implementing all the *"`good`"* practices positions you to instantly create pipelines for your applications by using Spring Cloud Pipelines. This is a huge win in terms of consistency and productivity and standardization across development teams. Of course, this is an open source project, so you can modify it to meet your needs.
+Implementing all the *"`good`"* practices positions you to instantly create pipelines for your applications by using Cloud Pipelines. This is a huge win in terms of consistency and productivity and standardization across development teams. Of course, this is an open source project, so you can modify it to meet your needs.
 
 Implementing the *"`better`"* practices ensures the proper tests get run at the proper time. At that point, you can add as much test coverage as you need to have high confidence in your pipelines.
 

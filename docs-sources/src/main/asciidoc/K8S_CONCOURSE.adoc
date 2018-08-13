@@ -4,8 +4,8 @@
 IMPORTANT: In this chapter, we assume that you deploy your application
 to Kubernetes PaaS
 
-[[concourse]]
-The Spring Cloud Pipelines repository contains opinionated
+[[concourse-k8s]]
+The Cloud Pipelines repository contains opinionated
 Concourse pipeline definitions. Those jobs form an empty pipeline and an
 opinionated sample pipeline that you can use in your company.
 

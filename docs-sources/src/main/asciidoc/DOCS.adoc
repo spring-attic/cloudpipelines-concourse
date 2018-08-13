@@ -1,4 +1,4 @@
-= Spring Cloud Pipelines
+= Cloud Pipelines
 
 Spring, Spring Boot, and Spring Cloud are tools that let developers speed up the
 time of creating new business features. It is common knowledge, however, that the
@@ -16,8 +16,6 @@ and time needed by new developers to blend in when they change projects.
 
 include::INTRO.adoc[]
 
-include::OPINIONATED.adoc[]
-
 include::CUSTOMIZATION.adoc[]
 
 // remove::start[CF]
@@ -27,10 +25,6 @@ include::CF_MIGRATION.adoc[]
 // remove::start[CONCOURSE]
 include::CONCOURSE.adoc[]
 // remove::end[CONCOURSE]
-
-// remove::start[JENKINS]
-include::JENKINS.adoc[]
-// remove::end[JENKINS]
 
 // remove::start[K8S]
 include::K8S_SETUP.adoc[]
