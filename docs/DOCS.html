@@ -443,15 +443,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#a-pipeline-for-each-repository">1.2.4. A Pipeline for Each Repository</a></li>
 </ul>
 </li>
-<li><a href="#the-flow">1.3. The Flow</a></li>
-<li><a href="#vocabulary">1.4. Vocabulary</a>
-<ul class="sectlevel3">
-<li><a href="#environments">1.4.1. Environments</a></li>
-<li><a href="#tests">1.4.2. Tests</a></li>
-<li><a href="#testing-against-stubs">1.4.3. Testing against Stubs</a></li>
-<li><a href="#general-view">1.4.4. General View</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li><a href="#customizing-the-project">2. Customizing the Project</a>
@@ -745,284 +736,6 @@ and it is up to the project to set up the pipeline.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="the-flow">1.3. The Flow</h3>
-<div class="paragraph">
-<p>The following images show the flow of the opinionated pipeline:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/scripts/master/docs/images/intro/flow_concourse.png" alt="flow concourse">
-</div>
-<div class="title">Figure 2. Flow in Concourse</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/scripts/master/docs/images/intro/flow.png" alt="flow">
-</div>
-<div class="title">Figure 3. Flow in Jenkins</div>
-</div>
-<div class="paragraph">
-<p>We first describe the overall concept behind the flow and then
-split it into pieces and describe each piece independently.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="vocabulary">1.4. Vocabulary</h3>
-<div class="paragraph">
-<p>This section defines some common vocabulary. We describe four typical
-environments in terms of running the pipeline.</p>
-</div>
-<div class="sect3">
-<h4 id="environments">1.4.1. Environments</h4>
-<div class="paragraph">
-<p>We typically encounter the following environments:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>build</strong> environment is a machine where the building of the application takes place.
-It is a continuous integration or continuous delivery tool worker.</p>
-</li>
-<li>
-<p><strong>test</strong> is an environment where you can deploy an application to test it. It does not
-resemble production, because we cannot be sure of its state (which application is deployed
-there and in which version). It can be used by multiple teams at the same time.</p>
-</li>
-<li>
-<p><strong>stage</strong> is an environment that does resemble production. Most likely, applications
-are deployed there in versions that correspond to those deployed to production.
-Typically, staging databases hold (often obfuscated) production data. Most
-often, this environment is a single environment shared between many teams. In other
-words, in order to run some performance and user acceptance tests, you have to block
-and wait until the environment is free.</p>
-</li>
-<li>
-<p><strong>prod</strong> is the production environment where we want our tested applications to be
-deployed for our customers.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="tests">1.4.2. Tests</h4>
-<div class="paragraph">
-<p>We typically encounter the following kinds of tests:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Unit tests</strong>: Tests that run on the application during the build phase.
-No integrations with databases or HTTP server stubs or other resources take place.
-Generally speaking, your application should have plenty of these tests to provide fast
-feedback about whether your features work.</p>
-</li>
-<li>
-<p><strong>Integration tests</strong>: Tests that run on the built application during the build phase.
-Integrations with in-memory databases and HTTP server stubs take place. According to the
-<a href="https://martinfowler.com/bliki/TestPyramid.html">test pyramid</a>, in most cases, you should
-not have many of these kind of tests.</p>
-</li>
-<li>
-<p><strong>Smoke tests</strong>: Tests that run on a deployed application. The concept of these tests
-is to check that the crucial parts of your application are working properly. If you have 100 features
-in your application but you gain the most money from five features, you could write smoke tests
-for those five features. We are talking about smoke tests of an application, not of
-the whole system. In our understanding inside the opinionated pipeline, these tests are
-executed against an application that is surrounded with stubs.</p>
-</li>
-<li>
-<p><strong>End-to-end tests</strong>: Tests that run on a system composed of multiple applications.
-These tests ensure that the tested feature works when the whole system is set up.
-Due to the fact that it takes a lot of time, effort, and resources to maintain such an environment
-and that these tests are often unreliable (due to many different moving pieces, such as network,
-database, and others), you should have a handful of those tests. They should be only for critical parts of your business.
-Since only production is the key verifier of whether your feature works, some companies
-do not even want to have these tests and move directly to deployment to production. When your
-system contains KPI monitoring and alerting, you can quickly react when your deployed application
-does not behave properly.</p>
-</li>
-<li>
-<p><strong>Performance testing</strong>: Tests run on an application or set of applications
-to check if your system can handle a big load. In the case of our opinionated pipeline,
-these tests can run either on test (against a stubbed environment) or on
-staging (against the whole system).</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="testing-against-stubs">1.4.3. Testing against Stubs</h4>
-<div class="paragraph">
-<p>Before we go into the details of the flow, consider the example described by the following image:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/scripts/master/docs/images/intro/monolith.png" alt="monolith">
-</div>
-<div class="title">Figure 4. Two monolithic applications deployed for end to end testing</div>
-</div>
-<div class="paragraph">
-<p>When you have only a handful of applications, end-to-end testing is beneficial.
-From the operations perspective, it is maintainable for a finite number of deployed instances.
-From the developers perspective, it is nice to verify the whole flow in the system
-for a feature.</p>
-</div>
-<div class="paragraph">
-<p>In the case of microservices, the scale starts to be a problem, as the following image shows:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/scripts/master/docs/images/intro/many_microservices.png" alt="many microservices">
-</div>
-<div class="title">Figure 5. Many microservices deployed in different versions</div>
-</div>
-<div class="paragraph">
-<p>The following questions arise:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Should I queue deployments of microservices on one testing environment or should I have an environment per microservice?</p>
-<div class="ulist">
-<ul>
-<li>
-<p>If I queue deployments, people have to wait for hours to have their tests run. That can be a problem</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>To remove that issue, I can have an environment for each microservice.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Who will pay the bills? (Imagine 100 microservices, each having each own environment).</p>
-</li>
-<li>
-<p>Who will support each of those environments?</p>
-</li>
-<li>
-<p>Should we spawn a new environment each time we execute a new pipeline and then wrap it up or should we have
-them up and running for the whole day?</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>In which versions should I deploy the dependent microservices - development or production versions?</p>
-<div class="ulist">
-<ul>
-<li>
-<p>If I have development versions, I can test my application against a feature that is not yet on production.
-That can lead to exceptions in production.</p>
-</li>
-<li>
-<p>If I test against production versions, I can never test against a feature under development
-anytime before deployment to production.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>One of the possibilities of tackling these problems is to not do end-to-end tests.</p>
-</div>
-<div class="paragraph">
-<p>The following image shows one solution to the problem, in the form of stubbed dependencies:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/scripts/master/docs/images/intro/stubbed_dependencies.png" alt="stubbed dependencies">
-</div>
-<div class="title">Figure 6. Execute tests on a deployed microservice on stubbed dependencies</div>
-</div>
-<div class="paragraph">
-<p>If we stub out all the dependencies of our application, most of the problems presented earlier
-disappear. There is no need to start and setup the infrastructure required by the dependent
-microservices. That way, the testing setup looks like the following image:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/scripts/master/docs/images/intro/stubbed_dependencies.png" alt="stubbed dependencies">
-</div>
-<div class="title">Figure 7. We&#8217;re testing microservices in isolation</div>
-</div>
-<div class="paragraph">
-<p>Such an approach to testing and deployment gives the following benefits
-(thanks to the usage of <a href="http://cloud.spring.io/spring-cloud-contract/spring-cloud-contract.html">Spring Cloud Contract</a>):</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>No need to deploy dependent services.</p>
-</li>
-<li>
-<p>The stubs used for the tests run on a deployed microservice are the same as those used during integration tests.</p>
-</li>
-<li>
-<p>Those stubs have been tested against the application that produces them (see <a href="http://cloud.spring.io/spring-cloud-contract/spring-cloud-contract.html">Spring Cloud Contract</a> for more information).</p>
-</li>
-<li>
-<p>We do not have many slow tests running on a deployed application, so the pipeline gets executed much faster.</p>
-</li>
-<li>
-<p>We do not have to queue deployments. We test in isolation so that pipelines do not interfere with each other.</p>
-</li>
-<li>
-<p>We do not have to spawn virtual machines each time for deployment purposes.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>However, this approach brings the following challenges:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>No end-to-end tests before production. You do not have full certainty that a feature is working.</p>
-</li>
-<li>
-<p>The first time the applications interact in a real way is on production.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>As with every solution, it has its benefits and drawbacks. The opinionated pipeline
-lets you configure whether you want to follow this flow or not.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="general-view">1.4.4. General View</h4>
-<div class="paragraph">
-<p>The general view behind this deployment pipeline is to:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Test the application in isolation.</p>
-</li>
-<li>
-<p>Test the backwards compatibility of the application, in order to roll it back if necessary.</p>
-</li>
-<li>
-<p>Allow testing of the packaged application in a deployed environment.</p>
-</li>
-<li>
-<p>Allow user acceptance tests and performance tests in a deployed environment.</p>
-</li>
-<li>
-<p>Allow deployment to production.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The pipeline could have been split to more steps, but it seems that all of the aforementioned
-actions fit nicely in our opinionated proposal.</p>
-</div>
-</div>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -1083,7 +796,7 @@ migrates a set of applications to be compliant with Cloud Pipelines.</p>
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/use_case_logical.png" alt="use case logical">
 </div>
-<div class="title">Figure 8. Use Case - Logical View</div>
+<div class="title">Figure 2. Use Case - Logical View</div>
 </div>
 <div class="paragraph">
 <p>At the end of this tutorial, you will be able to quickly create a Concourse pipeline for each application and run successfully through a full lifecycle, from source code commit to production deployment, following the lifecycle stages for testing and deployment recommended by Cloud Pipelines. You will be able to improve application code bases with organized test coverage, a contract-based API, and a versioned database schema, letting Cloud Pipelines carry out stubbed testing and ensure backward compatibility for API and database schema changes.</p>
@@ -1107,7 +820,7 @@ migrates a set of applications to be compliant with Cloud Pipelines.</p>
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/use_case_implementation.png" alt="use case implementation">
 </div>
-<div class="title">Figure 9. Use Case - Implementation</div>
+<div class="title">Figure 3. Use Case - Implementation</div>
 </div>
 </div>
 <div class="sect2">
@@ -1245,7 +958,7 @@ migrates a set of applications to be compliant with Cloud Pipelines.</p>
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/github_branches.png" alt="github branches">
 </div>
-<div class="title">Figure 10. GitHub Branches</div>
+<div class="title">Figure 4. GitHub Branches</div>
 </div>
 <div class="paragraph">
 <p>If you want to use this tutorial as a hands-on lab, fork each of the following repositories:</p>
@@ -1383,7 +1096,7 @@ git checkout -b sc-pipelines</code></pre>
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/bintray_packages.png" alt="bintray packages">
 </div>
-<div class="title">Figure 11. Bintray Packages</div>
+<div class="title">Figure 5. Bintray Packages</div>
 </div>
 </div>
 <div class="sect4">
@@ -1558,7 +1271,7 @@ fly -t myTarget set-pipeline -p fortune-service -c "${SCP_HOME}/spring-cloud-pip
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/concourse_build_success.png" alt="concourse build success">
 </div>
-<div class="title">Figure 12. Build Success</div>
+<div class="title">Figure 6. Build Success</div>
 </div>
 <div class="paragraph">
 <p>In addition, you should see a new <code>dev/&lt;version_number&gt;</code> tag in each GitHub repository and see the app jars uploaded into Bintray.</p>
@@ -1880,7 +1593,7 @@ paas-prod-space: scp-prod</code></pre>
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/concourse_test_stage_prod_success.png" alt="concourse test stage prod success">
 </div>
-<div class="title">Figure 13. Test, Stage, &amp; Prod Success</div>
+<div class="title">Figure 7. Test, Stage, &amp; Prod Success</div>
 </div>
 <div class="paragraph">
 <p>On Cloud Foundry, you should now see the apps deployed in the test, stage, and prod spaces. The following image shows the deployment of <code>fortune-service</code> to its dedicated test space:</p>
@@ -1889,7 +1602,7 @@ paas-prod-space: scp-prod</code></pre>
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/cf_test_and_prod_deployed.png" alt="cf test and prod deployed">
 </div>
-<div class="title">Figure 14. Cloud Foundry Test and Prod Deployment</div>
+<div class="title">Figure 8. Cloud Foundry Test and Prod Deployment</div>
 </div>
 <div class="paragraph">
 <p>Notice that the five services declared in its manifest files (<code>sc-pipelines.yml</code> for provisioning and <code>manifest.yml</code> for binding) have also been automatically provisioned. The image also shows the deployment of the same app to the shared prod space. Notice that the instance of the previous version has been renamed as <code>venerable</code> and stopped. If a rollback were deemed necessary, the <code>prod-rollback</code> job in the pipeline could be triggered to remove the currently running version, remove the <code>prod/&lt;version_number&gt;</code> tag from GitHub, and re-start the former (<code>venerable</code>) version.</p>
@@ -2096,7 +1809,7 @@ paas-prod-space: scp-prod</code></pre>
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/test_package_structure.png" alt="test package structure">
 </div>
-<div class="title">Figure 15. Test Package Structure</div>
+<div class="title">Figure 9. Test Package Structure</div>
 </div>
 <div class="paragraph">
 <p>Note that we are creating matching packages only for the default, smoke, and e2e profiles. We will address the package for the <code>apicompatibility</code> profile in Stage Three.</p>
@@ -2178,7 +1891,7 @@ public class FortuneServiceApplicationTests {
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/fortune_service_smoke_tests.png" alt="fortune service smoke tests">
 </div>
-<div class="title">Figure 16. fortune-service Smoke Tests</div>
+<div class="title">Figure 10. fortune-service Smoke Tests</div>
 </div>
 <div class="paragraph">
 <p>In the test environment, we choose to verify that <code>fortune-service</code> is retrieving a fortune from <code>fortune-db</code>, and not returning its Hystrix fallback response. The following example defines this test:</p>
@@ -2238,7 +1951,7 @@ public class SmokeTests {
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/fortune_service_e2e_tests.png" alt="fortune service e2e tests">
 </div>
-<div class="title">Figure 17. fortune-service E2E Tests</div>
+<div class="title">Figure 11. fortune-service E2E Tests</div>
 </div>
 <div class="paragraph">
 <p>In the <code>e2e</code> environment, we choose to use a string replacement to obtain the URL for <code>greeting-ui</code>. We also choose to verify that we hit <code>fortune-db</code> and do not receive Hystrix fallback responses from either application. The following example shows this test:</p>
@@ -2346,7 +2059,7 @@ public class GreetingUIApplicationTests {
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/greeting_ui_smoke_tests.png" alt="greeting ui smoke tests">
 </div>
-<div class="title">Figure 18. greeting-ui Smoke Tests</div>
+<div class="title">Figure 12. greeting-ui Smoke Tests</div>
 </div>
 <div class="paragraph">
 <p>Since <code>fortune-service</code> is not deployed to the <code>scp-test-greeting-ui</code> space, we expect to receive the Hystrix fallback response defined in <code>greeting-ui</code>. Hence, our smoke test validates that condition:</p>
@@ -2406,7 +2119,7 @@ public class SmokeTests {
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/greeting_ui_e2e_tests.png" alt="greeting ui e2e tests">
 </div>
-<div class="title">Figure 19. greeting-ui E2E Tests</div>
+<div class="title">Figure 13. greeting-ui E2E Tests</div>
 </div>
 <div class="paragraph">
 <p>In the <code>e2e</code> environment, we choose to verify that we hit <code>fortune-service</code> and do not receive the Hystrix fallback response from <code>greeting-ui</code>. The following example shows the test:</p>
@@ -2491,7 +2204,7 @@ public class E2eTests {
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/fortune_service_flyway_file_name.png" alt="fortune service flyway file name">
 </div>
-<div class="title">Figure 20. fortune-service Flyway File Name</div>
+<div class="title">Figure 14. fortune-service Flyway File Name</div>
 </div>
 <div class="paragraph">
 <p>Note that the filename specifies the version (<code>V1</code>), followed by two underscore characters.</p>
@@ -2715,7 +2428,7 @@ applications:
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/fortune_service_flyway_schema_info.png" alt="fortune service flyway schema info">
 </div>
-<div class="title">Figure 21. fortune-service Flyway Schema Info</div>
+<div class="title">Figure 15. fortune-service Flyway Schema Info</div>
 </div>
 </div>
 <div class="sect4">
@@ -2790,7 +2503,7 @@ should return a fortune string
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/fortune_service_contract_file.png" alt="fortune service contract file">
 </div>
-<div class="title">Figure 22. fortune-service Flyway Contract File</div>
+<div class="title">Figure 16. fortune-service Flyway Contract File</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2961,7 +2674,7 @@ Package the project locally (run <code>mvn package</code>) to observe the tests,
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/fortune_service_generated_tests.png" alt="fortune service generated tests">
 </div>
-<div class="title">Figure 23. Generated Tests and Stubs</div>
+<div class="title">Figure 17. Generated Tests and Stubs</div>
 </div>
 </div>
 <div class="sect4">
@@ -3073,7 +2786,7 @@ Package the project locally (run <code>mvn package</code>) to observe the tests,
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/fortune_service_build_and_upload_test_and_stub_generation.png" alt="fortune service build and upload test and stub generation">
 </div>
-<div class="title">Figure 24. fortune-service build-and-upload Test and Stub Generation</div>
+<div class="title">Figure 18. fortune-service build-and-upload Test and Stub Generation</div>
 </div>
 <div class="paragraph">
 <p>You should also see output in the <code>build-and-upload</code> job that shows the execution of these tests against the code.</p>
@@ -3097,7 +2810,7 @@ Package the project locally (run <code>mvn package</code>) to observe the tests,
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/greeting_ui_build_flow.png" alt="greeting ui build flow">
 </div>
-<div class="title">Figure 25. greeting-ui Build Flow</div>
+<div class="title">Figure 19. greeting-ui Build Flow</div>
 </div>
 <div class="paragraph">
 <p>Without stubs, we expect the response to be the Hystrix fallback response that is hard-coded in <code>greeting-ui</code>. With stubs, however, we can expect the response that was declared in the contract. In this case, the stubs are loaded into the <code>greeting-ui</code> process. This leads us to our next task: Loading the stubs produced by <code>fortune-service</code>.</p>
@@ -3210,7 +2923,7 @@ Setting <code>workOffline=true</code> (commented out but shown earlier for infor
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/greeting_ui_test_flow.png" alt="greeting ui test flow">
 </div>
-<div class="title">Figure 26. greeting-ui Test Flow</div>
+<div class="title">Figure 20. greeting-ui Test Flow</div>
 </div>
 <div class="paragraph">
 <p>As in the build phase, without stubs, we expect the response to be the Hystrix fallback response that is hard-coded in <code>greeting-ui</code>. With stubs, however, we can expect the response that was declared in the contract.</p>
@@ -3295,7 +3008,7 @@ cd cloudfoundry-stub-runner-boot
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/greeting_ui_stubrunner_manifest.png" alt="greeting ui stubrunner manifest">
 </div>
-<div class="title">Figure 27. greeting-ui Stub Runner Manifest</div>
+<div class="title">Figure 21. greeting-ui Stub Runner Manifest</div>
 </div>
 <div class="paragraph">
 <p>We populate this <code>manifest-stubrunner.yml</code> with the content shown in the next listing so that the stub runner binds to <code>service-registry</code>. The stub runner registers the <code>fortune-service</code> stub there so that <code>greeting-ui</code> can discover it in the same way it discovers the actual <code>fortune-service</code> app endpoint in stage and prod. From the <code>greeting-ui</code> perspective, there is no difference in how it interacts with Eureka and the stub runner application in test and the way it interacts with Eureka and the <code>fortune-service</code> application in stage and prod. The following listing shows the content of <code>manifest-stubrunner.yml</code>:</p>
@@ -3414,7 +3127,7 @@ applications:
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/greeting_ui_stub_runner_eureka_registration.png" alt="greeting ui stub runner eureka registration">
 </div>
-<div class="title">Figure 28. greeting-ui Stub Runner Eureka Registration</div>
+<div class="title">Figure 22. greeting-ui Stub Runner Eureka Registration</div>
 </div>
 <div class="paragraph">
 <p>This completes the process of configuring the stand-alone stub runner application.</p>
@@ -4360,7 +4073,7 @@ a user name of <code>admin</code> and a password of <code>password</code>.</p>
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/artifactory_quick_setup.png" alt="artifactory quick setup">
 </div>
-<div class="title">Figure 29. Click on Quick Setup</div>
+<div class="title">Figure 23. Click on Quick Setup</div>
 </div>
 <div class="paragraph">
 <p>Then, click on Maven setup and click <code>Create</code>.</p>
@@ -4369,7 +4082,7 @@ a user name of <code>admin</code> and a password of <code>password</code>.</p>
 <div class="content">
 <img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/artifactory_maven_repo.png" alt="artifactory maven repo">
 </div>
-<div class="title">Figure 30. Create the <code>Maven</code> Repository</div>
+<div class="title">Figure 24. Create the <code>Maven</code> Repository</div>
 </div>
 </div>
 <div class="sect3">

@@ -54,5 +54,3 @@ TIP: We recommend using Cloud Pipelines this way.
 You can use Cloud Pipelines in such a way that
 ach project contains its own pipeline steps,
 and it is up to the project to set up the pipeline.
-
-include::{scripts-base-url}/docs-sources/src/main/asciidoc/FLOW.adoc[]
