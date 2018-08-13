@@ -18,7 +18,7 @@ resources:
   type: git
   source:
     uri: ((concourse-scripts-url))
-    branch: ((concourse-branch))
+    branch: ((concourse-scripts-branch))
 
 - name: scripts
   type: git

@@ -8,7 +8,7 @@ Cloud Pipelines offers a number of ways to customize a Pipelines project:
 [[customization-overriding-scripts]]
 === Overriding Scripts
 
-You can read the documentation of https://github.com/CloudPipelines/Scripts[Cloud Pipelines Scripts]
+You can read the documentation of https://github.com/CloudPipelines/scripts[Cloud Pipelines Scripts]
 to see how to override the scripts.
 
 [[customization-overriding-pipelines]]

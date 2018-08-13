@@ -226,15 +226,15 @@ In `$SCP_HOME/credentials`, make two copies of the `$SCP_HOME/spring-cloud-pipel
 
 CAUTION: These files will contain credentials to your GitHub repository, your Bintray repository, and your Cloud Foundry foundation. Hence, we opt to put them in a separate directory. You may choose to store these files in a private Git repository, but do not push them to a public repository.
 
-Edit the Git properties of each credentials file. Make sure to replace the sample values shown in our example. For `concourse-branch`, you can use a fixed release (use v1.0.0.M8 or later for Cloud Foundry). Leave the other values as they are. We update those in later steps. The following listing shows a credentials file:
+Edit the Git properties of each credentials file. Make sure to replace the sample values shown in our example. For `concourse-scripts-branch`, you can use a fixed release (use v1.0.0.M8 or later for Cloud Foundry). Leave the other values as they are. We update those in later steps. The following listing shows a credentials file:
 
 ====
 [source,yml]
 ----
 app-url: git@github.com:ciberkleid/fortune-service.git
 app-branch: sc-pipelines
-concourse-scripts-url: https://github.com/cloudpipelines/scripts.git
-concourse-branch: master
+concourse-scripts-url: https://github.com/CloudPipelines/scripts.git
+concourse-scripts-branch: master
 build-options: ""
 
 github-private-key: |
