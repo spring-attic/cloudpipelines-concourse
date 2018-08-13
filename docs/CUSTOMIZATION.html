@@ -434,12 +434,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#customizing-the-project">1. Customizing the Project</a>
 <ul class="sectlevel2">
 <li><a href="#customization-overriding-scripts">1.1. Overriding Scripts</a></li>
-<li><a href="#customization-overriding-pipelines">1.2. Overriding Pipelines</a>
-<ul class="sectlevel3">
-<li><a href="#overriding-jenkins-job-dsl-pipelines">1.2.1. Overriding Jenkins Job DSL pipelines</a></li>
-</ul>
-</li>
-<li><a href="#customization-picking-features">1.3. Picking Features</a></li>
+<li><a href="#customization-overriding-pipelines">1.2. Overriding Pipelines</a></li>
 </ul>
 </li>
 </ul>
@@ -460,164 +455,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li>
 <p><a href="#customization-overriding-pipelines">Overriding Pipelines</a></p>
 </li>
-<li>
-<p><a href="#customization-picking-features">Picking Features</a></p>
-</li>
 </ul>
 </div>
 <div class="sect2">
 <h3 id="customization-overriding-scripts">1.1. Overriding Scripts</h3>
 <div class="paragraph">
-<p>Since Cloud Pipelines evolves, you may want to pull the most recent changes to your
-Cloud Pipelines fork. To not have merge conflicts, the best approach
-to extending the functionality is to use a separate script with customizations.</p>
-</div>
-<div class="paragraph">
-<p>When we execute a script that represents a step (for example, a script named <code>build_and_upload.sh</code>),
-after we source all the deployment and build-specific scripts (such as <code>pipeline-cf.sh</code>
-and <code>projectType/pipeline-jvm.sh</code> with <code>projectType/pipeline-gradle.sh</code>), we set
-a hook that lets you customize the behavior. If the script that we run
-is <code>common/src/main/bash/build_and_upload.sh</code>, we search for a script in the
-Cloud Pipelines repository under <code>common/src/main/bash/custom/build_and_upload.sh</code>,
-and we source that script just before running any functions.</p>
-</div>
-<div class="paragraph">
-<p>The following example shows such a customization:</p>
-</div>
-<div class="exampleblock">
-<div class="title">Example 1. custom/build_and_upload.sh</div>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
-
-function build() {
-    echo "I am executing a custom build function"
-}
-
-export -f build</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>when the <code>build</code> function is called for our Gradle project, instead of
-calling the Gradle build process, we echo the following text: <code>I am executing a custom build function</code>.</p>
+<p>You can read the documentation of <a href="https://github.com/CloudPipelines/Scripts">Cloud Pipelines Scripts</a>
+to see how to override the scripts.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="customization-overriding-pipelines">1.2. Overriding Pipelines</h3>
 <div class="paragraph">
-<p>Currently, the best way to extend the Concourse and Jenkins Jenkinsfile pipelines is to make
-a copy of the Concourse pipeline <code>yaml</code> files and the Jenkins seed and pipeline jobs.</p>
-</div>
-<div class="sect3">
-<h4 id="overriding-jenkins-job-dsl-pipelines">1.2.1. Overriding Jenkins Job DSL pipelines</h4>
-<div class="paragraph">
-<p>We provide an interface (called <code>org.springframework.cloud.pipelines.common.JobCustomizer</code>)
-that lets you provide customization for:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>all jobs</p>
-</li>
-<li>
-<p>build jobs</p>
-</li>
-<li>
-<p>test jobs</p>
-</li>
-<li>
-<p>stage jobs</p>
-</li>
-<li>
-<p>prod jobs</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>We use the JDK&#8217;s <code>java.util.ServiceLoader</code> mechanism to achieve extensibility.</p>
-</div>
-<div class="paragraph">
-<p>You can write an implementation of that interface (for example, <code>com.example.MyJubCustomizer</code>)
-and create a <code>META-INF/org.springframework.cloud.pipelines.common.JobCustomizer</code> file in which you put the
-<code>com.example.MyJubCustomizer</code> line.</p>
-</div>
-<div class="paragraph">
-<p>If you create a JAR with your class (for example <code>com.example:my-customizer:1.0.0</code>),
-put it on the build classpath, as the following example shows:</p>
-</div>
-<div class="exampleblock">
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">dependencies {
-    // ...
-    libs "com.example:my-customizer:1.0.0"
-    // ...
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>If you do not want to create a separate library, you can create an implementation in the
-sources under <code>src/main/resources/META-INF</code>.</p>
-</div>
-<div class="paragraph">
-<p>Regardless of what you chose, your implementation runs for each job. You can add notifications
-or any other customizations of your choosing.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="customization-picking-features">1.3. Picking Features</h3>
-<div class="paragraph">
-<p>If you want to pick only pieces (for example you want only <code>Cloud Foundry</code> combined with
-<code>Concourse</code>), you can run the following command:</p>
-</div>
-<div class="exampleblock">
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">$ ./gradlew customize</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>A screen resembling the following appears:</p>
-</div>
-<div class="exampleblock">
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">:customize
-  ___          _              ___ _             _   ___ _           _ _
- / __|_ __ _ _(_)_ _  __ _   / __| |___ _  _ __| | | _ (_)_ __  ___| (_)_ _  ___ ___
- \__ \ '_ \ '_| | ' \/ _` | | (__| / _ \ || / _` | |  _/ | '_ \/ -_) | | ' \/ -_|_-&lt;
- |___/ .__/_| |_|_||_\__, |  \___|_\___/\_,_\__,_| |_| |_| .__/\___|_|_|_||_\___/__/
-     |_|             |___/                               |_|
-
-
-
-Follow the instructions presented in the console or terminate the process to quit (ctrl + c)
-
-
-=== PAAS TYPE ===
-Which PAAS type do you want to use? Options: [CF, K8S, BOTH]
-&lt;-------------&gt; 0% EXECUTING
-&gt; :customize</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>Now you need to answer a couple of questions. Depending on your choices, whole files and their pieces
-get removed and updated accordingly. For example, if you choose the <code>CF</code> and <code>Concourse</code> options,
-the <code>Kubernetes</code> and <code>Jenkins</code> configuration and folders and pieces of code in
-the project get removed.</p>
+<p>Currently, the best way to extend the Concourse is to make
+a copy of the Concourse pipeline <code>yaml</code> files and modify it.</p>
 </div>
 </div>
 </div>
@@ -625,7 +476,7 @@ the project get removed.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-08-13 11:17:37 CEST
+Last updated 2018-08-13 13:23:06 CEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
