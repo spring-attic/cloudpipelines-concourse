@@ -40,7 +40,8 @@ jobs:
   public: true
   plan:
   - aggregate:
-    - get: tools
+    - get: concourse
+    - get: scripts
     - get: version
   - task: generate-version
     privileged: true
@@ -60,7 +61,8 @@ jobs:
   public: false
   plan:
   - aggregate:
-    - get: tools
+    - get: concourse
+    - get: scripts
     - get: repo
     - get: keyval
       passed:
@@ -85,7 +87,8 @@ jobs:
   public: false
   plan:
   - aggregate:
-    - get: tools
+    - get: concourse
+    - get: scripts
     - get: repo
     - get: keyval
       passed:
@@ -109,7 +112,8 @@ jobs:
   public: false
   plan:
   - aggregate:
-    - get: tools
+    - get: concourse
+    - get: scripts
     - get: repo
     - get: keyval
       passed:
@@ -132,7 +136,8 @@ jobs:
   public: false
   plan:
   - aggregate:
-    - get: tools
+    - get: concourse
+    - get: scripts
     - get: repo
     - get: keyval
       passed:
@@ -156,7 +161,8 @@ jobs:
   public: false
   plan:
   - aggregate:
-    - get: tools
+    - get: concourse
+    - get: scripts
     - get: repo
     - get: keyval
       passed:
@@ -179,7 +185,8 @@ jobs:
   public: false
   plan:
   - aggregate:
-    - get: tools
+    - get: concourse
+    - get: scripts
     - get: repo
     - get: keyval
       passed:
@@ -203,7 +210,8 @@ jobs:
   public: false
   plan:
   - aggregate:
-    - get: tools
+    - get: concourse
+    - get: scripts
     - get: repo
     - get: keyval
       passed:
@@ -226,7 +234,8 @@ jobs:
   public: false
   plan:
   - aggregate:
-    - get: tools
+    - get: concourse
+    - get: scripts
     - get: repo
     - get: keyval
       passed:
@@ -254,7 +263,8 @@ jobs:
   public: false
   plan:
   - aggregate:
-    - get: tools
+    - get: concourse
+    - get: scripts
     - get: repo
     - get: keyval
       passed:
@@ -274,7 +284,8 @@ jobs:
   public: false
   plan:
   - aggregate:
-    - get: tools
+    - get: concourse
+    - get: scripts
     - get: repo
     - get: keyval
       passed:
