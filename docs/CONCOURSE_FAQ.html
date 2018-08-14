@@ -459,17 +459,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 opinionated decisions. See the documentation to learn
 what those decisions are.</p>
 </dd>
-<dt class="hdlist1">Can I modify this to reuse in my project?</dt>
-<dd>
-<p>Yes It is an open-source project. The important thing is that the core part of the logic is written in
-Bash scripts. That way, in the majority of cases, you could change only the bash scripts without changing the
-whole pipeline. <a href="https://github.com/CloudPipelines/scripts/tree/master/src/main/bash">You can check out the scripts here.</a></p>
-<div class="paragraph">
-<p>Furthermore, if you want only to customize a particular function under <code>common/src/main/bash</code>, you can provide your own
-function under <code>common/src/main/bash/&lt;some custom identifier&gt;</code> where <code>&lt;some custom identifier&gt;</code> is equal to the value of
-the <code>CUSTOM_SCRIPT_IDENTIFIER</code> environment variable. It defaults to <code>custom</code>.</p>
-</div>
-</dd>
 <dt class="hdlist1">I ran out of resources! (PCF Dev)</dt>
 <dd>
 <p><a id="resources"></a> When deploying the application to stage or prod, you can get an <code>Insufficient resources</code> exception. The way to
@@ -601,7 +590,7 @@ set it up.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-08-14 12:48:34 CEST
+Last updated 2018-08-14 15:50:43 CEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">

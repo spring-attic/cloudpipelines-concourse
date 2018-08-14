@@ -11,15 +11,6 @@ Not really. This is an `opinionated pipeline`. That is why we took some
 opinionated decisions. See the documentation to learn
 what those decisions are.
 
-Can I modify this to reuse in my project?::
-Yes It is an open-source project. The important thing is that the core part of the logic is written in
-Bash scripts. That way, in the majority of cases, you could change only the bash scripts without changing the
-whole pipeline. https://github.com/CloudPipelines/scripts/tree/master/src/main/bash[You can check out the scripts here.]
-+
-Furthermore, if you want only to customize a particular function under `common/src/main/bash`, you can provide your own
-function under `common/src/main/bash/<some custom identifier>` where `<some custom identifier>` is equal to the value of
-the `CUSTOM_SCRIPT_IDENTIFIER` environment variable. It defaults to `custom`.
-
 I ran out of resources! (PCF Dev)::
 [[resources]] When deploying the application to stage or prod, you can get an `Insufficient resources` exception. The way to
 resolve it is to kill some apps from the test or stage environment. To do so, run the following commands:
