@@ -73,7 +73,7 @@ CloudPipes->Github: For each repo fetch pipeline descriptor
 Github->CloudPipes: There you go
 CloudPipes->Concourse: Run [fly] and upload the pipeline
 note left of CloudPipes: We assume that \nwe're already logged in
-note right of CloudPipes: We update the [credentials.yml] with proper values of repos
+note right of CloudPipes: We update the [credentials.yml] \nwith proper values of repos
 Concourse->CloudPipes: Pipeline created for repo [a]!
 CloudPipes->CloudPipes: Repeat for [b,c]
 CloudPipes->CloudPipes: Script finished for [a,b,c]!
