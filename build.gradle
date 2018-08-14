@@ -40,7 +40,7 @@ dependencies {
 	jrubyExec "rubygems:asciidoctor:1.5.7.1"
 
 	compile "org.codehaus.groovy:groovy-all:2.4.15"
-	compile "org.springframework.cloud.internal:project-crawler:${projectCrawlerVersion}"
+	compile "io.cloudpipelines:project-crawler:${projectCrawlerVersion}"
 	compile "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
 	compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
 	compile "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${jacksonVersion}"

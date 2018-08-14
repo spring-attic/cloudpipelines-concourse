@@ -51,7 +51,7 @@ Cloud Pipelines Concourse comes with a `crawler.groovy` file that allows to
 go through the repositories in an organization in an SCM server (e.g. Github, Gitlab, Bitbucket)
 and for each repo it will create a pipeline in Concourse.
 
-We use the https://github.com/spring-cloud/project-crawler[Project Crawler]
+We use the https://github.com/CloudPipelines/project-crawler[Project Crawler]
 library, which can:
 
 * Fetch all projects for a given organization.
@@ -85,7 +85,7 @@ CloudPipes->CloudPipes: Script finished for [a,b,c]!
 
 Project Crawler supports repositories stored at Github, Gitlab, and Bitbucket.
 You can also register your own implementation. See the
-https://github.com/spring-cloud/project-crawler[Project Crawler] repository for more information.
+https://github.com/CloudPipelines/project-crawler[Project Crawler] repository for more information.
 
 Below you can find the environment variables required by the Bash script
 

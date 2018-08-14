@@ -1,7 +1,7 @@
 @GrabResolver(name = 'spring-snapshot', root = 'http://repo.spring.io/libs-snapshot-local')
 @Grapes([
 	// transitive has to be [false], otherwise some strange stackoverflow issues are thrown
-	@Grab(group = 'org.springframework.cloud.internal', module = 'project-crawler', version = '1.0.0.BUILD-SNAPSHOT', transitive = false, changing = true),
+	@Grab(group = 'io.cloudpipelines', module = 'project-crawler', version = '1.0.0.BUILD-SNAPSHOT', transitive = false, changing = true),
 	@Grab(group = 'ch.qos.logback', module = 'logback-classic', version='1.2.3'),
 	@Grab(group = 'commons-logging', module = 'commons-logging', version = '1.2'),
 	@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.9.4'),
@@ -17,9 +17,9 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import groovy.transform.CompileStatic
 import groovy.transform.Field
-import org.springframework.cloud.projectcrawler.OptionsBuilder
-import org.springframework.cloud.projectcrawler.Repository
-import org.springframework.cloud.projectcrawler.ProjectCrawler
+import io.cloudpipelines.projectcrawler.OptionsBuilder
+import io.cloudpipelines.projectcrawler.Repository
+import io.cloudpipelines.projectcrawler.ProjectCrawler
 
 /*
 	// tag::description[]
