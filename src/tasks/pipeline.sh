@@ -18,7 +18,7 @@ set -o pipefail
 export SCRIPTS_OUTPUT_FOLDER="${ROOT_FOLDER}/${REPO_RESOURCE}/ciscripts"
 echo "Scripts will be copied to [${SCRIPTS_OUTPUT_FOLDER}]"
 
-echo "Copying pipelines scripts"
+echo "Copying pipelines scripts from [${ROOT_FOLDER}/${SCRIPTS_RESOURCE}/src/main/bash/] to [${SCRIPTS_OUTPUT_FOLDER}]"
 cd "${ROOT_FOLDER}/${REPO_RESOURCE}" || exit
 mkdir -p "${SCRIPTS_OUTPUT_FOLDER}" || echo "Failed to create the scripts output folder"
 [[ -d "${ROOT_FOLDER}/${SCRIPTS_RESOURCE}/src/main/bash/" ]] && \
