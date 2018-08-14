@@ -80,7 +80,7 @@ asciidoctor {
 		'org': ghOrg,
 		'repo': repo,
 		'scripts-base-url': scriptsBaseUrl,
-		'intro-root-docs': "${scriptsBaseUrl}/docs/images/intro",
+		'intro-root-docs': "${docsBaseUrl}/docs/images/intro",
 		'docs-base-url': docsBaseUrl,
 		'demo-root-docs': "${docsBaseUrl}/docs/images/demo",
 		'concourse-root-docs': "${docsBaseUrl}/docs/images/concourse",

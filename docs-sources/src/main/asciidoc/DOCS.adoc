@@ -22,21 +22,10 @@ include::CUSTOMIZATION.adoc[]
 include::CF_MIGRATION.adoc[]
 // remove::end[CF]
 
-// remove::start[CONCOURSE]
-include::CONCOURSE.adoc[]
-// remove::end[CONCOURSE]
+== Setup examples
 
-// remove::start[K8S]
-include::K8S_SETUP.adoc[]
-// remove::end[K8S]
-
-// remove::start[CF]
-include::CF_DEMO.adoc[]
-// remove::end[CF]
-
-// remove::start[K8S]
-include::K8S_DEMO.adoc[]
-// remove::end[K8S]
+You can go to link:SETUP.html[setup subpage] to read more
+about different setup scenarios.
 
 include::TECH.adoc[]
 
