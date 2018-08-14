@@ -89,13 +89,14 @@ void updatePropsAndRun(Repository repository) {
 	println "Updating the pipeline [${repository.name}]"
 	File build = new File("build")
 	build.mkdirs()
-	new File(build, repository.name
-		.replaceAll("[^a-zA-Z0-9\\.\\-]", "_")).text =
+	File newCreds = new File(build, repository.name
+		.replaceAll("[^a-zA-Z0-9\\.\\-]", "_") + ".yml")
+	newCreds.text =
 		new File(propOrEnv("credentials")).text
 			.replaceAll("app-url.*", "app-url: " + repository.clone_url)
 			.replaceAll("app-branch.*", "app-branch: " + repository.requestedBranch ?: "master")
 	def sout = new StringBuilder(), serr = new StringBuilder()
-	def proc = "fly -t ${propOrEnv("alias")} sp -p ${repository.name} -c pipeline.yml -l ${new File(build, propOrEnv("credentials")).absolutePath} -n".execute()
+	def proc = "fly -t ${propOrEnv("alias")} sp -p ${repository.name} -c pipeline.yml -l ${newCreds.absolutePath} -n".execute()
 	proc.consumeProcessOutput(sout, serr)
 	proc.waitForOrKill(5000)
 	println "out> $sout err> $serr"
