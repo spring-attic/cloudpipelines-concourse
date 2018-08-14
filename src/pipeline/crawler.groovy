@@ -41,7 +41,7 @@ import org.springframework.cloud.projectcrawler.ProjectCrawler
 	System props with the name equal to arguments (e.g. rootUrl)
 	Environment variables are upper case arguments with CRAWLER_ prefix (e.g. CRAWLER_ROOTURL)
 
-	E.g.
+	E.g. of calling the script
 
 	#!/bin/bash
 
