@@ -46,8 +46,6 @@ cd "${ROOT_FOLDER}/${REPO_RESOURCE}" || exit
 
 echo "Sourcing file with pipeline functions"
 # shellcheck source=/dev/null
-ls -al "${SCRIPTS_OUTPUT_FOLDER}"
-# shellcheck source=/dev/null
 source "${SCRIPTS_OUTPUT_FOLDER}/pipeline.sh"
 
 echo "Generating settings.xml / gradle properties for Maven in local m2"
