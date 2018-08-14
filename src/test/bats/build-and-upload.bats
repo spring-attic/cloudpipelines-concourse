@@ -13,7 +13,6 @@ setup() {
 	NEW_SRC="${TEMP_DIR}/generic/project/scripts/src/main/bash"
 	mkdir -p "${NEW_SRC}"
 	export PAAS_TYPE="cf"
-	echo "Copying [${COMMON_DIR}/] to [${NEW_SRC}] for test"
 	cp -r  "${COMMON_DIR}/" "${NEW_SRC}"
 	cp -f "${FIXTURES_DIR}/pipeline-dummy.sh" "${NEW_SRC}/pipeline-cf.sh"
 
