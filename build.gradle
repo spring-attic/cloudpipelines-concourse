@@ -7,13 +7,18 @@ buildscript {
 	}
 }
 
-apply plugin: "java"
+apply plugin: "groovy"
 apply plugin: 'maven-publish'
 apply from: 'gradle/bash.gradle'
 apply from: 'gradle/docs.gradle'
 
 repositories {
 	jcenter()
+}
+
+ext {
+	projectCrawlerVersion = "1.0.0.BUILD-SNAPSHOT"
+	jacksonVersion = "2.9.5"
 }
 
 version = project.findProperty("newVersion") ?: project.findProperty("defaultVersion")
@@ -23,6 +28,9 @@ version = project.findProperty("newVersion") ?: project.findProperty("defaultVer
 repositories {
 	jcenter()
 	maven { url "http://rubygems-proxy.torquebox.org/releases/" }
+	maven { url "http://repo.spring.io/libs-snapshot-local" }
+	maven { url "http://repo.spring.io/libs-milestone-local" }
+	maven { url "http://repo.spring.io/libs-release-local" }
 }
 
 apply plugin: "com.github.jruby-gradle.base"
@@ -30,6 +38,12 @@ import com.github.jrubygradle.JRubyExec
 
 dependencies {
 	jrubyExec "rubygems:asciidoctor:1.5.7.1"
+
+	compile "org.codehaus.groovy:groovy-all:2.4.15"
+	compile "org.springframework.cloud.internal:project-crawler:${projectCrawlerVersion}"
+	compile "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
+	compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+	compile "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${jacksonVersion}"
 }
 
 jruby {

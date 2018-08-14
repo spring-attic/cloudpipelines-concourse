@@ -19,3 +19,4 @@ sample-creds-*.yml
 keys/
 target
 build
+set_pipeline_crawler_sample.sh

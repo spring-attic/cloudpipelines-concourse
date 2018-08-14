@@ -1,8 +1,6 @@
 == Introduction
 
-This section describes the rationale
-behind the opinionated pipeline. We go through each deployment
-step and describe it in detail.
+This section describes how Jenkins works with Cloud Pipelines.
 
 IMPORTANT: You do not need to use all the pieces of Cloud Pipelines. You
 can (and should) gradually migrate your applications to use those pieces of
@@ -10,15 +8,22 @@ Cloud Pipelines that you think best suit your needs.
 
 === Five-second Introduction
 
-// TODO: Write this
+Cloud Pipelines Concourse provides setup for Concourse that creates jobs and pipelines.
+The pipelines and jobs use the scripts defined in
+https://github.com/CloudPipelines/scripts[Cloud Pipelines Scripts] repo.
 
 === Five-minute Introduction
 
-// TODO: Write this
+In these sections you will learn how exactly Cloud Pipelines Concourse integrates
+with https://github.com/CloudPipelines/scripts[Cloud Pipelines Scripts] and how
+you can setup deployment pipelines for each project.
 
 ==== How to Use It
 
-// TODO: Write this
+The suggested approach is to use the <<project-crawler>> approach, where
+we scan your organization for projects and create deployment pipeline for each.
+
+Another approach is to add the contents of each project and alter it to suit your needs.
 
 ==== How It Works
 
@@ -27,30 +32,71 @@ pipeline and the runtime to execute pipeline steps.
 
 image::{intro-root-docs}/how.png[title="How Cloud Pipelines works"]
 
-Once a pipeline is created (for example, by using the Jenkins Job DSL or from a Concourse
-templated pipeline), when the jobs are ran, they clone or download Cloud Pipelines
+Once a pipeline is created the jobs are ran, they clone or download Cloud Pipelines
 code to run each step. Those steps run functions that are
-defined in the `commons` module of Cloud Pipelines.
+defined in https://github.com/CloudPipelines/scripts[Cloud Pipelines Scripts].
 
 Cloud Pipelines performs steps to guess what kind of a project your
-repository is (for example, JVM or PHP) and what framework it uses (Maven or Gradle), and it
-can deploy your application to a cloud (Cloud Foundry or Kubernetes). You can read about how
-it works by reading the <<how-do-the-scripts-work>> section.
+repository is (e.g. JVM or PHP) and what framework it uses (Maven or Gradle), and it
+can deploy your application to a cloud (e.g. Cloud Foundry or Kubernetes)
 
-All of that happens automatically if your application follows the conventions.
-You can read about them in the <<project-opinions>> section.
+[[project-crawler]]
+=== Project Crawler
 
-==== Centralized Pipeline Creation
+Cloud Pipelines Concourse comes with a `crawler.groovy` file that allows to
+go through the repositories in an organization in an SCM server (e.g. Github, Gitlab, Bitbucket)
+and for each repo it will create a pipeline in Concourse.
 
-You can use Cloud Pipelines to generate pipelines
-for all the projects in your system. You can scan all your
-repositories (for example, you can call the Stash or Github API to retrieve the list of repositories)
-and then call `fly` and set the pipeline for every repository.
+We use the https://github.com/spring-cloud/project-crawler[Project Crawler]
+library, which can:
 
-TIP: We recommend using Cloud Pipelines this way.
+* Fetch all projects for a given organization.
+* Fetch contents of a file for a given repository.
 
-==== A Pipeline for Each Repository
+For your convenience we're providing you with a script under `src/pipeline/set_pipeline_crawler.sh`
+that:
 
-You can use Cloud Pipelines in such a way that
-ach project contains its own pipeline steps,
-and it is up to the project to set up the pipeline.
+* Verifies if Groovy is installed. If not, fetches it and unpacks to `build/groovy`
+* Defines all the required environment variables
+* Runs the `crawler.groovy` script
+
+The following diagram depicts this situation:
+
+[plantuml, crawler, png]
+----
+User->CloudPipes: Run the [set_pipeline_crawler.sh] script for org [foo] and use [credentials.yml] as template
+CloudPipes->CloudPipes: Checking if Groovy is installed...
+note left of CloudPipes: If Groovy is not present, \nthe script will fetch it automatically
+CloudPipes->Github: Crawl org [foo] and fetch all repositories
+Github->CloudPipes: In org [foo] there [a,b,c] repos
+CloudPipes->Github: For each repo fetch pipeline descriptor
+Github->CloudPipes: There you go
+CloudPipes->Concourse: Run [fly] and upload the pipeline
+note left of CloudPipes: We assume that \nwe're already logged in
+note right of CloudPipes: We update the [credentials.yml] with proper values of repos
+Concourse->CloudPipes: Pipeline created for repo [a]!
+CloudPipes->CloudPipes: Repeat for [b,c]
+CloudPipes->CloudPipes: Script finished for [a,b,c]!
+----
+
+Project Crawler supports repositories stored at Github, Gitlab, and Bitbucket.
+You can also register your own implementation. See the
+https://github.com/spring-cloud/project-crawler[Project Crawler] repository for more information.
+
+Below you can find the environment variables required by the Bash script
+
+====
+[source,bash]
+----
+include::{docs-base-url}/src/pipeline/set_pipeline_crawler.sh[tags=envs]
+----
+====
+
+Here you can find the description of the Groovy script
+
+====
+[source,bash]
+----
+include::{docs-base-url}/src/pipeline/crawler.groovy[tags=description]
+----
+====
