@@ -1,0 +1,40 @@
+pipeline.sh(1)
+==============
+:compat-mode!:
+
+NAME
+----
+pipeline.sh - a shell script
+
+SYNOPSIS
+--------
+
+Contains default setup for all Concourse scripts.
+
+* Copies the Cloud Pipelines Scripts to a subfolder of the repository to reference it in further steps.
+* Sources Concourse scripts utility functions
+* References variables from the key-value Concourse resource
+* Generates required settings.xml / gradle.properties values
+* Sources pipeline.sh script from Cloud Pipelines Scripts
+
+
+
+FUNCTIONS
+---------
+
+
+DETAILS
+-------
+
+Script Body
+~~~~~~~~~~~
+
+Has 43 line(s). Calls functions:
+
+ Script-Body
+ `-- resource-utils.sh/exportKeyValProperties
+
+Uses feature(s): _export_, _source_
+
+_Exports (environment):_ CI [big]*//* LATEST_PROD_TAG [big]*//* PIPELINE_VERSION [big]*//* SCRIPTS_OUTPUT_FOLDER [big]*//* TERM
+

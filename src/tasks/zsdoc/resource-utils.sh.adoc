@@ -1,0 +1,84 @@
+resource-utils.sh(1)
+====================
+:compat-mode!:
+
+NAME
+----
+resource-utils.sh - a shell script
+
+SYNOPSIS
+--------
+
+Contains
+
+* utility functions required by the key-value Concourse resource.
+* functions for setting up the ssh agent
+
+
+
+FUNCTIONS
+---------
+
+ exportKeyValProperties
+ load_pubkey
+ passKeyValProperties
+
+DETAILS
+-------
+
+Script Body
+~~~~~~~~~~~
+
+Has 10 line(s). No functions are called (may set up e.g. a hook, a Zle widget bound to a key, etc.).
+
+Uses feature(s): _export_
+
+_Exports (environment):_ SSH_AGENT_BIN [big]*//* TEST_MODE [big]*//* TMPDIR
+
+exportKeyValProperties
+~~~~~~~~~~~~~~~~~~~~~~
+
+____
+ # Reads all key-value pairs in keyval.properties input file and exports them as env vars
+____
+
+Has 14 line(s). Doesn't call other functions.
+
+Uses feature(s): _export_
+
+Called by:
+
+ pipeline.sh/Script-Body
+
+_Environment variables used:_ task.sh -> KEYVAL_RESOURCE [big]*//* task.sh -> ROOT_FOLDER
+
+load_pubkey
+~~~~~~~~~~~
+
+____
+ # Loads git key - needed for prod-rollback to delete prod tag after rollback
+____
+
+Has 22 line(s). Doesn't call other functions.
+
+Uses feature(s): _eval_, _trap_
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
+_Environment variables used:_ SSH_AGENT_BIN [big]*//* TEST_MODE [big]*//* TMPDIR
+
+passKeyValProperties
+~~~~~~~~~~~~~~~~~~~~
+
+____
+ # Writes all env vars that begin with PASSED_ to the keyval.properties output file
+____
+
+Has 13 line(s). Doesn't call other functions.
+
+Called by:
+
+ task.sh/\]
+
+_Environment variables used:_ task.sh -> KEYVALOUTPUT_RESOURCE [big]*//* task.sh -> ROOT_FOLDER
+

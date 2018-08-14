@@ -1,0 +1,35 @@
+task.sh(1)
+==========
+:compat-mode!:
+
+NAME
+----
+task.sh - a shell script
+
+SYNOPSIS
+--------
+
+This script:
+
+* Sources default Cloud Pipelines Concourse scripts setup
+* Loads all git related functionality to allow tag manipulation
+* Calls the production rollback script of Cloud Pipelines script
+
+
+
+FUNCTIONS
+---------
+
+
+DETAILS
+-------
+
+Script Body
+~~~~~~~~~~~
+
+Has 22 line(s). No functions are called (may set up e.g. a hook, a Zle widget bound to a key, etc.).
+
+Uses feature(s): _export_, _source_
+
+_Exports (environment):_ CONCOURSE_SCRIPTS_RESOURCE [big]*//* KEYVALOUTPUT_RESOURCE [big]*//* KEYVAL_RESOURCE [big]*//* OUTPUT_RESOURCE [big]*//* REPO_RESOURCE [big]*//* ROOT_FOLDER [big]*//* SCRIPTS_RESOURCE
+

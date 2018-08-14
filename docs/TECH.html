@@ -445,12 +445,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#building-generate-documentation">1.5. Generate Documentation</a></li>
 </ul>
 </li>
-<li><a href="#building-making-a-release">2. Releasing the Project</a>
-<ul class="sectlevel2">
-<li><a href="#publishing-a-docker-image">2.1. Publishing A Docker Image</a></li>
-</ul>
-</li>
-<li><a href="#building-ci-worker-prerequisites">3. CI Server Worker Prerequisites</a></li>
+<li><a href="#building-ci-worker-prerequisites">2. CI Server Worker Prerequisites</a></li>
 </ul>
 </div>
 </div>
@@ -479,16 +474,29 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><a href="#building-generate-documentation">Generate Documentation</a></p>
 </li>
 <li>
-<p><a href="#building-making-a-release">Releasing the Project</a></p>
-</li>
-<li>
 <p><a href="#building-ci-worker-prerequisites">CI Server Worker Prerequisites</a></p>
 </li>
 </ul>
 </div>
 <div class="sect2">
 <h3 id="building-project-setup">1.1. Project Setup</h3>
-
+<div class="paragraph">
+<p>The project contains the following structure.</p>
+</div>
+<div class="paragraph">
+<p>Under <code>demo</code> folder you can find the setup prepared to start a demo instance of Concourse and Artifactory.</p>
+</div>
+<div class="paragraph">
+<p>In <code>docs</code> you can find HTML documentation built from contents of <code>docs-sources</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>src/pipeline</code> folder contains the files related to setting up pipelines in Concourse.
+In <code>src/tasks</code> we&#8217;ll find all the scripts required at runtime of pipeline execution.</p>
+</div>
+<div class="paragraph">
+<p>The <code>tools</code> folder contains tools required for building and that ease the work
+with demo setup.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="building-prerequisites">1.2. Prerequisites</h3>
@@ -537,7 +545,7 @@ pull to update it. The following command clones the project:</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">$ git clone --recursive https://github.com/cloudpipelines/jenkins.git</code></pre>
+<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">$ git clone --recursive https://github.com/cloudpipelines/concourse.git</code></pre>
 </div>
 </div>
 </div>
@@ -592,34 +600,7 @@ $ git submodule update</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="building-making-a-release">2. Releasing the Project</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>This section covers how to release the project by publishing a Docker image.</p>
-</div>
-<div class="sect2">
-<h3 id="publishing-a-docker-image">2.1. Publishing A Docker Image</h3>
-<div class="paragraph">
-<p>When doing a release, you also need to push a Docker image to Dockerhub.
-From the project root, run the following commands, replacing <code>&lt;version&gt;</code> with the
-version of the release:</p>
-</div>
-<div class="exampleblock">
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">$ docker login
-$ docker build -t cloudpipelines/cloud-pipelines-jenkins:&lt;version&gt; ./jenkins
-$ docker push cloudpipelines/cloud-pipelines-jenkins:&lt;version&gt;</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="building-ci-worker-prerequisites">3. CI Server Worker Prerequisites</h2>
+<h2 id="building-ci-worker-prerequisites">2. CI Server Worker Prerequisites</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Cloud Pipelines uses Bash scripts extensively. The following list shows the software
@@ -661,7 +642,7 @@ In the demo setup all of these libraries are already installed.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-08-13 13:23:06 CEST
+Last updated 2018-08-14 12:48:34 CEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">

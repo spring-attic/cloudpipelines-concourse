@@ -1,0 +1,35 @@
+task.sh(1)
+==========
+:compat-mode!:
+
+NAME
+----
+task.sh - a shell script
+
+SYNOPSIS
+--------
+
+Contains default setup for a generic Cloud Pipelines Concourse step
+
+* Sources the default setup for all Cloud Pipelines Concourse scripts
+* Executes the passed script to run
+* Passes properties via key-value Concourse resource
+
+
+
+FUNCTIONS
+---------
+
+
+DETAILS
+-------
+
+Script Body
+~~~~~~~~~~~
+
+Has 22 line(s). No functions are called (may set up e.g. a hook, a Zle widget bound to a key, etc.).
+
+Uses feature(s): _export_, _source_
+
+_Exports (environment):_ CONCOURSE_SCRIPTS_RESOURCE [big]*//* KEYVALOUTPUT_RESOURCE [big]*//* KEYVAL_RESOURCE [big]*//* OUTPUT_RESOURCE [big]*//* REPO_RESOURCE [big]*//* ROOT_FOLDER [big]*//* SCRIPTS_RESOURCE
+

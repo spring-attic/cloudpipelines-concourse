@@ -7,13 +7,22 @@ This section covers how to build the project. It covers:
 * <<building-bats-submodules>>
 * <<building-build-and-test>>
 * <<building-generate-documentation>>
-* <<building-making-a-release>>
 * <<building-ci-worker-prerequisites>>
 
 [[building-project-setup]]
 === Project Setup
 
-// TODO: Add the setup info
+The project contains the following structure.
+
+Under `demo` folder you can find the setup prepared to start a demo instance of Concourse and Artifactory.
+
+In `docs` you can find HTML documentation built from contents of `docs-sources`.
+
+The `src/pipeline` folder contains the files related to setting up pipelines in Concourse.
+In `src/tasks` we'll find all the scripts required at runtime of pipeline execution.
+
+The `tools` folder contains tools required for building and that ease the work
+with demo setup.
 
 [[building-prerequisites]]
 === Prerequisites
@@ -54,7 +63,7 @@ pull to update it. The following command clones the project:
 ====
 [source,bash]
 ----
-$ git clone --recursive https://github.com/cloudpipelines/jenkins.git
+$ git clone --recursive https://github.com/cloudpipelines/concourse.git
 ----
 ====
 
@@ -91,26 +100,6 @@ To generate the documentation, run the following command:
 [source,bash]
 ----
 $ ./gradlew generateDocs
-----
-====
-
-[[building-making-a-release]]
-== Releasing the Project
-
-This section covers how to release the project by publishing a Docker image.
-
-=== Publishing A Docker Image
-
-When doing a release, you also need to push a Docker image to Dockerhub.
-From the project root, run the following commands, replacing `<version>` with the
-version of the release:
-
-====
-[source,bash]
-----
-$ docker login
-$ docker build -t cloudpipelines/cloud-pipelines-jenkins:<version> ./jenkins
-$ docker push cloudpipelines/cloud-pipelines-jenkins:<version>
 ----
 ====
 

@@ -61,7 +61,7 @@ TIP: You can skip this step if you have a Kubernetes cluster installed and do no
 want to use Minikube. In that case, the only thing you have to do is to set up spaces.
 
 WARNING: Servers often run run out of resources at the stage step.
-If that happens, <<jenkins-resources-k8s,clear some apps from PCF Dev and continue>>.
+If that happens, <<concourse-resources-k8s,clear some apps from PCF Dev and continue>>.
 
 [[kubernetes-minikube-script]]
 ==== Script Installation

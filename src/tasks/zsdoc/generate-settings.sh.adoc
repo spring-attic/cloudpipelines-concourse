@@ -1,0 +1,27 @@
+generate-settings.sh(1)
+=======================
+:compat-mode!:
+
+NAME
+----
+generate-settings.sh - a shell script
+
+SYNOPSIS
+--------
+
+Generates settings.xml and gradle.properties#
+
+
+
+FUNCTIONS
+---------
+
+
+DETAILS
+-------
+
+Script Body
+~~~~~~~~~~~
+
+Has 42 line(s). No functions are called (may set up e.g. a hook, a Zle widget bound to a key, etc.).
+

@@ -456,7 +456,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="introduction">1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This section describes how Jenkins works with Cloud Pipelines.</p>
+<p>This section describes how Concourse works with Cloud Pipelines.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -505,7 +505,7 @@ pipeline and the runtime to execute pipeline steps.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/scripts/master/docs/images/intro/how.png" alt="how">
+<img src="https://raw.githubusercontent.com/CloudPipelines/scripts/master/docs/images/intro/how.png" alt="how">
 </div>
 <div class="title">Figure 1. How Cloud Pipelines works</div>
 </div>
@@ -518,6 +518,11 @@ defined in <a href="https://github.com/CloudPipelines/scripts">Cloud Pipelines S
 <p>Cloud Pipelines performs steps to guess what kind of a project your
 repository is (e.g. JVM or PHP) and what framework it uses (Maven or Gradle), and it
 can deploy your application to a cloud (e.g. Cloud Foundry or Kubernetes)</p>
+</div>
+<div class="paragraph">
+<p>Cloud Pipelines Concourse contains bash scripts that are required at runtime of
+execution of a Concourse pipeline. If you want to read its documentation, it&#8217;s
+available under <a href="https://github.com/CloudPipelines/concourse/blob/master/src/tasks/README.adoc"><code>src/tasks/README.adoc</code></a> file of Cloud Pipelines repository.</p>
 </div>
 </div>
 </div>
@@ -658,7 +663,7 @@ export CRAWLER_CREDENTIALS="${CRAWLER_CREDENTIALS:-}"</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-08-14 11:18:39 CEST
+Last updated 2018-08-14 12:50:16 CEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">

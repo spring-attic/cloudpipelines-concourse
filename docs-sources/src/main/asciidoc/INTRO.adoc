@@ -1,6 +1,6 @@
 == Introduction
 
-This section describes how Jenkins works with Cloud Pipelines.
+This section describes how Concourse works with Cloud Pipelines.
 
 IMPORTANT: You do not need to use all the pieces of Cloud Pipelines. You
 can (and should) gradually migrate your applications to use those pieces of
@@ -39,6 +39,10 @@ defined in https://github.com/CloudPipelines/scripts[Cloud Pipelines Scripts].
 Cloud Pipelines performs steps to guess what kind of a project your
 repository is (e.g. JVM or PHP) and what framework it uses (Maven or Gradle), and it
 can deploy your application to a cloud (e.g. Cloud Foundry or Kubernetes)
+
+Cloud Pipelines Concourse contains bash scripts that are required at runtime of
+execution of a Concourse pipeline. If you want to read its documentation, it's
+available under https://github.com/{org}/{repo}/blob/{branch}/src/tasks/README.adoc[`src/tasks/README.adoc`] file of Cloud Pipelines repository.
 
 [[project-crawler]]
 === Project Crawler

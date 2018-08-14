@@ -36,6 +36,6 @@ credentials.yml
 credentials-cf.yml
 credentials-k8s.yml
 pom.xml.versionsBackup
-zsdoc
+**/zsdoc/data/
 set_pipeline_crawler_sample.sh
 .asciidoctor

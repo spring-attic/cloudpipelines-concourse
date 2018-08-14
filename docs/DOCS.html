@@ -608,13 +608,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#building-generate-documentation">9.5. Generate Documentation</a></li>
 </ul>
 </li>
-<li><a href="#building-making-a-release">10. Releasing the Project</a>
-<ul class="sectlevel2">
-<li><a href="#publishing-a-docker-image">10.1. Publishing A Docker Image</a></li>
-</ul>
-</li>
-<li><a href="#building-ci-worker-prerequisites">11. CI Server Worker Prerequisites</a></li>
-<li><a href="#concourse-faq">12. Concourse FAQ</a></li>
+<li><a href="#building-ci-worker-prerequisites">10. CI Server Worker Prerequisites</a></li>
+<li><a href="#concourse-faq">11. Concourse FAQ</a></li>
 </ul>
 </div>
 </div>
@@ -653,7 +648,7 @@ and time needed by new developers to blend in when they change projects.</p>
 <h2 id="introduction">1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This section describes how Jenkins works with Cloud Pipelines.</p>
+<p>This section describes how Concourse works with Cloud Pipelines.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -702,7 +697,7 @@ pipeline and the runtime to execute pipeline steps.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/scripts/master/docs/images/intro/how.png" alt="how">
+<img src="https://raw.githubusercontent.com/CloudPipelines/scripts/master/docs/images/intro/how.png" alt="how">
 </div>
 <div class="title">Figure 1. How Cloud Pipelines works</div>
 </div>
@@ -715,6 +710,11 @@ defined in <a href="https://github.com/CloudPipelines/scripts">Cloud Pipelines S
 <p>Cloud Pipelines performs steps to guess what kind of a project your
 repository is (e.g. JVM or PHP) and what framework it uses (Maven or Gradle), and it
 can deploy your application to a cloud (e.g. Cloud Foundry or Kubernetes)</p>
+</div>
+<div class="paragraph">
+<p>Cloud Pipelines Concourse contains bash scripts that are required at runtime of
+execution of a Concourse pipeline. If you want to read its documentation, it&#8217;s
+available under <a href="https://github.com/CloudPipelines/concourse/blob/master/src/tasks/README.adoc"><code>src/tasks/README.adoc</code></a> file of Cloud Pipelines repository.</p>
 </div>
 </div>
 </div>
@@ -908,7 +908,7 @@ migrates a set of applications to be compliant with Cloud Pipelines.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/use_case_logical.png" alt="use case logical">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/use_case_logical.png" alt="use case logical">
 </div>
 <div class="title">Figure 2. Use Case - Logical View</div>
 </div>
@@ -932,7 +932,7 @@ migrates a set of applications to be compliant with Cloud Pipelines.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/use_case_implementation.png" alt="use case implementation">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/use_case_implementation.png" alt="use case implementation">
 </div>
 <div class="title">Figure 3. Use Case - Implementation</div>
 </div>
@@ -1073,7 +1073,7 @@ migrates a set of applications to be compliant with Cloud Pipelines.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/github_branches.png" alt="github branches">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/github_branches.png" alt="github branches">
 </div>
 <div class="title">Figure 4. GitHub Branches</div>
 </div>
@@ -1211,7 +1211,7 @@ git checkout -b cloud-pipelines</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/bintray_packages.png" alt="bintray packages">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/bintray_packages.png" alt="bintray packages">
 </div>
 <div class="title">Figure 5. Bintray Packages</div>
 </div>
@@ -1388,7 +1388,7 @@ fly -t myTarget set-pipeline -p fortune-service -c "${SCP_HOME}/concourse/src/pi
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/concourse_build_success.png" alt="concourse build success">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/concourse_build_success.png" alt="concourse build success">
 </div>
 <div class="title">Figure 6. Build Success</div>
 </div>
@@ -1710,7 +1710,7 @@ paas-prod-space: scp-prod</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/concourse_test_stage_prod_success.png" alt="concourse test stage prod success">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/concourse_test_stage_prod_success.png" alt="concourse test stage prod success">
 </div>
 <div class="title">Figure 7. Test, Stage, &amp; Prod Success</div>
 </div>
@@ -1719,7 +1719,7 @@ paas-prod-space: scp-prod</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/cf_test_and_prod_deployed.png" alt="cf test and prod deployed">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/cf_test_and_prod_deployed.png" alt="cf test and prod deployed">
 </div>
 <div class="title">Figure 8. Cloud Foundry Test and Prod Deployment</div>
 </div>
@@ -1926,7 +1926,7 @@ paas-prod-space: scp-prod</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/test_package_structure.png" alt="test package structure">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/test_package_structure.png" alt="test package structure">
 </div>
 <div class="title">Figure 9. Test Package Structure</div>
 </div>
@@ -2008,7 +2008,7 @@ public class FortuneServiceApplicationTests {
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/fortune_service_smoke_tests.png" alt="fortune service smoke tests">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/fortune_service_smoke_tests.png" alt="fortune service smoke tests">
 </div>
 <div class="title">Figure 10. fortune-service Smoke Tests</div>
 </div>
@@ -2068,7 +2068,7 @@ public class SmokeTests {
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/fortune_service_e2e_tests.png" alt="fortune service e2e tests">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/fortune_service_e2e_tests.png" alt="fortune service e2e tests">
 </div>
 <div class="title">Figure 11. fortune-service E2E Tests</div>
 </div>
@@ -2176,7 +2176,7 @@ public class GreetingUIApplicationTests {
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/greeting_ui_smoke_tests.png" alt="greeting ui smoke tests">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/greeting_ui_smoke_tests.png" alt="greeting ui smoke tests">
 </div>
 <div class="title">Figure 12. greeting-ui Smoke Tests</div>
 </div>
@@ -2236,7 +2236,7 @@ public class SmokeTests {
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/greeting_ui_e2e_tests.png" alt="greeting ui e2e tests">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/greeting_ui_e2e_tests.png" alt="greeting ui e2e tests">
 </div>
 <div class="title">Figure 13. greeting-ui E2E Tests</div>
 </div>
@@ -2321,7 +2321,7 @@ public class E2eTests {
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/fortune_service_flyway_file_name.png" alt="fortune service flyway file name">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/fortune_service_flyway_file_name.png" alt="fortune service flyway file name">
 </div>
 <div class="title">Figure 14. fortune-service Flyway File Name</div>
 </div>
@@ -2545,7 +2545,7 @@ applications:
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/fortune_service_flyway_schema_info.png" alt="fortune service flyway schema info">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/fortune_service_flyway_schema_info.png" alt="fortune service flyway schema info">
 </div>
 <div class="title">Figure 15. fortune-service Flyway Schema Info</div>
 </div>
@@ -2620,7 +2620,7 @@ should return a fortune string
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/fortune_service_contract_file.png" alt="fortune service contract file">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/fortune_service_contract_file.png" alt="fortune service contract file">
 </div>
 <div class="title">Figure 16. fortune-service Flyway Contract File</div>
 </div>
@@ -2791,7 +2791,7 @@ Package the project locally (run <code>mvn package</code>) to observe the tests,
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/fortune_service_generated_tests.png" alt="fortune service generated tests">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/fortune_service_generated_tests.png" alt="fortune service generated tests">
 </div>
 <div class="title">Figure 17. Generated Tests and Stubs</div>
 </div>
@@ -2903,7 +2903,7 @@ Package the project locally (run <code>mvn package</code>) to observe the tests,
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/fortune_service_build_and_upload_test_and_stub_generation.png" alt="fortune service build and upload test and stub generation">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/fortune_service_build_and_upload_test_and_stub_generation.png" alt="fortune service build and upload test and stub generation">
 </div>
 <div class="title">Figure 18. fortune-service build-and-upload Test and Stub Generation</div>
 </div>
@@ -2927,7 +2927,7 @@ Package the project locally (run <code>mvn package</code>) to observe the tests,
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/greeting_ui_build_flow.png" alt="greeting ui build flow">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/greeting_ui_build_flow.png" alt="greeting ui build flow">
 </div>
 <div class="title">Figure 19. greeting-ui Build Flow</div>
 </div>
@@ -3040,7 +3040,7 @@ Setting <code>workOffline=true</code> (commented out but shown earlier for infor
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/greeting_ui_test_flow.png" alt="greeting ui test flow">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/greeting_ui_test_flow.png" alt="greeting ui test flow">
 </div>
 <div class="title">Figure 20. greeting-ui Test Flow</div>
 </div>
@@ -3125,7 +3125,7 @@ cd cloudfoundry-stub-runner-boot
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/greeting_ui_stubrunner_manifest.png" alt="greeting ui stubrunner manifest">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/greeting_ui_stubrunner_manifest.png" alt="greeting ui stubrunner manifest">
 </div>
 <div class="title">Figure 21. greeting-ui Stub Runner Manifest</div>
 </div>
@@ -3244,7 +3244,7 @@ applications:
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/cf-migration/greeting_ui_stub_runner_eureka_registration.png" alt="greeting ui stub runner eureka registration">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/cf-migration/greeting_ui_stub_runner_eureka_registration.png" alt="greeting ui stub runner eureka registration">
 </div>
 <div class="title">Figure 22. greeting-ui Stub Runner Eureka Registration</div>
 </div>
@@ -3721,7 +3721,7 @@ cf set-space-role user pcfdev-org pcfdev-prod SpaceDeveloper</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/running_concourse.png" alt="running concourse">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/running_concourse.png" alt="running concourse">
 </div>
 </div>
 <div class="paragraph">
@@ -3895,7 +3895,7 @@ You can override these values in exactly that order (for example <code>./set-pip
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/concourse_login.png" alt="concourse login">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/concourse_login.png" alt="concourse login">
 </div>
 <div class="title">Step 1: Click <code>Login</code></div>
 </div>
@@ -3905,7 +3905,7 @@ You can override these values in exactly that order (for example <code>./set-pip
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/concourse_team_main.png" alt="concourse team main">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/concourse_team_main.png" alt="concourse team main">
 </div>
 <div class="title">Step 2: Pick <code>main</code> team</div>
 </div>
@@ -3915,7 +3915,7 @@ You can override these values in exactly that order (for example <code>./set-pip
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/concourse_user_pass.png" alt="concourse user pass">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/concourse_user_pass.png" alt="concourse user pass">
 </div>
 <div class="title">Step 3: Log in with <code>concourse</code> user and <code>changeme</code> password</div>
 </div>
@@ -3925,7 +3925,7 @@ You can override these values in exactly that order (for example <code>./set-pip
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/concourse_pipeline.png" alt="concourse pipeline">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/concourse_pipeline.png" alt="concourse pipeline">
 </div>
 <div class="title">Step 4: Your screen should look more or less like this</div>
 </div>
@@ -3935,7 +3935,7 @@ You can override these values in exactly that order (for example <code>./set-pip
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/start_pipeline.png" alt="start pipeline">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/start_pipeline.png" alt="start pipeline">
 </div>
 <div class="title">Step 5: Unpause the pipeline by clicking in the top lefr corner and then clicking the <code>play</code> button</div>
 </div>
@@ -3945,7 +3945,7 @@ You can override these values in exactly that order (for example <code>./set-pip
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/generate_version.png" alt="generate version">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/generate_version.png" alt="generate version">
 </div>
 <div class="title">Step 6: Click 'generate-version'</div>
 </div>
@@ -3955,7 +3955,7 @@ You can override these values in exactly that order (for example <code>./set-pip
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/run_pipeline.png" alt="run pipeline">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/run_pipeline.png" alt="run pipeline">
 </div>
 <div class="title">Step 7: Click <code>+</code> sign to start a new build</div>
 </div>
@@ -3965,7 +3965,7 @@ You can override these values in exactly that order (for example <code>./set-pip
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/concourse_pending.png" alt="concourse pending">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/concourse_pending.png" alt="concourse pending">
 </div>
 <div class="title">Step 8: The job is pending</div>
 </div>
@@ -3975,7 +3975,7 @@ You can override these values in exactly that order (for example <code>./set-pip
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/job_running.png" alt="job running">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/job_running.png" alt="job running">
 </div>
 <div class="title">Step 9: Job is pending in the main screen</div>
 </div>
@@ -3985,7 +3985,7 @@ You can override these values in exactly that order (for example <code>./set-pip
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/running_pipeline.png" alt="running pipeline">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/running_pipeline.png" alt="running pipeline">
 </div>
 <div class="title">Step 10: Job is running in the main screen</div>
 </div>
@@ -4190,7 +4190,7 @@ a user name of <code>admin</code> and a password of <code>password</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/artifactory_quick_setup.png" alt="artifactory quick setup">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/artifactory_quick_setup.png" alt="artifactory quick setup">
 </div>
 <div class="title">Figure 23. Click on Quick Setup</div>
 </div>
@@ -4199,7 +4199,7 @@ a user name of <code>admin</code> and a password of <code>password</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/artifactory_maven_repo.png" alt="artifactory maven repo">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/artifactory_maven_repo.png" alt="artifactory maven repo">
 </div>
 <div class="title">Figure 24. Create the <code>Maven</code> Repository</div>
 </div>
@@ -4211,7 +4211,7 @@ a user name of <code>admin</code> and a password of <code>password</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/running_concourse.png" alt="running concourse">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/running_concourse.png" alt="running concourse">
 </div>
 </div>
 <div class="paragraph">
@@ -4322,7 +4322,7 @@ Visit http://127.0.0.1:8080 to use Concourse</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/concourse_login.png" alt="concourse login">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/concourse_login.png" alt="concourse login">
 </div>
 <div class="title">Step 1: Click <code>Login</code></div>
 </div>
@@ -4332,7 +4332,7 @@ Visit http://127.0.0.1:8080 to use Concourse</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/concourse_team_main.png" alt="concourse team main">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/concourse_team_main.png" alt="concourse team main">
 </div>
 <div class="title">Step 2: Pick <code>main</code> team</div>
 </div>
@@ -4342,7 +4342,7 @@ Visit http://127.0.0.1:8080 to use Concourse</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/concourse_user_pass.png" alt="concourse user pass">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/concourse_user_pass.png" alt="concourse user pass">
 </div>
 <div class="title">Step 3: Log in with <code>concourse</code> user and <code>concourse</code> password</div>
 </div>
@@ -4352,7 +4352,7 @@ Visit http://127.0.0.1:8080 to use Concourse</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/concourse_pipeline.png" alt="concourse pipeline">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/concourse_pipeline.png" alt="concourse pipeline">
 </div>
 <div class="title">Step 4: Your screen should look more or less like this</div>
 </div>
@@ -4362,7 +4362,7 @@ Visit http://127.0.0.1:8080 to use Concourse</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/start_pipeline.png" alt="start pipeline">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/start_pipeline.png" alt="start pipeline">
 </div>
 <div class="title">Step 5: Unpause the pipeline by clicking in the top lefr corner and then clicking the <code>play</code> button</div>
 </div>
@@ -4372,7 +4372,7 @@ Visit http://127.0.0.1:8080 to use Concourse</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/generate_version.png" alt="generate version">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/generate_version.png" alt="generate version">
 </div>
 <div class="title">Step 6: Click 'generate-version'</div>
 </div>
@@ -4382,7 +4382,7 @@ Visit http://127.0.0.1:8080 to use Concourse</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/run_pipeline.png" alt="run pipeline">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/run_pipeline.png" alt="run pipeline">
 </div>
 <div class="title">Step 7: Click <code>+</code> sign to start a new build</div>
 </div>
@@ -4392,7 +4392,7 @@ Visit http://127.0.0.1:8080 to use Concourse</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/concourse_pending.png" alt="concourse pending">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/concourse_pending.png" alt="concourse pending">
 </div>
 <div class="title">Step 8: The job is pending</div>
 </div>
@@ -4402,7 +4402,7 @@ Visit http://127.0.0.1:8080 to use Concourse</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/job_running.png" alt="job running">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/job_running.png" alt="job running">
 </div>
 <div class="title">Step 9: Job is pending in the main screen</div>
 </div>
@@ -4412,7 +4412,7 @@ Visit http://127.0.0.1:8080 to use Concourse</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/concourse/running_pipeline.png" alt="running pipeline">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/concourse/running_pipeline.png" alt="running pipeline">
 </div>
 <div class="title">Step 10: Job is running in the main screen</div>
 </div>
@@ -4520,7 +4520,7 @@ want to use Minikube. In that case, the only thing you have to do is to set up s
 </td>
 <td class="content">
 Servers often run run out of resources at the stage step.
-If that happens, <a href="#jenkins-resources-k8s">clear some apps from PCF Dev and continue</a>.
+If that happens, <a href="#concourse-resources-k8s">clear some apps from PCF Dev and continue</a>.
 </td>
 </tr>
 </table>
@@ -4687,7 +4687,7 @@ image shows how these application communicate with each other:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/demo/demo.png" alt="demo">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/demo/demo.png" alt="demo">
 </div>
 <div class="title">The overview of the demo: Github Webhook listens to HTTP calls and sends a message to Github Analytics</div>
 </div>
@@ -4704,7 +4704,7 @@ an API that could register to such hooks and receive those messages. Once this h
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/demo/demo_metrics.png" alt="demo metrics">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/demo/demo_metrics.png" alt="demo metrics">
 </div>
 <div class="title">Gathering metrics: Github Analytics exposes metrics that are polled by Prometheus</div>
 </div>
@@ -4718,7 +4718,7 @@ of that application the KPI is number of issues.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/demo/demo_alerting.png" alt="demo alerting">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/demo/demo_alerting.png" alt="demo alerting">
 </div>
 <div class="title">Alerting over metrics: Grafana alerts Slack over Prometheus metrics</div>
 </div>
@@ -4889,7 +4889,7 @@ image shows how these application communicate with each other:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/demo/demo.png" alt="demo">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/demo/demo.png" alt="demo">
 </div>
 <div class="title">The overview of the demo: Github Webhook listens to HTTP calls and sends a message to Github Analytics</div>
 </div>
@@ -4906,7 +4906,7 @@ an API that could register to such hooks and receive those messages. Once this h
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/demo/demo_metrics.png" alt="demo metrics">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/demo/demo_metrics.png" alt="demo metrics">
 </div>
 <div class="title">Gathering metrics: Github Analytics exposes metrics that are polled by Prometheus</div>
 </div>
@@ -4920,7 +4920,7 @@ of that application the KPI is number of issues.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/cloudpipelines/concourse/master/docs/images/demo/demo_alerting.png" alt="demo alerting">
+<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/demo/demo_alerting.png" alt="demo alerting">
 </div>
 <div class="title">Alerting over metrics: Grafana alerts Slack over Prometheus metrics</div>
 </div>
@@ -5911,16 +5911,29 @@ locally to a port <code>9876</code>, as follows:</p>
 <p><a href="#building-generate-documentation">Generate Documentation</a></p>
 </li>
 <li>
-<p><a href="#building-making-a-release">Releasing the Project</a></p>
-</li>
-<li>
 <p><a href="#building-ci-worker-prerequisites">CI Server Worker Prerequisites</a></p>
 </li>
 </ul>
 </div>
 <div class="sect2">
 <h3 id="building-project-setup">9.1. Project Setup</h3>
-
+<div class="paragraph">
+<p>The project contains the following structure.</p>
+</div>
+<div class="paragraph">
+<p>Under <code>demo</code> folder you can find the setup prepared to start a demo instance of Concourse and Artifactory.</p>
+</div>
+<div class="paragraph">
+<p>In <code>docs</code> you can find HTML documentation built from contents of <code>docs-sources</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>src/pipeline</code> folder contains the files related to setting up pipelines in Concourse.
+In <code>src/tasks</code> we&#8217;ll find all the scripts required at runtime of pipeline execution.</p>
+</div>
+<div class="paragraph">
+<p>The <code>tools</code> folder contains tools required for building and that ease the work
+with demo setup.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="building-prerequisites">9.2. Prerequisites</h3>
@@ -5969,7 +5982,7 @@ pull to update it. The following command clones the project:</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">$ git clone --recursive https://github.com/cloudpipelines/jenkins.git</code></pre>
+<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">$ git clone --recursive https://github.com/cloudpipelines/concourse.git</code></pre>
 </div>
 </div>
 </div>
@@ -6024,34 +6037,7 @@ $ git submodule update</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="building-making-a-release">10. Releasing the Project</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>This section covers how to release the project by publishing a Docker image.</p>
-</div>
-<div class="sect2">
-<h3 id="publishing-a-docker-image">10.1. Publishing A Docker Image</h3>
-<div class="paragraph">
-<p>When doing a release, you also need to push a Docker image to Dockerhub.
-From the project root, run the following commands, replacing <code>&lt;version&gt;</code> with the
-version of the release:</p>
-</div>
-<div class="exampleblock">
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">$ docker login
-$ docker build -t cloudpipelines/cloud-pipelines-jenkins:&lt;version&gt; ./jenkins
-$ docker push cloudpipelines/cloud-pipelines-jenkins:&lt;version&gt;</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="building-ci-worker-prerequisites">11. CI Server Worker Prerequisites</h2>
+<h2 id="building-ci-worker-prerequisites">10. CI Server Worker Prerequisites</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Cloud Pipelines uses Bash scripts extensively. The following list shows the software
@@ -6091,7 +6077,7 @@ In the demo setup all of these libraries are already installed.
 </div>
 </div>
 <div class="sect1">
-<h2 id="concourse-faq">12. Concourse FAQ</h2>
+<h2 id="concourse-faq">11. Concourse FAQ</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section covers the most commonly asked questions about using Concourse with Cloud Pipelines:</p>
@@ -6182,7 +6168,7 @@ forgotten to create and copy the <code>version</code> branch too.</p>
 </dd>
 <dt class="hdlist1">The route is already in use (CF)</dt>
 <dd>
-<p>If you play around with Jenkins and Concourse you might end up with the routes occupied,
+<p>If you play around with Concourse you might end up with the routes occupied,
 as indicated by a message similar to the following:</p>
 <div class="exampleblock">
 <div class="content">

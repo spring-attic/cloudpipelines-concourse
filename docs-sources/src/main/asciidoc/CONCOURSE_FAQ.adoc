@@ -70,7 +70,7 @@ the pipeline to start, ensure that when doing some git operations, you have not
 forgotten to create and copy the `version` branch too.
 
 The route is already in use (CF)::
-If you play around with Jenkins and Concourse you might end up with the routes occupied,
+If you play around with Concourse you might end up with the routes occupied,
 as indicated by a message similar to the following:
 +
 ====
