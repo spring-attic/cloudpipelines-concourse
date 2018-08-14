@@ -89,7 +89,8 @@ void updatePropsAndRun(Repository repository) {
 	println "Updating the pipeline [${repository.name}]"
 	File build = new File("build")
 	build.mkdirs()
-	new File(build, propOrEnv("credentials")).text =
+	new File(build, repository.name
+		.replaceAll("[^a-zA-Z0-9\\.\\-]", "_")).text =
 		new File(propOrEnv("credentials")).text
 			.replaceAll("app-url.*", "app-url: " + repository.clone_url)
 			.replaceAll("app-branch.*", "app-branch: " + repository.requestedBranch ?: "master")
