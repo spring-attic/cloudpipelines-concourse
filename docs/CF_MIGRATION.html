@@ -579,13 +579,16 @@ migrates a set of applications to be compliant with Cloud Pipelines.</p>
 <p><a href="https://github.com/ciberkleid/fortune-service"><code>fortune-service</code></a></p>
 </li>
 <li>
-<p><a href="https://github.com/ciberkleid/app-config">`app-confi`g</a></p>
+<p><a href="https://github.com/ciberkleid/app-config"><code>app-config</code></a></p>
 </li>
 <li>
 <p><a href="https://github.com/spring-cloud-samples/cloudfoundry-stub-runner-boot"><code>cloudfoundry-stub-runner-boot</code></a></p>
 </li>
 <li>
-<p><a href="https://github.com/spring-cloud/spring-cloud-pipelines"><code>spring-cloud-pipelines</code></a></p>
+<p><a href="https://github.com/CloudPipelines/concourse"><code>Cloud Pipelines Concourse</code></a></p>
+</li>
+<li>
+<p><a href="https://github.com/CloudPipelines/scripts"><code>Cloud Pipelines Scripts</code></a></p>
 </li>
 </ul>
 </div>
@@ -717,7 +720,7 @@ migrates a set of applications to be compliant with Cloud Pipelines.</p>
 <p><a href="https://github.com/spring-cloud-samples/cloudfoundry-stub-runner-boot">cloudfoundry-stub-runner-boot</a></p>
 </li>
 <li>
-<p><a href="https://github.com/spring-cloud/spring-cloud-pipelines">spring-cloud-pipelines</a></p>
+<p><a href="https://github.com/CloudPipelines/concourse">Cloud Pipelines Concourse</a></p>
 </li>
 </ul>
 </div>
@@ -752,7 +755,7 @@ You must complete the steps in this stage for both <code>greeting-ui</code> and 
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">git branch version
-git checkout -b sc-pipelines</code></pre>
+git checkout -b cloud-pipelines</code></pre>
 </div>
 </div>
 </div>
@@ -761,7 +764,7 @@ git checkout -b sc-pipelines</code></pre>
 <p>The <code>version</code> branch is required to exist, though it can be created as an empty branch. It is used by Spring Coud Pipelines to generate a version number for each new pipeline execution.</p>
 </div>
 <div class="paragraph">
-<p>The <code>sc-pipelines</code> branch is optional and can be named anything you wish. The intention is for you to use it as a working branch for the changes suggested in this tutorial (hence, you should both create it and check it out).</p>
+<p>The <code>cloud-pipelines</code> branch is optional and can be named anything you wish. The intention is for you to use it as a working branch for the changes suggested in this tutorial (hence, you should both create it and check it out).</p>
 </div>
 </div>
 <div class="sect4">
@@ -936,8 +939,10 @@ These files will contain credentials to your GitHub repository, your Bintray rep
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-yml" data-lang="yml">app-url: git@github.com:ciberkleid/fortune-service.git
-app-branch: sc-pipelines
-concourse-scripts-url: https://github.com/CloudPipelines/scripts.git
+app-branch: cloud-pipelines
+scripts-url: https://github.com/CloudPipelines/scripts.git
+scripts-branch: master
+concourse-scripts-url: https://github.com/CloudPipelines/concourse.git
 concourse-scripts-branch: master
 build-options: ""
 
@@ -985,10 +990,10 @@ repo-with-binaries-for-upload: https://api.bintray.com/maven/ciberkleid/maven-re
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-bash" data-lang="bash"># Set greeting-ui pipeline
-fly -t myTarget set-pipeline -p greeting-ui -c "${SCP_HOME}/spring-cloud-pipelines/concourse/pipeline.yml" -l "${SCP_HOME}/credentials/credentials-greeting-ui.yml" -n
+fly -t myTarget set-pipeline -p greeting-ui -c "${SCP_HOME}/concourse/src/pipeline/pipeline.yml" -l "${SCP_HOME}/credentials/credentials-greeting-ui.yml" -n
 
 # Set fortune-service pipeline
-fly -t myTarget set-pipeline -p fortune-service -c "${SCP_HOME}/spring-cloud-pipelines/concourse/pipeline.yml" -l "${SCP_HOME}/credentials/credentials-fortune-service.yml" -n</code></pre>
+fly -t myTarget set-pipeline -p fortune-service -c "${SCP_HOME}/concourse/src/pipeline/pipeline.yml" -l "${SCP_HOME}/credentials/credentials-fortune-service.yml" -n</code></pre>
 </div>
 </div>
 </div>
@@ -1003,7 +1008,7 @@ fly -t myTarget set-pipeline -p fortune-service -c "${SCP_HOME}/spring-cloud-pip
 <div class="title">Figure 5. Build Success</div>
 </div>
 <div class="paragraph">
-<p>In addition, you should see a new <code>dev/&lt;version_number&gt;</code> tag in each GitHub repository and see the app jars uploaded into Bintray.</p>
+<p>In addition, you should see a new <code>dev/&lt;app_name&gt;/&lt;version_number&gt;</code> tag in each GitHub repository and see the app jars uploaded into Bintray.</p>
 </div>
 <div class="paragraph">
 <p>The test, stage, and prod jobs fail, because we have not yet added scaffolding for deployment to Cloud Foundry. We do that next.</p>
@@ -1065,7 +1070,7 @@ applications:
 <p>The <code>TRUST_CERTS</code> variable is used by the Pivotal Spring Cloud Services (Config Server, Service Registry, and Circuit Breaker Dashboard), which we use in this example. The value specified in the preceding example assumes deployment to Pivotal Web Services. Update it accordingly if you are deploying to a different Cloud Foundry foundation, or you can leave it out altogether if you are replacing the Pivotal Spring Cloud Services with alternative implementations (for example, deploying the services as applications and exposing them as user-provided services).</p>
 </div>
 <div class="paragraph">
-<p>If you wishi, you can add additional values to the manifest files&#8201;&#8212;&#8201;for example, if additional values are useful for any manual deployment you may still want to do or if you need additional values in your Cloud Pipelines deployment. For example, the following file could be an alternative <code>manifest.yml</code> for <code>fortune-service</code>:</p>
+<p>If you wish, you can add additional values to the manifest files&#8201;&#8212;&#8201;for example, if additional values are useful for any manual deployment you may still want to do or if you need additional values in your Cloud Pipelines deployment. For example, the following file could be an alternative <code>manifest.yml</code> for <code>fortune-service</code>:</p>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1104,7 +1109,7 @@ applications:
 <p>The Cloud Foundry manifest created in the previous step includes the logical names of the services to which the applications should be bound, but it does not describe how the services can be provisioned. Hence, we add a second manifest file so that Cloud Pipelines can provision the services.</p>
 </div>
 <div class="paragraph">
-<p>Add a file called <code>sc-pipelines.yml</code> to each application and include the same list of services as in the corresponding <code>manifest.yml</code>. Add the necessary details such that Cloud Pipelines can construct a <code>cf create-service</code> command.</p>
+<p>Add a file called <code>cloud-pipelines.yml</code> to each application and include the same list of services as in the corresponding <code>manifest.yml</code>. Add the necessary details such that Cloud Pipelines can construct a <code>cf create-service</code> command.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1119,7 +1124,7 @@ The `type: broker' parameter in the next example instructs Cloud Pipelines to pr
 </table>
 </div>
 <div class="paragraph">
-<p>More specifically, for <code>greeting-ui</code>, create an <code>sc-pipelines.yml</code> file with the following content:</p>
+<p>More specifically, for <code>greeting-ui</code>, create an <code>cloud-pipelines.yml</code> file with the following content:</p>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1155,7 +1160,7 @@ The `type: broker' parameter in the next example instructs Cloud Pipelines to pr
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>sc-pipelines.yml</code> file for <code>fortune-service</code> is similar, with the addition of the <code>fortune-db</code> service, as follows:</p>
+<p>The <code>cloud-pipelines.yml</code> file for <code>fortune-service</code> is similar, with the addition of the <code>fortune-db</code> service, as follows:</p>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1223,7 +1228,7 @@ Notice the <code>useExisting: true</code> parameter in the preceding example. By
 <p>A new app manifest file</p>
 </li>
 <li>
-<p>A new sc-pipelines manifest file</p>
+<p>A new cloud-pipelines manifest file</p>
 </li>
 </ul>
 </div>
@@ -1255,7 +1260,7 @@ cf create-space scp-prod</code></pre>
 <div class="sect4">
 <h5 id="1-12-create-cloud-foundry-stage-and-prod-service-instances">1.12 Create Cloud Foundry Stage and Prod Service Instances</h5>
 <div class="paragraph">
-<p>Cloud Pipelines dynamically creates the services in the test spaces, as defined by the <code>sc-pipelines.yml</code> file we created previously. Optionally, you can add a second section to the <code>sc-pipelines.yml</code> file for the stage environment, and these are created dynamically as well. However, you must always crate prod manually.</p>
+<p>Cloud Pipelines dynamically creates the services in the test spaces, as defined by the <code>cloud-pipelines.yml</code> file we created previously. Optionally, you can add a second section to the <code>cloud-pipelines.yml</code> file for the stage environment, and these are created dynamically as well. However, you must always crate prod manually.</p>
 </div>
 <div class="paragraph">
 <p>For this example, we create both the stage and prod services manually.</p>
@@ -1282,7 +1287,7 @@ cf create-space scp-prod</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-yml" data-lang="yml">pipeline-descriptor: sc-pipelines.yml
+<pre class="prettyprint highlight"><code class="language-yml" data-lang="yml">pipeline-descriptor: cloud-pipelines.yml
 
 paas-type: cf
 
@@ -1334,7 +1339,7 @@ paas-prod-space: scp-prod</code></pre>
 <div class="title">Figure 7. Cloud Foundry Test and Prod Deployment</div>
 </div>
 <div class="paragraph">
-<p>Notice that the five services declared in its manifest files (<code>sc-pipelines.yml</code> for provisioning and <code>manifest.yml</code> for binding) have also been automatically provisioned. The image also shows the deployment of the same app to the shared prod space. Notice that the instance of the previous version has been renamed as <code>venerable</code> and stopped. If a rollback were deemed necessary, the <code>prod-rollback</code> job in the pipeline could be triggered to remove the currently running version, remove the <code>prod/&lt;version_number&gt;</code> tag from GitHub, and re-start the former (<code>venerable</code>) version.</p>
+<p>Notice that the five services declared in its manifest files (<code>cloud-pipelines.yml</code> for provisioning and <code>manifest.yml</code> for binding) have also been automatically provisioned. The image also shows the deployment of the same app to the shared prod space. Notice that the instance of the previous version has been renamed as <code>venerable</code> and stopped. If a rollback were deemed necessary, the <code>prod-rollback</code> job in the pipeline could be triggered to remove the currently running version, remove the <code>prod/&lt;version_number&gt;</code> tag from GitHub, and re-start the former (<code>venerable</code>) version.</p>
 </div>
 </div>
 <div class="sect4">
@@ -1361,7 +1366,7 @@ paas-prod-space: scp-prod</code></pre>
 <p>Upload the app artifacts to the maven repo (for example, Bintray).</p>
 </li>
 <li>
-<p>Tag the git repositories with <code>dev/&lt;version_number&gt;</code> and <code>prod/&lt;version_number&gt;</code>.</p>
+<p>Tag the git repositories with <code>dev/&lt;app_name&gt;/&lt;version_number&gt;</code> and <code>prod/&lt;app_name&gt;/&lt;version_number&gt;</code>.</p>
 </li>
 </ul>
 </div>
@@ -2731,7 +2736,7 @@ cd cloudfoundry-stub-runner-boot
 <p>Next, we add a manifest file for the stub runner application for deployment to Cloud Foundry.</p>
 </div>
 <div class="paragraph">
-<p>Place this file in the <code>greeting-ui</code> repo. The file name and location can be your choice. For this example, we use <code>sc-pipelines/manifest-stubrunner.yml</code>. The following image shows the file in the appropriate folder:</p>
+<p>Place this file in the <code>greeting-ui</code> repo. The file name and location can be your choice. For this example, we use <code>cloud-pipelines/manifest-stubrunner.yml</code>. The following image shows the file in the appropriate folder:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -2764,7 +2769,7 @@ applications:
 <div class="sect5">
 <h6 id="provide-a-stub-runner-jar-and-manifest-information-to-the-pipeline">Provide a Stub Runner Jar and Manifest Information to the Pipeline</h6>
 <div class="paragraph">
-<p>Now that we have a jar file and a manifest file for our stub runner application, we need to provide this information to our <code>greeting-ui</code> pipeline so that the pipeline downloads the jar from Bintray and deploys it to Cloud Foundry. We do this through the <code>greeting-ui</code> <code>sc-pipelines.yml</code> file. We add an entry to the list of services in the <code>test</code> section, as follows:</p>
+<p>Now that we have a jar file and a manifest file for our stub runner application, we need to provide this information to our <code>greeting-ui</code> pipeline so that the pipeline downloads the jar from Bintray and deploys it to Cloud Foundry. We do this through the <code>greeting-ui</code> <code>cloud-pipelines.yml</code> file. We add an entry to the list of services in the <code>test</code> section, as follows:</p>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -2773,7 +2778,7 @@ applications:
 <pre class="prettyprint highlight"><code class="language-yml" data-lang="yml">    - name: stubrunner
       type: stubrunner
       coordinates: io.pivotal:cloudfoundry-stub-runner-boot:0.0.1.M1
-      pathToManifest: sc-pipelines/manifest-stubrunner.yml</code></pre>
+      pathToManifest: cloud-pipelines/manifest-stubrunner.yml</code></pre>
 </div>
 </div>
 </div>
@@ -2937,10 +2942,10 @@ public class SmokeTests {
 <p><code>pom.xml</code></p>
 </li>
 <li>
-<p><code>sc-pipelines.yml</code></p>
+<p><code>cloud-pipelines.yml</code></p>
 </li>
 <li>
-<p><code>sc-pipelines/manifest-stubrunner.yml</code></p>
+<p><code>cloud-pipelines/manifest-stubrunner.yml</code></p>
 </li>
 <li>
 <p><code>src/test/java/io/pivotal/fortune/FortuneServiceTests.java</code></p>
@@ -3084,7 +3089,7 @@ public class SmokeTests {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-08-13 15:00:26 CEST
+Last updated 2018-08-14 11:57:20 CEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">

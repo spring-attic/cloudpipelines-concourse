@@ -964,13 +964,16 @@ migrates a set of applications to be compliant with Cloud Pipelines.</p>
 <p><a href="https://github.com/ciberkleid/fortune-service"><code>fortune-service</code></a></p>
 </li>
 <li>
-<p><a href="https://github.com/ciberkleid/app-config">`app-confi`g</a></p>
+<p><a href="https://github.com/ciberkleid/app-config"><code>app-config</code></a></p>
 </li>
 <li>
 <p><a href="https://github.com/spring-cloud-samples/cloudfoundry-stub-runner-boot"><code>cloudfoundry-stub-runner-boot</code></a></p>
 </li>
 <li>
-<p><a href="https://github.com/spring-cloud/spring-cloud-pipelines"><code>spring-cloud-pipelines</code></a></p>
+<p><a href="https://github.com/CloudPipelines/concourse"><code>Cloud Pipelines Concourse</code></a></p>
+</li>
+<li>
+<p><a href="https://github.com/CloudPipelines/scripts"><code>Cloud Pipelines Scripts</code></a></p>
 </li>
 </ul>
 </div>
@@ -1102,7 +1105,7 @@ migrates a set of applications to be compliant with Cloud Pipelines.</p>
 <p><a href="https://github.com/spring-cloud-samples/cloudfoundry-stub-runner-boot">cloudfoundry-stub-runner-boot</a></p>
 </li>
 <li>
-<p><a href="https://github.com/spring-cloud/spring-cloud-pipelines">spring-cloud-pipelines</a></p>
+<p><a href="https://github.com/CloudPipelines/concourse">Cloud Pipelines Concourse</a></p>
 </li>
 </ul>
 </div>
@@ -1137,7 +1140,7 @@ You must complete the steps in this stage for both <code>greeting-ui</code> and 
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">git branch version
-git checkout -b sc-pipelines</code></pre>
+git checkout -b cloud-pipelines</code></pre>
 </div>
 </div>
 </div>
@@ -1146,7 +1149,7 @@ git checkout -b sc-pipelines</code></pre>
 <p>The <code>version</code> branch is required to exist, though it can be created as an empty branch. It is used by Spring Coud Pipelines to generate a version number for each new pipeline execution.</p>
 </div>
 <div class="paragraph">
-<p>The <code>sc-pipelines</code> branch is optional and can be named anything you wish. The intention is for you to use it as a working branch for the changes suggested in this tutorial (hence, you should both create it and check it out).</p>
+<p>The <code>cloud-pipelines</code> branch is optional and can be named anything you wish. The intention is for you to use it as a working branch for the changes suggested in this tutorial (hence, you should both create it and check it out).</p>
 </div>
 </div>
 <div class="sect4">
@@ -1321,8 +1324,10 @@ These files will contain credentials to your GitHub repository, your Bintray rep
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-yml" data-lang="yml">app-url: git@github.com:ciberkleid/fortune-service.git
-app-branch: sc-pipelines
-concourse-scripts-url: https://github.com/CloudPipelines/scripts.git
+app-branch: cloud-pipelines
+scripts-url: https://github.com/CloudPipelines/scripts.git
+scripts-branch: master
+concourse-scripts-url: https://github.com/CloudPipelines/concourse.git
 concourse-scripts-branch: master
 build-options: ""
 
@@ -1370,10 +1375,10 @@ repo-with-binaries-for-upload: https://api.bintray.com/maven/ciberkleid/maven-re
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-bash" data-lang="bash"># Set greeting-ui pipeline
-fly -t myTarget set-pipeline -p greeting-ui -c "${SCP_HOME}/spring-cloud-pipelines/concourse/pipeline.yml" -l "${SCP_HOME}/credentials/credentials-greeting-ui.yml" -n
+fly -t myTarget set-pipeline -p greeting-ui -c "${SCP_HOME}/concourse/src/pipeline/pipeline.yml" -l "${SCP_HOME}/credentials/credentials-greeting-ui.yml" -n
 
 # Set fortune-service pipeline
-fly -t myTarget set-pipeline -p fortune-service -c "${SCP_HOME}/spring-cloud-pipelines/concourse/pipeline.yml" -l "${SCP_HOME}/credentials/credentials-fortune-service.yml" -n</code></pre>
+fly -t myTarget set-pipeline -p fortune-service -c "${SCP_HOME}/concourse/src/pipeline/pipeline.yml" -l "${SCP_HOME}/credentials/credentials-fortune-service.yml" -n</code></pre>
 </div>
 </div>
 </div>
@@ -1388,7 +1393,7 @@ fly -t myTarget set-pipeline -p fortune-service -c "${SCP_HOME}/spring-cloud-pip
 <div class="title">Figure 6. Build Success</div>
 </div>
 <div class="paragraph">
-<p>In addition, you should see a new <code>dev/&lt;version_number&gt;</code> tag in each GitHub repository and see the app jars uploaded into Bintray.</p>
+<p>In addition, you should see a new <code>dev/&lt;app_name&gt;/&lt;version_number&gt;</code> tag in each GitHub repository and see the app jars uploaded into Bintray.</p>
 </div>
 <div class="paragraph">
 <p>The test, stage, and prod jobs fail, because we have not yet added scaffolding for deployment to Cloud Foundry. We do that next.</p>
@@ -1450,7 +1455,7 @@ applications:
 <p>The <code>TRUST_CERTS</code> variable is used by the Pivotal Spring Cloud Services (Config Server, Service Registry, and Circuit Breaker Dashboard), which we use in this example. The value specified in the preceding example assumes deployment to Pivotal Web Services. Update it accordingly if you are deploying to a different Cloud Foundry foundation, or you can leave it out altogether if you are replacing the Pivotal Spring Cloud Services with alternative implementations (for example, deploying the services as applications and exposing them as user-provided services).</p>
 </div>
 <div class="paragraph">
-<p>If you wishi, you can add additional values to the manifest files&#8201;&#8212;&#8201;for example, if additional values are useful for any manual deployment you may still want to do or if you need additional values in your Cloud Pipelines deployment. For example, the following file could be an alternative <code>manifest.yml</code> for <code>fortune-service</code>:</p>
+<p>If you wish, you can add additional values to the manifest files&#8201;&#8212;&#8201;for example, if additional values are useful for any manual deployment you may still want to do or if you need additional values in your Cloud Pipelines deployment. For example, the following file could be an alternative <code>manifest.yml</code> for <code>fortune-service</code>:</p>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1489,7 +1494,7 @@ applications:
 <p>The Cloud Foundry manifest created in the previous step includes the logical names of the services to which the applications should be bound, but it does not describe how the services can be provisioned. Hence, we add a second manifest file so that Cloud Pipelines can provision the services.</p>
 </div>
 <div class="paragraph">
-<p>Add a file called <code>sc-pipelines.yml</code> to each application and include the same list of services as in the corresponding <code>manifest.yml</code>. Add the necessary details such that Cloud Pipelines can construct a <code>cf create-service</code> command.</p>
+<p>Add a file called <code>cloud-pipelines.yml</code> to each application and include the same list of services as in the corresponding <code>manifest.yml</code>. Add the necessary details such that Cloud Pipelines can construct a <code>cf create-service</code> command.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1504,7 +1509,7 @@ The `type: broker' parameter in the next example instructs Cloud Pipelines to pr
 </table>
 </div>
 <div class="paragraph">
-<p>More specifically, for <code>greeting-ui</code>, create an <code>sc-pipelines.yml</code> file with the following content:</p>
+<p>More specifically, for <code>greeting-ui</code>, create an <code>cloud-pipelines.yml</code> file with the following content:</p>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1540,7 +1545,7 @@ The `type: broker' parameter in the next example instructs Cloud Pipelines to pr
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>sc-pipelines.yml</code> file for <code>fortune-service</code> is similar, with the addition of the <code>fortune-db</code> service, as follows:</p>
+<p>The <code>cloud-pipelines.yml</code> file for <code>fortune-service</code> is similar, with the addition of the <code>fortune-db</code> service, as follows:</p>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -1608,7 +1613,7 @@ Notice the <code>useExisting: true</code> parameter in the preceding example. By
 <p>A new app manifest file</p>
 </li>
 <li>
-<p>A new sc-pipelines manifest file</p>
+<p>A new cloud-pipelines manifest file</p>
 </li>
 </ul>
 </div>
@@ -1640,7 +1645,7 @@ cf create-space scp-prod</code></pre>
 <div class="sect4">
 <h5 id="1-12-create-cloud-foundry-stage-and-prod-service-instances">1.12 Create Cloud Foundry Stage and Prod Service Instances</h5>
 <div class="paragraph">
-<p>Cloud Pipelines dynamically creates the services in the test spaces, as defined by the <code>sc-pipelines.yml</code> file we created previously. Optionally, you can add a second section to the <code>sc-pipelines.yml</code> file for the stage environment, and these are created dynamically as well. However, you must always crate prod manually.</p>
+<p>Cloud Pipelines dynamically creates the services in the test spaces, as defined by the <code>cloud-pipelines.yml</code> file we created previously. Optionally, you can add a second section to the <code>cloud-pipelines.yml</code> file for the stage environment, and these are created dynamically as well. However, you must always crate prod manually.</p>
 </div>
 <div class="paragraph">
 <p>For this example, we create both the stage and prod services manually.</p>
@@ -1667,7 +1672,7 @@ cf create-space scp-prod</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-yml" data-lang="yml">pipeline-descriptor: sc-pipelines.yml
+<pre class="prettyprint highlight"><code class="language-yml" data-lang="yml">pipeline-descriptor: cloud-pipelines.yml
 
 paas-type: cf
 
@@ -1719,7 +1724,7 @@ paas-prod-space: scp-prod</code></pre>
 <div class="title">Figure 8. Cloud Foundry Test and Prod Deployment</div>
 </div>
 <div class="paragraph">
-<p>Notice that the five services declared in its manifest files (<code>sc-pipelines.yml</code> for provisioning and <code>manifest.yml</code> for binding) have also been automatically provisioned. The image also shows the deployment of the same app to the shared prod space. Notice that the instance of the previous version has been renamed as <code>venerable</code> and stopped. If a rollback were deemed necessary, the <code>prod-rollback</code> job in the pipeline could be triggered to remove the currently running version, remove the <code>prod/&lt;version_number&gt;</code> tag from GitHub, and re-start the former (<code>venerable</code>) version.</p>
+<p>Notice that the five services declared in its manifest files (<code>cloud-pipelines.yml</code> for provisioning and <code>manifest.yml</code> for binding) have also been automatically provisioned. The image also shows the deployment of the same app to the shared prod space. Notice that the instance of the previous version has been renamed as <code>venerable</code> and stopped. If a rollback were deemed necessary, the <code>prod-rollback</code> job in the pipeline could be triggered to remove the currently running version, remove the <code>prod/&lt;version_number&gt;</code> tag from GitHub, and re-start the former (<code>venerable</code>) version.</p>
 </div>
 </div>
 <div class="sect4">
@@ -1746,7 +1751,7 @@ paas-prod-space: scp-prod</code></pre>
 <p>Upload the app artifacts to the maven repo (for example, Bintray).</p>
 </li>
 <li>
-<p>Tag the git repositories with <code>dev/&lt;version_number&gt;</code> and <code>prod/&lt;version_number&gt;</code>.</p>
+<p>Tag the git repositories with <code>dev/&lt;app_name&gt;/&lt;version_number&gt;</code> and <code>prod/&lt;app_name&gt;/&lt;version_number&gt;</code>.</p>
 </li>
 </ul>
 </div>
@@ -3116,7 +3121,7 @@ cd cloudfoundry-stub-runner-boot
 <p>Next, we add a manifest file for the stub runner application for deployment to Cloud Foundry.</p>
 </div>
 <div class="paragraph">
-<p>Place this file in the <code>greeting-ui</code> repo. The file name and location can be your choice. For this example, we use <code>sc-pipelines/manifest-stubrunner.yml</code>. The following image shows the file in the appropriate folder:</p>
+<p>Place this file in the <code>greeting-ui</code> repo. The file name and location can be your choice. For this example, we use <code>cloud-pipelines/manifest-stubrunner.yml</code>. The following image shows the file in the appropriate folder:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -3149,7 +3154,7 @@ applications:
 <div class="sect5">
 <h6 id="provide-a-stub-runner-jar-and-manifest-information-to-the-pipeline">Provide a Stub Runner Jar and Manifest Information to the Pipeline</h6>
 <div class="paragraph">
-<p>Now that we have a jar file and a manifest file for our stub runner application, we need to provide this information to our <code>greeting-ui</code> pipeline so that the pipeline downloads the jar from Bintray and deploys it to Cloud Foundry. We do this through the <code>greeting-ui</code> <code>sc-pipelines.yml</code> file. We add an entry to the list of services in the <code>test</code> section, as follows:</p>
+<p>Now that we have a jar file and a manifest file for our stub runner application, we need to provide this information to our <code>greeting-ui</code> pipeline so that the pipeline downloads the jar from Bintray and deploys it to Cloud Foundry. We do this through the <code>greeting-ui</code> <code>cloud-pipelines.yml</code> file. We add an entry to the list of services in the <code>test</code> section, as follows:</p>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -3158,7 +3163,7 @@ applications:
 <pre class="prettyprint highlight"><code class="language-yml" data-lang="yml">    - name: stubrunner
       type: stubrunner
       coordinates: io.pivotal:cloudfoundry-stub-runner-boot:0.0.1.M1
-      pathToManifest: sc-pipelines/manifest-stubrunner.yml</code></pre>
+      pathToManifest: cloud-pipelines/manifest-stubrunner.yml</code></pre>
 </div>
 </div>
 </div>
@@ -3322,10 +3327,10 @@ public class SmokeTests {
 <p><code>pom.xml</code></p>
 </li>
 <li>
-<p><code>sc-pipelines.yml</code></p>
+<p><code>cloud-pipelines.yml</code></p>
 </li>
 <li>
-<p><code>sc-pipelines/manifest-stubrunner.yml</code></p>
+<p><code>cloud-pipelines/manifest-stubrunner.yml</code></p>
 </li>
 <li>
 <p><code>src/test/java/io/pivotal/fortune/FortuneServiceTests.java</code></p>
@@ -3584,8 +3589,8 @@ opinionated sample pipeline one that you can use in your company.</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">git clone https://github.com/spring-cloud/spring-cloud-pipelines
-cd spring-cloud-pipelines/concourse
+<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">git clone https://github.com/CloudPipelines/concourse
+cd concourse/demo
 ./setup_docker_compose.sh
 ./start.sh 192.168.99.100</code></pre>
 </div>
@@ -3613,8 +3618,8 @@ The following listing shows the script:</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">git clone https://github.com/spring-cloud/spring-cloud-pipelines
-cd spring-cloud-pipelines/
+<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">git clone https://github.com/CloudPipelines/concourse
+cd concourse
 ./tools/deploy-infra.sh</code></pre>
 </div>
 </div>
@@ -3798,7 +3803,7 @@ Docker Machine IP.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PAAS_TEST_SPACE_PREFIX</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Prefix of the name of the CF space for the test env to which the app name will be appended</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sc-pipelines-test</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cloud-pipelines-test</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PAAS_STAGE_ORG</code></p></td>
@@ -3808,7 +3813,7 @@ Docker Machine IP.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PAAS_STAGE_SPACE</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name of the space for the stage env</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sc-pipelines-stage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cloud-pipelines-stage</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PAAS_PROD_ORG</code></p></td>
@@ -3818,7 +3823,7 @@ Docker Machine IP.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PAAS_PROD_SPACE</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name of the space for the prod env</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sc-pipelines-prod</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cloud-pipelines-prod</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>REPO_WITH_BINARIES_FOR_UPLOAD</code></p></td>
@@ -4785,7 +4790,7 @@ you deploy to production, you can provision the <code>pcfdev-prod</code> space b
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">cf push sc-pipelines-prometheus -b binary_buildpack -c './prometheus -web.listen-address=:8080' -m 64m</code></pre>
+<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">cf push cloud-pipelines-prometheus -b binary_buildpack -c './prometheus -web.listen-address=:8080' -m 64m</code></pre>
 </div>
 </div>
 </div>
@@ -4794,7 +4799,7 @@ you deploy to production, you can provision the <code>pcfdev-prod</code> space b
 <p>Also, <code>localhost:9090</code> in <code>prometheus.yml</code> should be <code>localhost:8080</code>.</p>
 </div>
 <div class="paragraph">
-<p>The file should resemble the following listing to work with the demo setup (change <code>github-analytics-sc-pipelines.cfapps.io</code>
+<p>The file should resemble the following listing to work with the demo setup (change <code>github-analytics-cloud-pipelines.cfapps.io</code>
 to your <code>github-analytics</code> installation).</p>
 </div>
 <div class="exampleblock">
@@ -4838,13 +4843,13 @@ scrape_configs:
     # scheme defaults to 'http'.
 
     static_configs:
-      - targets: ['github-analytics-sc-pipelines.cfapps.io']</code></pre>
+      - targets: ['github-analytics-cloud-pipelines.cfapps.io']</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>A deployed version for the Cloud Pipelines demo is available <a href="https://sc-pipelines-prometheus.cfapps.io/">here</a>.</p>
+<p>A deployed version for the Cloud Pipelines demo is available <a href="https://cloud-pipelines-prometheus.cfapps.io/">here</a>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -4860,7 +4865,7 @@ and set <code>http_port = 8080</code> in <code>conf/default.ini</code>. Then run
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">cf push sc-pipelines-grafana -b binary_buildpack -c './bin/grafana-server web' -m 64m</code></pre>
+<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">cf push cloud-pipelines-grafana -b binary_buildpack -c './bin/grafana-server web' -m 64m</code></pre>
 </div>
 </div>
 </div>
@@ -4869,7 +4874,7 @@ and set <code>http_port = 8080</code> in <code>conf/default.ini</code>. Then run
 <p>The demo uses Grafana Dashboard with an ID of <code>2471</code>.</p>
 </div>
 <div class="paragraph">
-<p>A deployed version for the Cloud Pipelines demo is available <a href="https://sc-pipelines-grafana.cfapps.io/">here</a></p>
+<p>A deployed version for the Cloud Pipelines demo is available <a href="https://cloud-pipelines-grafana.cfapps.io/">here</a></p>
 </div>
 </div>
 </div>
@@ -4933,7 +4938,7 @@ sent to Slack.</p>
 <p>In a real-world scenario, we would not want to automatically provision services such as
 RabbitMQ, MySQL, or Eureka each time we deploy a new application to production. Typically,
 production is provisioned manually (often by using automated solutions). In our case, before
-you deploy to production, you can provision the <code>sc-pipelines-prod</code> namespace by using the
+you deploy to production, you can provision the <code>cloud-pipelines-prod</code> namespace by using the
  <code>k8s-helper.sh</code>. To do so, call the following script:</p>
 </div>
 <div class="exampleblock">
@@ -5553,7 +5558,7 @@ serverFiles:
         metrics_path: '/prometheus'
         static_configs:
           - targets:
-            - github-analytics.sc-pipelines-prod.svc.cluster.local:8080
+            - github-analytics.cloud-pipelines-prod.svc.cluster.local:8080
       - job_name: prometheus
         static_configs:
           - targets:
@@ -5753,7 +5758,7 @@ networkPolicy:
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">$ helm install --name sc-pipelines-prometheus stable/prometheus -f values.yaml</code></pre>
+<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">$ helm install --name cloud-pipelines-prometheus stable/prometheus -f values.yaml</code></pre>
 </div>
 </div>
 </div>
@@ -5767,7 +5772,7 @@ networkPolicy:
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">NOTES:
 The Prometheus server can be accessed via port 80 on the following DNS name from within your cluster:
-sc-pipelines-prometheus-prometheus-server.default.svc.cluster.local
+cloud-pipelines-prometheus-prometheus-server.default.svc.cluster.local
 
 
 Get the Prometheus server URL by running these commands in the same shell:
@@ -5776,7 +5781,7 @@ Get the Prometheus server URL by running these commands in the same shell:
 
 
 The Prometheus alertmanager can be accessed via port 80 on the following DNS name from within your cluster:
-sc-pipelines-prometheus-prometheus-alertmanager.default.svc.cluster.local
+cloud-pipelines-prometheus-prometheus-alertmanager.default.svc.cluster.local
 
 
 Get the Alertmanager URL by running these commands in the same shell:
@@ -5785,7 +5790,7 @@ Get the Alertmanager URL by running these commands in the same shell:
 
 
 The Prometheus PushGateway can be accessed via port 9091 on the following DNS name from within your cluster:
-sc-pipelines-prometheus-prometheus-pushgateway.default.svc.cluster.local
+cloud-pipelines-prometheus-prometheus-pushgateway.default.svc.cluster.local
 
 
 Get the PushGateway URL by running these commands in the same shell:
@@ -5808,7 +5813,7 @@ https://prometheus.io/</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">$ helm install --name sc-pipelines-grafana stable/grafana</code></pre>
+<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">$ helm install --name cloud-pipelines-grafana stable/grafana</code></pre>
 </div>
 </div>
 </div>
@@ -5823,15 +5828,15 @@ https://prometheus.io/</code></pre>
 <pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">NOTES:
 1. Get your 'admin' user password by running:
 
-   kubectl get secret --namespace default sc-pipelines-grafana-grafana -o jsonpath="{.data.grafana-admin-password}" | base64 --decode ; echo
+   kubectl get secret --namespace default cloud-pipelines-grafana-grafana -o jsonpath="{.data.grafana-admin-password}" | base64 --decode ; echo
 
 2. The Grafana server can be accessed via port 80 on the following DNS name from within your cluster:
 
-   sc-pipelines-grafana-grafana.default.svc.cluster.local
+   cloud-pipelines-grafana-grafana.default.svc.cluster.local
 
    Get the Grafana URL to visit by running these commands in the same shell:
 
-     export POD_NAME=$(kubectl get pods --namespace default -l "app=sc-pipelines-grafana-grafana,component=grafana" -o jsonpath="{.items[0].metadata.name}")
+     export POD_NAME=$(kubectl get pods --namespace default -l "app=cloud-pipelines-grafana-grafana,component=grafana" -o jsonpath="{.items[0].metadata.name}")
      kubectl --namespace default port-forward $POD_NAME 3000
 
 3. Login with the password from step 1 and the username: admin</code></pre>
@@ -5841,7 +5846,7 @@ https://prometheus.io/</code></pre>
 </div>
 <div class="paragraph">
 <p>Perform the steps listed in the preceding output and add the Grafana&#8217;s datasource
-as Prometheus with the following URL: <code><a href="http://sc-pipelines-prometheus-prometheus-server.default.svc.cluster.local" class="bare">sc-pipelines-prometheus-prometheus-server.default.svc.cluster.local</a></code></p>
+as Prometheus with the following URL: <code><a href="http://cloud-pipelines-prometheus-prometheus-server.default.svc.cluster.local" class="bare">cloud-pipelines-prometheus-prometheus-server.default.svc.cluster.local</a></code></p>
 </div>
 <div class="paragraph">
 <p>You can pick up the dashboard with the Grafana ID (2471). This is the
@@ -5858,7 +5863,7 @@ locally to a port <code>9876</code>, as follows:</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">$ kubectl port-forward --namespace=sc-pipelines-prod $( kubectl get pods --namespace=sc-pipelines-prod | grep github-webhook | head -1 | awk '{print $1}' ) 9876:8080</code></pre>
+<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">$ kubectl port-forward --namespace=cloud-pipelines-prod $( kubectl get pods --namespace=cloud-pipelines-prod | grep github-webhook | head -1 | awk '{print $1}' ) 9876:8080</code></pre>
 </div>
 </div>
 </div>
@@ -6107,7 +6112,7 @@ what those decisions are.</p>
 <dd>
 <p>Yes It is an open-source project. The important thing is that the core part of the logic is written in
 Bash scripts. That way, in the majority of cases, you could change only the bash scripts without changing the
-whole pipeline. <a href="https://github.com/spring-cloud/spring-cloud-pipelines/tree/master/common/src/main/bash">You can check out the scripts here.</a></p>
+whole pipeline. <a href="https://github.com/CloudPipelines/scripts/tree/master/src/main/bash">You can check out the scripts here.</a></p>
 <div class="paragraph">
 <p>Furthermore, if you want only to customize a particular function under <code>common/src/main/bash</code>, you can provide your own
 function under <code>common/src/main/bash/&lt;some custom identifier&gt;</code> where <code>&lt;some custom identifier&gt;</code> is equal to the value of

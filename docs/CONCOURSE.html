@@ -595,8 +595,8 @@ opinionated sample pipeline one that you can use in your company.</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">git clone https://github.com/spring-cloud/spring-cloud-pipelines
-cd spring-cloud-pipelines/concourse
+<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">git clone https://github.com/CloudPipelines/concourse
+cd concourse/demo
 ./setup_docker_compose.sh
 ./start.sh 192.168.99.100</code></pre>
 </div>
@@ -624,8 +624,8 @@ The following listing shows the script:</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">git clone https://github.com/spring-cloud/spring-cloud-pipelines
-cd spring-cloud-pipelines/
+<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">git clone https://github.com/CloudPipelines/concourse
+cd concourse
 ./tools/deploy-infra.sh</code></pre>
 </div>
 </div>
@@ -809,7 +809,7 @@ Docker Machine IP.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PAAS_TEST_SPACE_PREFIX</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Prefix of the name of the CF space for the test env to which the app name will be appended</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sc-pipelines-test</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cloud-pipelines-test</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PAAS_STAGE_ORG</code></p></td>
@@ -819,7 +819,7 @@ Docker Machine IP.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PAAS_STAGE_SPACE</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name of the space for the stage env</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sc-pipelines-stage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cloud-pipelines-stage</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PAAS_PROD_ORG</code></p></td>
@@ -829,7 +829,7 @@ Docker Machine IP.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PAAS_PROD_SPACE</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name of the space for the prod env</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sc-pipelines-prod</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cloud-pipelines-prod</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>REPO_WITH_BINARIES_FOR_UPLOAD</code></p></td>
