@@ -43,9 +43,10 @@ Throughout this tutorial, we use the following tools:
 * *GitHub*: Sample application source code and configuration repositories, a sample stubrunner application repository, and the Cloud Pipelines code base, including the following:
 ** https://github.com/ciberkleid/greeting-ui[`greeting-ui`]
 ** https://github.com/ciberkleid/fortune-service[`fortune-service`]
-** https://github.com/ciberkleid/app-config[`app-confi`g]
+** https://github.com/ciberkleid/app-config[`app-config`]
 ** https://github.com/spring-cloud-samples/cloudfoundry-stub-runner-boot[`cloudfoundry-stub-runner-boot`]
-** https://github.com/spring-cloud/spring-cloud-pipelines[`spring-cloud-pipelines`]
+** https://github.com/CloudPipelines/concourse[`Cloud Pipelines Concourse`]
+** https://github.com/CloudPipelines/scripts[`Cloud Pipelines Scripts`]
 * *Pivotal Web Services*: Publicly hosted Cloud Foundry offering http://run.pivotal.io[free trial accounts] and including MySQL, Rabbit, and Pivotal Spring Cloud Services in the Marketplace
 * *Concourse*
 * *JFrog Bintray*: Publicly hosted Maven repository offering free https://bintray.com/signup/oss[OSS accounts]
@@ -93,7 +94,7 @@ Then create a new directory on your local machine. You may name it anything you 
 In `$SCP_HOME`, clone your forks of `greeting-ui` and `fortune-service`, as well as the following two repositories:
 
 * https://github.com/spring-cloud-samples/cloudfoundry-stub-runner-boot[cloudfoundry-stub-runner-boot]
-* https://github.com/spring-cloud/spring-cloud-pipelines[spring-cloud-pipelines]
+* https://github.com/CloudPipelines/concourse[Cloud Pipelines Concourse]
 
 Finally, create a directory called `$SCP_HOME/credentials`. Leave it empty for now.
 
@@ -112,12 +113,12 @@ Create branches in GitHub by using the following git commands:
 [source,bash]
 ----
 git branch version
-git checkout -b sc-pipelines
+git checkout -b cloud-pipelines
 ----
 ====
 The `version` branch is required to exist, though it can be created as an empty branch. It is used by Spring Coud Pipelines to generate a version number for each new pipeline execution.
 
-The `sc-pipelines` branch is optional and can be named anything you wish. The intention is for you to use it as a working branch for the changes suggested in this tutorial (hence, you should both create it and check it out).
+The `cloud-pipelines` branch is optional and can be named anything you wish. The intention is for you to use it as a working branch for the changes suggested in this tutorial (hence, you should both create it and check it out).
 
 ===== 1.2 Add Maven Wrapper
 
@@ -232,8 +233,10 @@ Edit the Git properties of each credentials file. Make sure to replace the sampl
 [source,yml]
 ----
 app-url: git@github.com:ciberkleid/fortune-service.git
-app-branch: sc-pipelines
-concourse-scripts-url: https://github.com/CloudPipelines/scripts.git
+app-branch: cloud-pipelines
+scripts-url: https://github.com/CloudPipelines/scripts.git
+scripts-branch: master
+concourse-scripts-url: https://github.com/CloudPipelines/concourse.git
 concourse-scripts-branch: master
 build-options: ""
 
@@ -273,10 +276,10 @@ To verify this, log in to your Concourse target and set the Concourse pipelines.
 [source,bash]
 ----
 # Set greeting-ui pipeline
-fly -t myTarget set-pipeline -p greeting-ui -c "${SCP_HOME}/spring-cloud-pipelines/concourse/pipeline.yml" -l "${SCP_HOME}/credentials/credentials-greeting-ui.yml" -n
+fly -t myTarget set-pipeline -p greeting-ui -c "${SCP_HOME}/concourse/src/pipeline/pipeline.yml" -l "${SCP_HOME}/credentials/credentials-greeting-ui.yml" -n
 
 # Set fortune-service pipeline
-fly -t myTarget set-pipeline -p fortune-service -c "${SCP_HOME}/spring-cloud-pipelines/concourse/pipeline.yml" -l "${SCP_HOME}/credentials/credentials-fortune-service.yml" -n
+fly -t myTarget set-pipeline -p fortune-service -c "${SCP_HOME}/concourse/src/pipeline/pipeline.yml" -l "${SCP_HOME}/credentials/credentials-fortune-service.yml" -n
 ----
 ====
 
@@ -284,7 +287,7 @@ Log into the Concourse UI and un-pause the pipelines. Start each pipeline. You s
 
 image::{cf-migration-root-docs}/concourse_build_success.png[title="Build Success"]
 
-In addition, you should see a new `dev/<version_number>` tag in each GitHub repository and see the app jars uploaded into Bintray.
+In addition, you should see a new `dev/<app_name>/<version_number>` tag in each GitHub repository and see the app jars uploaded into Bintray.
 
 The test, stage, and prod jobs fail, because we have not yet added scaffolding for deployment to Cloud Foundry. We do that next.
 
@@ -335,7 +338,7 @@ applications:
 
 The `TRUST_CERTS` variable is used by the Pivotal Spring Cloud Services (Config Server, Service Registry, and Circuit Breaker Dashboard), which we use in this example. The value specified in the preceding example assumes deployment to Pivotal Web Services. Update it accordingly if you are deploying to a different Cloud Foundry foundation, or you can leave it out altogether if you are replacing the Pivotal Spring Cloud Services with alternative implementations (for example, deploying the services as applications and exposing them as user-provided services).
 
-If you wishi, you can add additional values to the manifest files -- for example, if additional values are useful for any manual deployment you may still want to do or if you need additional values in your Cloud Pipelines deployment. For example, the following file could be an alternative `manifest.yml` for `fortune-service`:
+If you wish, you can add additional values to the manifest files -- for example, if additional values are useful for any manual deployment you may still want to do or if you need additional values in your Cloud Pipelines deployment. For example, the following file could be an alternative `manifest.yml` for `fortune-service`:
 
 ====
 [source,yml]
@@ -368,11 +371,11 @@ Note that Cloud Pipelines ignores `random-route` and `path`. `instances` is hono
 
 The Cloud Foundry manifest created in the previous step includes the logical names of the services to which the applications should be bound, but it does not describe how the services can be provisioned. Hence, we add a second manifest file so that Cloud Pipelines can provision the services.
 
-Add a file called `sc-pipelines.yml` to each application and include the same list of services as in the corresponding `manifest.yml`. Add the necessary details such that Cloud Pipelines can construct a `cf create-service` command.
+Add a file called `cloud-pipelines.yml` to each application and include the same list of services as in the corresponding `manifest.yml`. Add the necessary details such that Cloud Pipelines can construct a `cf create-service` command.
 
 NOTE: The `type: broker' parameter in the next example instructs Cloud Pipelines to provision a service by using `cf create-service'. Other service types are also supported: cups, syslog, route, app, and stubrunner.
 
-More specifically, for `greeting-ui`, create an `sc-pipelines.yml` file with the following content:
+More specifically, for `greeting-ui`, create an `cloud-pipelines.yml` file with the following content:
 
 ====
 [source,yml]
@@ -405,7 +408,7 @@ test:
 ----
 ====
 
-The `sc-pipelines.yml` file for `fortune-service` is similar, with the addition of the `fortune-db` service, as follows:
+The `cloud-pipelines.yml` file for `fortune-service` is similar, with the addition of the `fortune-db` service, as follows:
 
 ====
 [source,yml]
@@ -453,12 +456,11 @@ TIP: Notice the `useExisting: true` parameter in the preceding example. By defau
 Push the preceding changes to GitHub. You should be pushing the following to each of the two application repositories:
 
 * A new app manifest file
-* A new sc-pipelines manifest file
+* A new cloud-pipelines manifest file
 
 ===== 1.11 Create Cloud Foundry Orgs and Spaces
 
 Cloud Pipelines requires that the Cloud Foundry test, stage, and prod spaces exist before a pipeline is run. If you wish, you can use different foundations, orgs, and users for each. For simplicity, in this example, we use a single foundation (PWS), a single org, and a single user.
-
 
 You can name the orgs and spaces anything you like. Each app requires its own test space. The stage and prod spaces are shared.
 
@@ -476,7 +478,7 @@ cf create-space scp-prod
 
 ===== 1.12 Create Cloud Foundry Stage and Prod Service Instances
 
-Cloud Pipelines dynamically creates the services in the test spaces, as defined by the `sc-pipelines.yml` file we created previously. Optionally, you can add a second section to the `sc-pipelines.yml` file for the stage environment, and these are created dynamically as well. However, you must always crate prod manually.
+Cloud Pipelines dynamically creates the services in the test spaces, as defined by the `cloud-pipelines.yml` file we created previously. Optionally, you can add a second section to the `cloud-pipelines.yml` file for the stage environment, and these are created dynamically as well. However, you must always crate prod manually.
 
 For this example, we create both the stage and prod services manually.
 
@@ -495,7 +497,7 @@ The following example shows an updated credentials file:
 ====
 [source,yml]
 ----
-pipeline-descriptor: sc-pipelines.yml
+pipeline-descriptor: cloud-pipelines.yml
 
 paas-type: cf
 
@@ -534,7 +536,7 @@ On Cloud Foundry, you should now see the apps deployed in the test, stage, and p
 
 image::{cf-migration-root-docs}/cf_test_and_prod_deployed.png[title="Cloud Foundry Test and Prod Deployment"]
 
-Notice that the five services declared in its manifest files (`sc-pipelines.yml` for provisioning and `manifest.yml` for binding) have also been automatically provisioned. The image also shows the deployment of the same app to the shared prod space. Notice that the instance of the previous version has been renamed as `venerable` and stopped. If a rollback were deemed necessary, the `prod-rollback` job in the pipeline could be triggered to remove the currently running version, remove the `prod/<version_number>` tag from GitHub, and re-start the former (`venerable`) version.
+Notice that the five services declared in its manifest files (`cloud-pipelines.yml` for provisioning and `manifest.yml` for binding) have also been automatically provisioned. The image also shows the deployment of the same app to the shared prod space. Notice that the instance of the previous version has been renamed as `venerable` and stopped. If a rollback were deemed necessary, the `prod-rollback` job in the pipeline could be triggered to remove the currently running version, remove the `prod/<version_number>` tag from GitHub, and re-start the former (`venerable`) version.
 
 ===== Stage One Recap and Next Steps
 
@@ -545,7 +547,7 @@ What have we accomplished?
 ** Automatically provision services in test spaces and, optionally, in stage spaces as well.
 ** Dynamically clean up the test spaces between pipeline executions.
 ** Upload the app artifacts to the maven repo (for example, Bintray).
-** Tag the git repositories with `dev/<version_number>` and `prod/<version_number>`.
+** Tag the git repositories with `dev/<app_name>/<version_number>` and `prod/<app_name>/<version_number>`.
 * After each successful pipeline run, we can, if necessary, to roll back to the last deployed version byusing the `prod-rollback` job.
 
 These accomplishments are extremely valuable. However, to derive confidence and reliability from the pipelines, we need to incorporate testing. We do this in Stage Two of the application migration.
@@ -1516,7 +1518,7 @@ You should now see the `cloudfoundry-stub-runner-boot` artifacts uploaded on Bin
 
 Next, we add a manifest file for the stub runner application for deployment to Cloud Foundry.
 
-Place this file in the `greeting-ui` repo. The file name and location can be your choice. For this example, we use `sc-pipelines/manifest-stubrunner.yml`. The following image shows the file in the appropriate folder:
+Place this file in the `greeting-ui` repo. The file name and location can be your choice. For this example, we use `cloud-pipelines/manifest-stubrunner.yml`. The following image shows the file in the appropriate folder:
 
 image::{cf-migration-root-docs}/greeting_ui_stubrunner_manifest.png[title="greeting-ui Stub Runner Manifest"]
 
@@ -1538,7 +1540,7 @@ applications:
 
 ====== Provide a Stub Runner Jar and Manifest Information to the Pipeline
 
-Now that we have a jar file and a manifest file for our stub runner application, we need to provide this information to our `greeting-ui` pipeline so that the pipeline downloads the jar from Bintray and deploys it to Cloud Foundry. We do this through the `greeting-ui` `sc-pipelines.yml` file. We add an entry to the list of services in the `test` section, as follows:
+Now that we have a jar file and a manifest file for our stub runner application, we need to provide this information to our `greeting-ui` pipeline so that the pipeline downloads the jar from Bintray and deploys it to Cloud Foundry. We do this through the `greeting-ui` `cloud-pipelines.yml` file. We add an entry to the list of services in the `test` section, as follows:
 
 ====
 [source,yml]
@@ -1546,7 +1548,7 @@ Now that we have a jar file and a manifest file for our stub runner application,
     - name: stubrunner
       type: stubrunner
       coordinates: io.pivotal:cloudfoundry-stub-runner-boot:0.0.1.M1
-      pathToManifest: sc-pipelines/manifest-stubrunner.yml
+      pathToManifest: cloud-pipelines/manifest-stubrunner.yml
 ----
 ====
 
@@ -1642,8 +1644,8 @@ In this case, in contrast to the integration test we created earlier for `greeti
 Push contract-based changes for `greeting-ui`. You should be pushing the following new or modified files:
 
 * `pom.xml`
-* `sc-pipelines.yml`
-* `sc-pipelines/manifest-stubrunner.yml`
+* `cloud-pipelines.yml`
+* `cloud-pipelines/manifest-stubrunner.yml`
 * `src/test/java/io/pivotal/fortune/FortuneServiceTests.java`
 * `src/test/java/smoke/SmokeTests.java`
 
