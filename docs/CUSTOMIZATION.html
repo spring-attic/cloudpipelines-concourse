@@ -438,7 +438,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel1">
 <li><a href="#customizing-the-project">1. Customizing the Project</a>
 <ul class="sectlevel2">
-<li><a href="#customization-overriding-scripts">1.1. Overriding Scripts</a></li>
+<li><a href="#customization-overriding-project-setup">1.1. Overriding Project Setup</a></li>
 <li><a href="#customization-overriding-pipelines">1.2. Overriding Pipelines</a></li>
 </ul>
 </li>
@@ -455,7 +455,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
-<p><a href="#customization-overriding-scripts">Overriding Scripts</a></p>
+<p><a href="#customization-overriding-project-setup">Overriding Project Setup</a></p>
 </li>
 <li>
 <p><a href="#customization-overriding-pipelines">Overriding Pipelines</a></p>
@@ -463,10 +463,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </div>
 <div class="sect2">
-<h3 id="customization-overriding-scripts">1.1. Overriding Scripts</h3>
+<h3 id="customization-overriding-project-setup">1.1. Overriding Project Setup</h3>
 <div class="paragraph">
-<p>You can read the documentation of <a href="https://github.com/CloudPipelines/scripts">Cloud Pipelines Scripts</a>
-to see how to override the scripts.</p>
+<p>If you want to customize the Cloud Pipelines build, you can update the contents
+of the <code>gradle/custom.gradle</code> build script. That way your customizations will not
+interfere with the changes in the main part of the code, thus there should be
+no merge conflicts when pulling the changes from Cloud Pipeline repositories.</p>
 </div>
 </div>
 <div class="sect2">
@@ -481,7 +483,7 @@ a copy of the Concourse pipeline <code>yaml</code> files and modify it.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-08-13 15:00:26 CEST
+Last updated 2018-08-16 14:13:54 CEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">

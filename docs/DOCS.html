@@ -451,7 +451,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#customizing-the-project">2. Customizing the Project</a>
 <ul class="sectlevel2">
-<li><a href="#customization-overriding-scripts">2.1. Overriding Scripts</a></li>
+<li><a href="#customization-overriding-project-setup">2.1. Overriding Project Setup</a></li>
 <li><a href="#customization-overriding-pipelines">2.2. Overriding Pipelines</a></li>
 </ul>
 </li>
@@ -756,7 +756,7 @@ export CRAWLER_CREDENTIALS="${CRAWLER_CREDENTIALS:-}"</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="#customization-overriding-scripts">Overriding Scripts</a></p>
+<p><a href="#customization-overriding-project-setup">Overriding Project Setup</a></p>
 </li>
 <li>
 <p><a href="#customization-overriding-pipelines">Overriding Pipelines</a></p>
@@ -764,10 +764,12 @@ export CRAWLER_CREDENTIALS="${CRAWLER_CREDENTIALS:-}"</code></pre>
 </ul>
 </div>
 <div class="sect2">
-<h3 id="customization-overriding-scripts">2.1. Overriding Scripts</h3>
+<h3 id="customization-overriding-project-setup">2.1. Overriding Project Setup</h3>
 <div class="paragraph">
-<p>You can read the documentation of <a href="https://github.com/CloudPipelines/scripts">Cloud Pipelines Scripts</a>
-to see how to override the scripts.</p>
+<p>If you want to customize the Cloud Pipelines build, you can update the contents
+of the <code>gradle/custom.gradle</code> build script. That way your customizations will not
+interfere with the changes in the main part of the code, thus there should be
+no merge conflicts when pulling the changes from Cloud Pipeline repositories.</p>
 </div>
 </div>
 <div class="sect2">
