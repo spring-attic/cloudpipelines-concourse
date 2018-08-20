@@ -44,6 +44,8 @@ Cloud Pipelines Concourse contains bash scripts that are required at runtime of
 execution of a Concourse pipeline. If you want to read its documentation, it's
 available under https://github.com/{org}/{repo}/blob/{branch}/src/tasks/README.adoc[`src/tasks/README.adoc`] file of Cloud Pipelines repository.
 
+You can link:BASH_SCRIPTS.html[click here to go the separate subpage containing that documentation].
+
 [[project-crawler]]
 === Project Crawler
 

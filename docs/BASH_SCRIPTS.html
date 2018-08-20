@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.7.1">
-<title>Introduction</title>
+<title>SCRIPTS</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -433,232 +433,598 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
+<h1>SCRIPTS</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#pipeline-sh1">pipeline.sh(1)</a>
 <ul class="sectlevel1">
-<li><a href="#introduction">1. Introduction</a>
+<li><a href="#name">1. NAME</a></li>
+<li><a href="#synopsis">2. SYNOPSIS</a></li>
+<li><a href="#functions">3. FUNCTIONS</a></li>
+<li><a href="#details">4. DETAILS</a>
 <ul class="sectlevel2">
-<li><a href="#five-second-introduction">1.1. Five-second Introduction</a></li>
-<li><a href="#five-minute-introduction">1.2. Five-minute Introduction</a>
-<ul class="sectlevel3">
-<li><a href="#how-to-use-it">1.2.1. How to Use It</a></li>
-<li><a href="#how-it-works">1.2.2. How It Works</a></li>
+<li><a href="#script-body">4.1. Script Body</a></li>
 </ul>
 </li>
-<li><a href="#project-crawler">1.3. Project Crawler</a></li>
+</ul>
+</li>
+<li><a href="#generate-settings-sh1">generate-settings.sh(1)</a>
+<ul class="sectlevel1">
+<li><a href="#name-2">5. NAME</a></li>
+<li><a href="#synopsis-2">6. SYNOPSIS</a></li>
+<li><a href="#functions-2">7. FUNCTIONS</a></li>
+<li><a href="#details-2">8. DETAILS</a>
+<ul class="sectlevel2">
+<li><a href="#script-body-2">8.1. Script Body</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#resource-utils-sh1">resource-utils.sh(1)</a>
+<ul class="sectlevel1">
+<li><a href="#name-3">9. NAME</a></li>
+<li><a href="#synopsis-3">10. SYNOPSIS</a></li>
+<li><a href="#functions-3">11. FUNCTIONS</a></li>
+<li><a href="#details-3">12. DETAILS</a>
+<ul class="sectlevel2">
+<li><a href="#script-body-3">12.1. Script Body</a></li>
+<li><a href="#exportkeyvalproperties">12.2. exportKeyValProperties</a></li>
+<li><a href="#load_pubkey">12.3. load_pubkey</a></li>
+<li><a href="#passkeyvalproperties">12.4. passKeyValProperties</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#task-sh1">task.sh(1)</a>
+<ul class="sectlevel1">
+<li><a href="#name-4">13. NAME</a></li>
+<li><a href="#synopsis-4">14. SYNOPSIS</a></li>
+<li><a href="#functions-4">15. FUNCTIONS</a></li>
+<li><a href="#details-4">16. DETAILS</a>
+<ul class="sectlevel2">
+<li><a href="#script-body-4">16.1. Script Body</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#task-sh1-2">task.sh(1)</a>
+<ul class="sectlevel1">
+<li><a href="#name-5">17. NAME</a></li>
+<li><a href="#synopsis-5">18. SYNOPSIS</a></li>
+<li><a href="#functions-5">19. FUNCTIONS</a></li>
+<li><a href="#details-5">20. DETAILS</a>
+<ul class="sectlevel2">
+<li><a href="#script-body-5">20.1. Script Body</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#task-sh1-3">task.sh(1)</a>
+<ul class="sectlevel1">
+<li><a href="#name-6">21. NAME</a></li>
+<li><a href="#synopsis-6">22. SYNOPSIS</a></li>
+<li><a href="#functions-6">23. FUNCTIONS</a></li>
+<li><a href="#details-6">24. DETAILS</a>
+<ul class="sectlevel2">
+<li><a href="#script-body-6">24.1. Script Body</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#task-sh1-4">task.sh(1)</a>
+<ul class="sectlevel1">
+<li><a href="#name-7">25. NAME</a></li>
+<li><a href="#synopsis-7">26. SYNOPSIS</a></li>
+<li><a href="#functions-7">27. FUNCTIONS</a></li>
+<li><a href="#details-7">28. DETAILS</a>
+<ul class="sectlevel2">
+<li><a href="#script-body-7">28.1. Script Body</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#task-sh1-5">task.sh(1)</a>
+<ul class="sectlevel1">
+<li><a href="#name-8">29. NAME</a></li>
+<li><a href="#synopsis-8">30. SYNOPSIS</a></li>
+<li><a href="#functions-8">31. FUNCTIONS</a></li>
+<li><a href="#details-8">32. DETAILS</a>
+<ul class="sectlevel2">
+<li><a href="#script-body-8">32.1. Script Body</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
+<h1 id="pipeline-sh1" class="sect0">pipeline.sh(1)</h1>
 <div class="sect1">
-<h2 id="introduction">1. Introduction</h2>
+<h2 id="name">1. NAME</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This section describes how Concourse works with Cloud Pipelines.</p>
+<p>pipeline.sh - a shell script</p>
 </div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-You do not need to use all the pieces of Cloud Pipelines. You
-can (and should) gradually migrate your applications to use those pieces of
-Cloud Pipelines that you think best suit your needs.
-</td>
-</tr>
-</table>
 </div>
-<div class="sect2">
-<h3 id="five-second-introduction">1.1. Five-second Introduction</h3>
+</div>
+<div class="sect1">
+<h2 id="synopsis">2. SYNOPSIS</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Cloud Pipelines Concourse provides setup for Concourse that creates jobs and pipelines.
-The pipelines and jobs use the scripts defined in
-<a href="https://github.com/CloudPipelines/scripts">Cloud Pipelines Scripts</a> repo.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="five-minute-introduction">1.2. Five-minute Introduction</h3>
-<div class="paragraph">
-<p>In these sections you will learn how exactly Cloud Pipelines Concourse integrates
-with <a href="https://github.com/CloudPipelines/scripts">Cloud Pipelines Scripts</a> and how
-you can setup deployment pipelines for each project.</p>
-</div>
-<div class="sect3">
-<h4 id="how-to-use-it">1.2.1. How to Use It</h4>
-<div class="paragraph">
-<p>The suggested approach is to use the <a href="#project-crawler">Project Crawler</a> approach, where
-we scan your organization for projects and create deployment pipeline for each.</p>
-</div>
-<div class="paragraph">
-<p>Another approach is to add the contents of each project and alter it to suit your needs.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="how-it-works">1.2.2. How It Works</h4>
-<div class="paragraph">
-<p>As the following image shows, Cloud Pipelines contains logic to generate a
-pipeline and the runtime to execute pipeline steps.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="https://raw.githubusercontent.com/CloudPipelines/concourse/master/docs/images/intro/how.png" alt="how">
-</div>
-<div class="title">Figure 1. How Cloud Pipelines works</div>
-</div>
-<div class="paragraph">
-<p>Once a pipeline is created the jobs are ran, they clone or download Cloud Pipelines
-code to run each step. Those steps run functions that are
-defined in <a href="https://github.com/CloudPipelines/scripts">Cloud Pipelines Scripts</a>.</p>
-</div>
-<div class="paragraph">
-<p>Cloud Pipelines performs steps to guess what kind of a project your
-repository is (e.g. JVM or PHP) and what framework it uses (Maven or Gradle), and it
-can deploy your application to a cloud (e.g. Cloud Foundry or Kubernetes)</p>
-</div>
-<div class="paragraph">
-<p>Cloud Pipelines Concourse contains bash scripts that are required at runtime of
-execution of a Concourse pipeline. If you want to read its documentation, it&#8217;s
-available under <a href="https://github.com/CloudPipelines/concourse/blob/master/src/tasks/README.adoc"><code>src/tasks/README.adoc</code></a> file of Cloud Pipelines repository.</p>
-</div>
-<div class="paragraph">
-<p>You can <a href="BASH_SCRIPTS.html">click here to go the separate subpage containing that documentation</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="project-crawler">1.3. Project Crawler</h3>
-<div class="paragraph">
-<p>Cloud Pipelines Concourse comes with a <code>crawler.groovy</code> file that allows to
-go through the repositories in an organization in an SCM server (e.g. Github, Gitlab, Bitbucket)
-and for each repo it will create a pipeline in Concourse.</p>
-</div>
-<div class="paragraph">
-<p>We use the <a href="https://github.com/CloudPipelines/project-crawler">Project Crawler</a>
-library, which can:</p>
+<p>Contains default setup for all Concourse scripts.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Fetch all projects for a given organization.</p>
+<p>Copies the Cloud Pipelines Scripts to a subfolder of the repository to reference it in further steps.</p>
 </li>
 <li>
-<p>Fetch contents of a file for a given repository.</p>
+<p>Sources Concourse scripts utility functions</p>
+</li>
+<li>
+<p>References variables from the key-value Concourse resource</p>
+</li>
+<li>
+<p>Generates required settings.xml / gradle.properties values</p>
+</li>
+<li>
+<p>Sources pipeline.sh script from Cloud Pipelines Scripts</p>
 </li>
 </ul>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="functions">3. FUNCTIONS</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="details">4. DETAILS</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="script-body">4.1. Script Body</h3>
 <div class="paragraph">
-<p>For your convenience we&#8217;re providing you with a script under <code>src/pipeline/set_pipeline_crawler.sh</code>
-that:</p>
+<p>Has 43 line(s). Calls functions:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Script-Body
+`-- resource-utils.sh/exportKeyValProperties</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Uses feature(s): <em>export</em>, <em>source</em></p>
+</div>
+<div class="paragraph">
+<p><em>Exports (environment):</em> CI <strong class="big">//</strong> LATEST_PROD_TAG <strong class="big">//</strong> PIPELINE_VERSION <strong class="big">//</strong> SCRIPTS_OUTPUT_FOLDER <strong class="big">//</strong> TERM</p>
+</div>
+</div>
+</div>
+</div>
+<h1 id="generate-settings-sh1" class="sect0">generate-settings.sh(1)</h1>
+<div class="sect1">
+<h2 id="name-2">5. NAME</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>generate-settings.sh - a shell script</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="synopsis-2">6. SYNOPSIS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Generates settings.xml and gradle.properties#</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="functions-2">7. FUNCTIONS</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="details-2">8. DETAILS</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="script-body-2">8.1. Script Body</h3>
+<div class="paragraph">
+<p>Has 42 line(s). No functions are called (may set up e.g. a hook, a Zle widget bound to a key, etc.).</p>
+</div>
+</div>
+</div>
+</div>
+<h1 id="resource-utils-sh1" class="sect0">resource-utils.sh(1)</h1>
+<div class="sect1">
+<h2 id="name-3">9. NAME</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>resource-utils.sh - a shell script</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="synopsis-3">10. SYNOPSIS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Contains</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Verifies if Groovy is installed. If not, fetches it and unpacks to <code>build/groovy</code></p>
+<p>utility functions required by the key-value Concourse resource.</p>
 </li>
 <li>
-<p>Defines all the required environment variables</p>
-</li>
-<li>
-<p>Runs the <code>crawler.groovy</code> script</p>
+<p>functions for setting up the ssh agent</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>The following diagram depicts this situation:</p>
 </div>
-<div class="imageblock">
+</div>
+<div class="sect1">
+<h2 id="functions-3">11. FUNCTIONS</h2>
+<div class="sectionbody">
+<div class="literalblock">
 <div class="content">
-<img src="crawler.png" alt="crawler" width="1039" height="593">
+<pre>exportKeyValProperties
+load_pubkey
+passKeyValProperties</pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="details-3">12. DETAILS</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="script-body-3">12.1. Script Body</h3>
 <div class="paragraph">
-<p>Project Crawler supports repositories stored at Github, Gitlab, and Bitbucket.
-You can also register your own implementation. See the
-<a href="https://github.com/CloudPipelines/project-crawler">Project Crawler</a> repository for more information.</p>
-</div>
-<div class="paragraph">
-<p>Below you can find the environment variables required by the Bash script</p>
-</div>
-<div class="exampleblock">
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash"># root URL of the SCM server's API
-export CRAWLER_ROOTURL="${CRAWLER_ROOTURL:-https://github.com}"
-# username to connect to the API
-export CRAWLER_USERNAME="${CRAWLER_USERNAME:-}"
-# password to connect to the API
-export CRAWLER_PASSWORD="${CRAWLER_PASSWORD:-}"
-# token to connect to the API
-export CRAWLER_TOKEN="${CRAWLER_TOKEN:-}"
-# pattern to exclude certain projects
-export CRAWLER_REPOPROJECTSEXCLUDEPATTERN="${CRAWLER_REPOPROJECTSEXCLUDEPATTERN:-}"
-# type of SCM repo server (GITHUB, GITLAB, BITBUCKET, OTHER). Can be resolved from URL
-export CRAWLER_REPOTYPE="${CRAWLER_REPOTYPE:-}"
-# name of the pipeline descriptor
-export CRAWLER_ORG="${CRAWLER_ORG:-}"
-# organization / project name
-export CRAWLER_PIPELINEDESCRIPTOR="${CRAWLER_PIPELINEDESCRIPTOR:-}"
-# alias to be used by FLY CLI to set the pipeline
-export CRAWLER_ALIAS="${CRAWLER_ALIAS:-}"
-# credentials file to be used by FLY CLI to set the pipeline
-export CRAWLER_CREDENTIALS="${CRAWLER_CREDENTIALS:-}"</code></pre>
-</div>
-</div>
-</div>
+<p>Has 10 line(s). No functions are called (may set up e.g. a hook, a Zle widget bound to a key, etc.).</p>
 </div>
 <div class="paragraph">
-<p>Here you can find the description of the Groovy script</p>
+<p>Uses feature(s): <em>export</em></p>
 </div>
-<div class="exampleblock">
+<div class="paragraph">
+<p><em>Exports (environment):</em> SSH_AGENT_BIN <strong class="big">//</strong> TEST_MODE <strong class="big">//</strong> TMPDIR</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="exportkeyvalproperties">12.2. exportKeyValProperties</h3>
+<div class="quoteblock">
+<blockquote>
+<div class="literalblock">
 <div class="content">
-<div class="listingblock">
+<pre># Reads all key-value pairs in keyval.properties input file and exports them as env vars</pre>
+</div>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>Has 14 line(s). Doesn&#8217;t call other functions.</p>
+</div>
+<div class="paragraph">
+<p>Uses feature(s): <em>export</em></p>
+</div>
+<div class="paragraph">
+<p>Called by:</p>
+</div>
+<div class="literalblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">	The arguments for this script will be taken in the order:
-	Arguments, System Properties, Environment Variables
-
-	Arguments:
-	0 - rootUrl - root URL of the SCM server's API
-	1 - username - username to connect to the API
-	2 - password - password to connect to the API
-	3 - token - token to connect to the API
-	4 - repoProjectsExcludePattern - pattern to exclude certain projects
-	5 - repoType - type of SCM repo server (GITHUB, GITLAB, BITBUCKET, OTHER)
-	6 - org - organization / project name
-	7 - pipelineDescriptor - name of the pipeline descriptor
-	8 - alias - alias to be used by FLY CLI to set the pipeline
-	9 - credentials - credentials file to be used by FLY CLI to set the pipeline
-
-	System props with the name equal to arguments (e.g. rootUrl)
-	Environment variables are upper case arguments with CRAWLER_ prefix (e.g. CRAWLER_ROOTURL)
-
-	E.g. of calling the script
-
-	#!/bin/bash
-
-	set -o errexit
-	set -o errtrace
-	set -o pipefail
-
-	export CRAWLER_ROOTURL="https://github.com"
-	export CRAWLER_USERNAME="username"
-	export CRAWLER_PASSWORD="password"
-	export CRAWLER_TOKEN=""
-	export CRAWLER_REPOPROJECTSEXCLUDEPATTERN=""
-	export CRAWLER_REPOTYPE=""
-	export CRAWLER_ORG="my-org"
-	export CRAWLER_PIPELINEDESCRIPTOR="my-pipelines.yml"
-	export CRAWLER_ALIAS="alias"
-	export CRAWLER_CREDENTIALS="credentials-cf.yml"
-
-	./set_pipeline_crawler.sh</code></pre>
+<pre>pipeline.sh/Script-Body</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><em>Environment variables used:</em> task.sh &#8594; KEYVAL_RESOURCE <strong class="big">//</strong> task.sh &#8594; ROOT_FOLDER</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="load_pubkey">12.3. load_pubkey</h3>
+<div class="quoteblock">
+<blockquote>
+<div class="literalblock">
+<div class="content">
+<pre># Loads git key - needed for prod-rollback to delete prod tag after rollback</pre>
+</div>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>Has 22 line(s). Doesn&#8217;t call other functions.</p>
+</div>
+<div class="paragraph">
+<p>Uses feature(s): <em>eval</em>, <em>trap</em></p>
+</div>
+<div class="paragraph">
+<p>Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).</p>
+</div>
+<div class="paragraph">
+<p><em>Environment variables used:</em> SSH_AGENT_BIN <strong class="big">//</strong> TEST_MODE <strong class="big">//</strong> TMPDIR</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="passkeyvalproperties">12.4. passKeyValProperties</h3>
+<div class="quoteblock">
+<blockquote>
+<div class="literalblock">
+<div class="content">
+<pre># Writes all env vars that begin with PASSED_ to the keyval.properties output file</pre>
+</div>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>Has 13 line(s). Doesn&#8217;t call other functions.</p>
+</div>
+<div class="paragraph">
+<p>Called by:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>task.sh/\]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><em>Environment variables used:</em> task.sh &#8594; KEYVALOUTPUT_RESOURCE <strong class="big">//</strong> task.sh &#8594; ROOT_FOLDER</p>
 </div>
 </div>
 </div>
+</div>
+<h1 id="task-sh1" class="sect0">task.sh(1)</h1>
+<div class="sect1">
+<h2 id="name-4">13. NAME</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>task.sh - a shell script</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="synopsis-4">14. SYNOPSIS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Contains default setup for a generic Cloud Pipelines Concourse step</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Sources the default setup for all Cloud Pipelines Concourse scripts</p>
+</li>
+<li>
+<p>Executes the passed script to run</p>
+</li>
+<li>
+<p>Passes properties via key-value Concourse resource</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="functions-4">15. FUNCTIONS</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="details-4">16. DETAILS</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="script-body-4">16.1. Script Body</h3>
+<div class="paragraph">
+<p>Has 22 line(s). No functions are called (may set up e.g. a hook, a Zle widget bound to a key, etc.).</p>
+</div>
+<div class="paragraph">
+<p>Uses feature(s): <em>export</em>, <em>source</em></p>
+</div>
+<div class="paragraph">
+<p><em>Exports (environment):</em> CONCOURSE_SCRIPTS_RESOURCE <strong class="big">//</strong> KEYVALOUTPUT_RESOURCE <strong class="big">//</strong> KEYVAL_RESOURCE <strong class="big">//</strong> OUTPUT_RESOURCE <strong class="big">//</strong> REPO_RESOURCE <strong class="big">//</strong> ROOT_FOLDER <strong class="big">//</strong> SCRIPTS_RESOURCE</p>
+</div>
+</div>
+</div>
+</div>
+<h1 id="task-sh1-2" class="sect0">task.sh(1)</h1>
+<div class="sect1">
+<h2 id="name-5">17. NAME</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>task.sh - a shell script</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="synopsis-5">18. SYNOPSIS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Generates and commits a version and passes it to the Concourse key-value resource.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="functions-5">19. FUNCTIONS</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="details-5">20. DETAILS</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="script-body-5">20.1. Script Body</h3>
+<div class="paragraph">
+<p>Has 34 line(s). No functions are called (may set up e.g. a hook, a Zle widget bound to a key, etc.).</p>
+</div>
+<div class="paragraph">
+<p>Uses feature(s): <em>export</em></p>
+</div>
+<div class="paragraph">
+<p><em>Exports (environment):</em> GIT_BIN <strong class="big">//</strong> KEYVALOUTPUT_RESOURCE <strong class="big">//</strong> ROOT_FOLDER</p>
+</div>
+</div>
+</div>
+</div>
+<h1 id="task-sh1-3" class="sect0">task.sh(1)</h1>
+<div class="sect1">
+<h2 id="name-6">21. NAME</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>task.sh - a shell script</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="synopsis-6">22. SYNOPSIS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This script:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Retrieves the latest production tag</p>
+</li>
+<li>
+<p>Calls api compatibility step</p>
+</li>
+<li>
+<p>Calls build and upload step</p>
+</li>
+<li>
+<p>Commits a tag with pipeline version</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="functions-6">23. FUNCTIONS</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="details-6">24. DETAILS</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="script-body-6">24.1. Script Body</h3>
+<div class="paragraph">
+<p>Has 22 line(s). No functions are called (may set up e.g. a hook, a Zle widget bound to a key, etc.).</p>
+</div>
+<div class="paragraph">
+<p>Uses feature(s): <em>export</em>, <em>source</em></p>
+</div>
+<div class="paragraph">
+<p><em>Exports (environment):</em> CONCOURSE_SCRIPTS_RESOURCE <strong class="big">//</strong> KEYVALOUTPUT_RESOURCE <strong class="big">//</strong> KEYVAL_RESOURCE <strong class="big">//</strong> OUTPUT_RESOURCE <strong class="big">//</strong> REPO_RESOURCE <strong class="big">//</strong> ROOT_FOLDER <strong class="big">//</strong> SCRIPTS_RESOURCE</p>
+</div>
+</div>
+</div>
+</div>
+<h1 id="task-sh1-4" class="sect0">task.sh(1)</h1>
+<div class="sect1">
+<h2 id="name-7">25. NAME</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>task.sh - a shell script</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="synopsis-7">26. SYNOPSIS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This script:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Sources default Cloud Pipelines Concourse scripts setup</p>
+</li>
+<li>
+<p>Loads all git related functionality to allow tag manipulation</p>
+</li>
+<li>
+<p>Calls the production deployment script of Cloud Pipelines script</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="functions-7">27. FUNCTIONS</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="details-7">28. DETAILS</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="script-body-7">28.1. Script Body</h3>
+<div class="paragraph">
+<p>Has 22 line(s). No functions are called (may set up e.g. a hook, a Zle widget bound to a key, etc.).</p>
+</div>
+<div class="paragraph">
+<p>Uses feature(s): <em>export</em>, <em>source</em></p>
+</div>
+<div class="paragraph">
+<p><em>Exports (environment):</em> CONCOURSE_SCRIPTS_RESOURCE <strong class="big">//</strong> KEYVALOUTPUT_RESOURCE <strong class="big">//</strong> KEYVAL_RESOURCE <strong class="big">//</strong> OUTPUT_RESOURCE <strong class="big">//</strong> REPO_RESOURCE <strong class="big">//</strong> ROOT_FOLDER <strong class="big">//</strong> SCRIPTS_RESOURCE</p>
+</div>
+</div>
+</div>
+</div>
+<h1 id="task-sh1-5" class="sect0">task.sh(1)</h1>
+<div class="sect1">
+<h2 id="name-8">29. NAME</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>task.sh - a shell script</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="synopsis-8">30. SYNOPSIS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This script:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Sources default Cloud Pipelines Concourse scripts setup</p>
+</li>
+<li>
+<p>Loads all git related functionality to allow tag manipulation</p>
+</li>
+<li>
+<p>Calls the production rollback script of Cloud Pipelines script</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="functions-8">31. FUNCTIONS</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="details-8">32. DETAILS</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="script-body-8">32.1. Script Body</h3>
+<div class="paragraph">
+<p>Has 22 line(s). No functions are called (may set up e.g. a hook, a Zle widget bound to a key, etc.).</p>
+</div>
+<div class="paragraph">
+<p>Uses feature(s): <em>export</em>, <em>source</em></p>
+</div>
+<div class="paragraph">
+<p><em>Exports (environment):</em> CONCOURSE_SCRIPTS_RESOURCE <strong class="big">//</strong> KEYVALOUTPUT_RESOURCE <strong class="big">//</strong> KEYVAL_RESOURCE <strong class="big">//</strong> OUTPUT_RESOURCE <strong class="big">//</strong> REPO_RESOURCE <strong class="big">//</strong> ROOT_FOLDER <strong class="big">//</strong> SCRIPTS_RESOURCE</p>
 </div>
 </div>
 </div>
