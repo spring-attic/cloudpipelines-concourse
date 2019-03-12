@@ -28,9 +28,9 @@ version = project.findProperty("newVersion") ?: project.findProperty("defaultVer
 repositories {
 	jcenter()
 	maven { url "http://rubygems-proxy.torquebox.org/releases/" }
-	maven { url "http://repo.spring.io/libs-snapshot-local" }
-	maven { url "http://repo.spring.io/libs-milestone-local" }
-	maven { url "http://repo.spring.io/libs-release-local" }
+	maven { url "https://repo.spring.io/libs-snapshot-local" }
+	maven { url "https://repo.spring.io/libs-milestone-local" }
+	maven { url "https://repo.spring.io/libs-release-local" }
 }
 
 apply plugin: "com.github.jruby-gradle.base"
