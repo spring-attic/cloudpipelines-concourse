@@ -1,4 +1,4 @@
-@GrabResolver(name = 'spring-snapshot', root = 'http://repo.spring.io/libs-snapshot-local')
+@GrabResolver(name = 'spring-snapshot', root = 'https://repo.spring.io/libs-snapshot-local')
 @Grapes([
 	// transitive has to be [false], otherwise some strange stackoverflow issues are thrown
 	@Grab(group = 'io.cloudpipelines', module = 'project-crawler', version = '1.0.0.BUILD-SNAPSHOT', transitive = false, changing = true),
