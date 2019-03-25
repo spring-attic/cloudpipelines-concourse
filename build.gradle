@@ -58,8 +58,4 @@ task generateScriptsReadme(type: JRubyExec) {
 generateDocs.dependsOn(generateScriptsReadme)
 // Scripts docs generation
 
-task wrapper(type: Wrapper) {
-	gradleVersion = '4.9'
-}
-
 apply from: "gradle/custom.gradle"

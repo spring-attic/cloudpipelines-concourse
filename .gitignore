@@ -39,3 +39,13 @@ pom.xml.versionsBackup
 **/zsdoc/data/
 set_pipeline_crawler_sample.sh
 .asciidoctor
+bin/
+out/
+.classpath
+.project
+.settings/
+.classpath
+.project
+.settings/
+.vscode/
+bin/
