@@ -8,7 +8,6 @@
 <title>Step-by-step Cloud Foundry Migration</title>
 <link rel="stylesheet" href="css/spring.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="css/coderay-asciidoctor.css">
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -286,7 +285,7 @@ You must complete the steps in this stage for both <code>greeting-ui</code> and 
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">git branch version
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git branch version
 git checkout -b cloud-pipelines</code></pre>
 </div>
 </div>
@@ -308,7 +307,7 @@ git checkout -b cloud-pipelines</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn -N io.takari:maven:wrapper</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mvn -N io.takari:maven:wrapper</code></pre>
 </div>
 </div>
 </div>
@@ -320,7 +319,7 @@ git checkout -b cloud-pipelines</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>.
+<pre class="highlightjs highlight"><code>.
 ├── mvnw
 ├── mvnw.cmd
 └── .mvn
@@ -338,7 +337,7 @@ git checkout -b cloud-pipelines</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>#Exceptions
+<pre class="highlightjs highlight"><code>#Exceptions
 !/mvnw
 !/mvnw.cmd
 !/.mvn/wrapper/maven-wrapper.jar
@@ -384,20 +383,20 @@ You must do this step for both application repositories.
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;properties&gt;</span>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;properties&gt;
 ...
-<span class="tag">&lt;distribution.management.release.id&gt;</span>bintray<span class="tag">&lt;/distribution.management.release.id&gt;</span>
-<span class="tag">&lt;distribution.management.release.url&gt;</span>https://api.bintray.com/maven/ciberkleid/maven-repo/fortune-service<span class="tag">&lt;/distribution.management.release.url&gt;</span>
-<span class="tag">&lt;/properties&gt;</span>
+&lt;distribution.management.release.id&gt;bintray&lt;/distribution.management.release.id&gt;
+&lt;distribution.management.release.url&gt;https://api.bintray.com/maven/ciberkleid/maven-repo/fortune-service&lt;/distribution.management.release.url&gt;
+&lt;/properties&gt;
 
 ...
 
-<span class="tag">&lt;distributionManagement&gt;</span>
-<span class="tag">&lt;repository&gt;</span>
-<span class="tag">&lt;id&gt;</span>${distribution.management.release.id}<span class="tag">&lt;/id&gt;</span>
-<span class="tag">&lt;url&gt;</span>${distribution.management.release.url}<span class="tag">&lt;/url&gt;</span>
-<span class="tag">&lt;/repository&gt;</span>
-<span class="tag">&lt;/distributionManagement&gt;</span></code></pre>
+&lt;distributionManagement&gt;
+&lt;repository&gt;
+&lt;id&gt;${distribution.management.release.id}&lt;/id&gt;
+&lt;url&gt;${distribution.management.release.url}&lt;/url&gt;
+&lt;/repository&gt;
+&lt;/distributionManagement&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -412,16 +411,16 @@ You must do this step for both application repositories.
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="tag">&lt;settings&gt;</span>
-  <span class="tag">&lt;servers&gt;</span>
-    <span class="tag">&lt;server&gt;</span>
-      <span class="tag">&lt;id&gt;</span>bintray<span class="tag">&lt;/id&gt;</span>
-      <span class="tag">&lt;username&gt;</span>ciberkleid<span class="tag">&lt;/username&gt;</span>
-      <span class="tag">&lt;password&gt;</span>my-super-secret-api-token<span class="tag">&lt;/password&gt;</span>
-   <span class="tag">&lt;/server&gt;</span>
- <span class="tag">&lt;/servers&gt;</span>
-<span class="tag">&lt;/settings&gt;</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;settings&gt;
+  &lt;servers&gt;
+    &lt;server&gt;
+      &lt;id&gt;bintray&lt;/id&gt;
+      &lt;username&gt;ciberkleid&lt;/username&gt;
+      &lt;password&gt;my-super-secret-api-token&lt;/password&gt;
+   &lt;/server&gt;
+ &lt;/servers&gt;
+&lt;/settings&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -470,22 +469,22 @@ These files will contain credentials to your GitHub repository, your Bintray rep
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="yml"><span class="key">app-url</span>: <span class="string"><span class="content">git@github.com:ciberkleid/fortune-service.git</span></span>
-<span class="key">app-branch</span>: <span class="string"><span class="content">cloud-pipelines</span></span>
-<span class="key">scripts-url</span>: <span class="string"><span class="content">https://github.com/CloudPipelines/scripts.git</span></span>
-<span class="key">scripts-branch</span>: <span class="string"><span class="content">master</span></span>
-<span class="key">concourse-scripts-url</span>: <span class="string"><span class="content">https://github.com/CloudPipelines/concourse.git</span></span>
-<span class="key">concourse-scripts-branch</span>: <span class="string"><span class="content">master</span></span>
-<span class="key">build-options</span>: <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">app-url: git@github.com:ciberkleid/fortune-service.git
+app-branch: cloud-pipelines
+scripts-url: https://github.com/CloudPipelines/scripts.git
+scripts-branch: master
+concourse-scripts-url: https://github.com/CloudPipelines/concourse.git
+concourse-scripts-branch: master
+build-options: ""
 
-<span class="key">github-private-key</span>: <span class="string"><span class="delimiter">|</span><span class="content">
+github-private-key: |
   -----BEGIN RSA PRIVATE KEY-----
   MIIJKQIBAAKCAgEAvwkL97vBllOSE39Wa5ppczT1cr5Blmkhadfoa1Va2/IBVyvk
   NJ9PqoTI+BahF2EgzweyiDSvKsstlTsG7QgiM9So8Voi2PlDOrXL6uOfCuAS/G8X
   ...
-  -----END RSA PRIVATE KEY-----</span></span>
-<span class="key">git-email</span>: <span class="string"><span class="content">ciberkleid@pivotal.io</span></span>
-<span class="key">git-name</span>: <span class="string"><span class="content">Cora Iberkleid</span></span></code></pre>
+  -----END RSA PRIVATE KEY-----
+git-email: ciberkleid@pivotal.io
+git-name: Cora Iberkleid</code></pre>
 </div>
 </div>
 </div>
@@ -497,13 +496,13 @@ These files will contain credentials to your GitHub repository, your Bintray rep
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="yml"><span class="key">m2-settings-repo-id</span>: <span class="string"><span class="content">bintray</span></span>
-<span class="key">m2-settings-repo-username</span>: <span class="string"><span class="content">ciberkleid</span></span>
-<span class="key">m2-settings-repo-password</span>: <span class="string"><span class="content">my-super-secret-api-token</span></span>
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">m2-settings-repo-id: bintray
+m2-settings-repo-username: ciberkleid
+m2-settings-repo-password: my-super-secret-api-token
 
-<span class="key">repo-with-binaries</span>: <span class="string"><span class="content">https://ciberkleid:my-super-secret-api-token@dl.bintray.com/ciberkleid/maven-repo</span></span>
+repo-with-binaries: https://ciberkleid:my-super-secret-api-token@dl.bintray.com/ciberkleid/maven-repo
 
-<span class="key">repo-with-binaries-for-upload</span>: <span class="string"><span class="content">https://api.bintray.com/maven/ciberkleid/maven-repo/fortune-service</span></span></code></pre>
+repo-with-binaries-for-upload: https://api.bintray.com/maven/ciberkleid/maven-repo/fortune-service</code></pre>
 </div>
 </div>
 </div>
@@ -521,11 +520,11 @@ These files will contain credentials to your GitHub repository, your Bintray rep
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash"># Set greeting-ui pipeline
-fly -t myTarget set-pipeline -p greeting-ui -c &quot;${SCP_HOME}/concourse/src/pipeline/pipeline.yml&quot; -l &quot;${SCP_HOME}/credentials/credentials-greeting-ui.yml&quot; -n
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Set greeting-ui pipeline
+fly -t myTarget set-pipeline -p greeting-ui -c "${SCP_HOME}/concourse/src/pipeline/pipeline.yml" -l "${SCP_HOME}/credentials/credentials-greeting-ui.yml" -n
 
 # Set fortune-service pipeline
-fly -t myTarget set-pipeline -p fortune-service -c &quot;${SCP_HOME}/concourse/src/pipeline/pipeline.yml&quot; -l &quot;${SCP_HOME}/credentials/credentials-fortune-service.yml&quot; -n</code></pre>
+fly -t myTarget set-pipeline -p fortune-service -c "${SCP_HOME}/concourse/src/pipeline/pipeline.yml" -l "${SCP_HOME}/credentials/credentials-fortune-service.yml" -n</code></pre>
 </div>
 </div>
 </div>
@@ -558,18 +557,18 @@ fly -t myTarget set-pipeline -p fortune-service -c &quot;${SCP_HOME}/concourse/s
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="yml"><span class="head"><span class="head">---</span></span>
-<span class="key">applications</span>:
-- <span class="string"><span class="content">name: greeting-ui</span></span>
-  <span class="key">timeout</span>: <span class="string"><span class="content">120</span></span>
-  <span class="key">services</span>:
-  - <span class="string"><span class="content">config-server</span></span>
-  - <span class="string"><span class="content">cloud-bus</span></span>
-  - <span class="string"><span class="content">service-registry</span></span>
-  - <span class="string"><span class="content">circuit-breaker-dashboard</span></span>
-  <span class="key">env</span>:
-    <span class="key">JAVA_OPTS</span>: <span class="string"><span class="content">-Djava.security.egd=file:///dev/urandom</span></span>
-    <span class="key">TRUST_CERTS</span>: <span class="string"><span class="content">api.run.pivotal.io</span></span></code></pre>
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">---
+applications:
+- name: greeting-ui
+  timeout: 120
+  services:
+  - config-server
+  - cloud-bus
+  - service-registry
+  - circuit-breaker-dashboard
+  env:
+    JAVA_OPTS: -Djava.security.egd=file:///dev/urandom
+    TRUST_CERTS: api.run.pivotal.io</code></pre>
 </div>
 </div>
 </div>
@@ -581,19 +580,19 @@ fly -t myTarget set-pipeline -p fortune-service -c &quot;${SCP_HOME}/concourse/s
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="yml"><span class="head"><span class="head">---</span></span>
-<span class="key">applications</span>:
-- <span class="string"><span class="content">name: fortune-service</span></span>
-  <span class="key">timeout</span>: <span class="string"><span class="content">120</span></span>
-  <span class="key">services</span>:
-  - <span class="string"><span class="content">fortune-db</span></span>
-  - <span class="string"><span class="content">config-server</span></span>
-  - <span class="string"><span class="content">cloud-bus</span></span>
-  - <span class="string"><span class="content">service-registry</span></span>
-  - <span class="string"><span class="content">circuit-breaker-dashboard</span></span>
-  <span class="key">env</span>:
-    <span class="key">JAVA_OPTS</span>: <span class="string"><span class="content">-Djava.security.egd=file:///dev/urandom</span></span>
-    <span class="key">TRUST_CERTS</span>: <span class="string"><span class="content">api.run.pivotal.io</span></span></code></pre>
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">---
+applications:
+- name: fortune-service
+  timeout: 120
+  services:
+  - fortune-db
+  - config-server
+  - cloud-bus
+  - service-registry
+  - circuit-breaker-dashboard
+  env:
+    JAVA_OPTS: -Djava.security.egd=file:///dev/urandom
+    TRUST_CERTS: api.run.pivotal.io</code></pre>
 </div>
 </div>
 </div>
@@ -608,25 +607,25 @@ fly -t myTarget set-pipeline -p fortune-service -c &quot;${SCP_HOME}/concourse/s
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="yml"><span class="head"><span class="head">---</span></span>
-<span class="key">applications</span>:
-- <span class="string"><span class="content">name: fortune-service</span></span>
-  <span class="key">timeout</span>: <span class="string"><span class="content">120</span></span>
-  <span class="key">instances</span>: <span class="string"><span class="content">3</span></span>
-  <span class="key">memory</span>: <span class="string"><span class="content">1024M</span></span>
-  <span class="key">buildpack</span>: <span class="string"><span class="content">https://github.com/cloudfoundry/java-buildpack.git</span></span>
-  <span class="key">random-route</span>: <span class="string"><span class="content">true</span></span>
-  <span class="key">path</span>: <span class="string"><span class="content">./target/fortune-service-0.0.1-SNAPSHOT.jar</span></span>
-  <span class="key">services</span>:
-  - <span class="string"><span class="content">fortune-db</span></span>
-  - <span class="string"><span class="content">config-server</span></span>
-  - <span class="string"><span class="content">cloud-bus</span></span>
-  - <span class="string"><span class="content">service-registry</span></span>
-  - <span class="string"><span class="content">circuit-breaker-dashboard</span></span>
-  <span class="key">env</span>:
-    <span class="key">SPRING_PROFILES_ACTIVE</span>: <span class="string"><span class="content">someProfile</span></span>
-    <span class="key">JAVA_OPTS</span>: <span class="string"><span class="content">-Djava.security.egd=file:///dev/urandom</span></span>
-    <span class="key">TRUST_CERTS</span>: <span class="string"><span class="content">api.run.pivotal.io</span></span></code></pre>
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">---
+applications:
+- name: fortune-service
+  timeout: 120
+  instances: 3
+  memory: 1024M
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git
+  random-route: true
+  path: ./target/fortune-service-0.0.1-SNAPSHOT.jar
+  services:
+  - fortune-db
+  - config-server
+  - cloud-bus
+  - service-registry
+  - circuit-breaker-dashboard
+  env:
+    SPRING_PROFILES_ACTIVE: someProfile
+    JAVA_OPTS: -Djava.security.egd=file:///dev/urandom
+    TRUST_CERTS: api.run.pivotal.io</code></pre>
 </div>
 </div>
 </div>
@@ -662,31 +661,31 @@ The `type: broker' parameter in the next example instructs Cloud Pipelines to pr
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="yml"><span class="key">test</span>:
-  <span class="key">services</span>:
-    - <span class="string"><span class="content">name: config-server</span></span>
-      <span class="key">type</span>: <span class="string"><span class="content">broker</span></span>
-      <span class="key">broker</span>: <span class="string"><span class="content">p-config-server</span></span>
-      <span class="key">plan</span>: <span class="string"><span class="content">standard</span></span>
-      <span class="key">params</span>:
-        <span class="key">git</span>:
-          <span class="key">uri</span>: <span class="string"><span class="content">https://github.com/ciberkleid/app-config</span></span>
-      <span class="key">useExisting</span>: <span class="string"><span class="content">true</span></span>
-    - <span class="string"><span class="content">name: cloud-bus</span></span>
-      <span class="key">type</span>: <span class="string"><span class="content">broker</span></span>
-      <span class="key">broker</span>: <span class="string"><span class="content">cloudamqp</span></span>
-      <span class="key">plan</span>: <span class="string"><span class="content">lemur</span></span>
-      <span class="key">useExisting</span>: <span class="string"><span class="content">true</span></span>
-    - <span class="string"><span class="content">name: service-registry</span></span>
-      <span class="key">type</span>: <span class="string"><span class="content">broker</span></span>
-      <span class="key">broker</span>: <span class="string"><span class="content">p-service-registry</span></span>
-      <span class="key">plan</span>: <span class="string"><span class="content">standard</span></span>
-      <span class="key">useExisting</span>: <span class="string"><span class="content">true</span></span>
-    - <span class="string"><span class="content">name: circuit-breaker-dashboard</span></span>
-      <span class="key">type</span>: <span class="string"><span class="content">broker</span></span>
-      <span class="key">broker</span>: <span class="string"><span class="content">p-circuit-breaker-dashboard</span></span>
-      <span class="key">plan</span>: <span class="string"><span class="content">standard</span></span>
-      <span class="key">useExisting</span>: <span class="string"><span class="content">true</span></span></code></pre>
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">test:
+  services:
+    - name: config-server
+      type: broker
+      broker: p-config-server
+      plan: standard
+      params:
+        git:
+          uri: https://github.com/ciberkleid/app-config
+      useExisting: true
+    - name: cloud-bus
+      type: broker
+      broker: cloudamqp
+      plan: lemur
+      useExisting: true
+    - name: service-registry
+      type: broker
+      broker: p-service-registry
+      plan: standard
+      useExisting: true
+    - name: circuit-breaker-dashboard
+      type: broker
+      broker: p-circuit-breaker-dashboard
+      plan: standard
+      useExisting: true</code></pre>
 </div>
 </div>
 </div>
@@ -698,37 +697,37 @@ The `type: broker' parameter in the next example instructs Cloud Pipelines to pr
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="yml"><span class="key">test</span>:
-  <span class="comment"># list of required services</span>
-  <span class="key">services</span>:
-    - <span class="string"><span class="content">name: fortune-db</span></span>
-      <span class="key">type</span>: <span class="string"><span class="content">broker</span></span>
-      <span class="key">broker</span>: <span class="string"><span class="content">cleardb</span></span>
-      <span class="key">plan</span>: <span class="string"><span class="content">spark</span></span>
-      <span class="key">useExisting</span>: <span class="string"><span class="content">true</span></span>
-    - <span class="string"><span class="content">name: config-server</span></span>
-      <span class="key">type</span>: <span class="string"><span class="content">broker</span></span>
-      <span class="key">broker</span>: <span class="string"><span class="content">p-config-server</span></span>
-      <span class="key">plan</span>: <span class="string"><span class="content">standard</span></span>
-      <span class="key">params</span>:
-        <span class="key">git</span>:
-          <span class="key">uri</span>: <span class="string"><span class="content">https://github.com/ciberkleid/app-config</span></span>
-      <span class="key">useExisting</span>: <span class="string"><span class="content">true</span></span>
-    - <span class="string"><span class="content">name: cloud-bus</span></span>
-      <span class="key">type</span>: <span class="string"><span class="content">broker</span></span>
-      <span class="key">broker</span>: <span class="string"><span class="content">cloudamqp</span></span>
-      <span class="key">plan</span>: <span class="string"><span class="content">lemur</span></span>
-      <span class="key">useExisting</span>: <span class="string"><span class="content">true</span></span>
-    - <span class="string"><span class="content">name: service-registry</span></span>
-      <span class="key">type</span>: <span class="string"><span class="content">broker</span></span>
-      <span class="key">broker</span>: <span class="string"><span class="content">p-service-registry</span></span>
-      <span class="key">plan</span>: <span class="string"><span class="content">standard</span></span>
-      <span class="key">useExisting</span>: <span class="string"><span class="content">true</span></span>
-    - <span class="string"><span class="content">name: circuit-breaker-dashboard</span></span>
-      <span class="key">type</span>: <span class="string"><span class="content">broker</span></span>
-      <span class="key">broker</span>: <span class="string"><span class="content">p-circuit-breaker-dashboard</span></span>
-      <span class="key">plan</span>: <span class="string"><span class="content">standard</span></span>
-      <span class="key">useExisting</span>: <span class="string"><span class="content">true</span></span></code></pre>
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">test:
+  # list of required services
+  services:
+    - name: fortune-db
+      type: broker
+      broker: cleardb
+      plan: spark
+      useExisting: true
+    - name: config-server
+      type: broker
+      broker: p-config-server
+      plan: standard
+      params:
+        git:
+          uri: https://github.com/ciberkleid/app-config
+      useExisting: true
+    - name: cloud-bus
+      type: broker
+      broker: cloudamqp
+      plan: lemur
+      useExisting: true
+    - name: service-registry
+      type: broker
+      broker: p-service-registry
+      plan: standard
+      useExisting: true
+    - name: circuit-breaker-dashboard
+      type: broker
+      broker: p-circuit-breaker-dashboard
+      plan: standard
+      useExisting: true</code></pre>
 </div>
 </div>
 </div>
@@ -780,7 +779,7 @@ Notice the <code>useExisting: true</code> parameter in the preceding example. By
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">cf create-space scp-test-greeting-ui
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cf create-space scp-test-greeting-ui
 cf create-space scp-test-fortune-service
 cf create-space scp-stage
 cf create-space scp-prod</code></pre>
@@ -819,32 +818,32 @@ cf create-space scp-prod</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="yml"><span class="key">pipeline-descriptor</span>: <span class="string"><span class="content">cloud-pipelines.yml</span></span>
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">pipeline-descriptor: cloud-pipelines.yml
 
-<span class="key">paas-type</span>: <span class="string"><span class="content">cf</span></span>
+paas-type: cf
 
-<span class="key">paas-hostname-uuid</span>: <span class="string"><span class="content">cyi</span></span>
+paas-hostname-uuid: cyi
 
-<span class="comment"># test values</span>
-<span class="key">paas-test-api-url</span>: <span class="string"><span class="content">https://api.run.pivotal.io</span></span>
-<span class="key">paas-test-username</span>: <span class="string"><span class="content">ciberkleid@pivotal.io</span></span>
-<span class="key">paas-test-password</span>: <span class="string"><span class="content">secret</span></span>
-<span class="key">paas-test-org</span>: <span class="string"><span class="content">S1Pdemo12</span></span>
-<span class="key">paas-test-space-prefix</span>: <span class="string"><span class="content">scp-test</span></span>
+# test values
+paas-test-api-url: https://api.run.pivotal.io
+paas-test-username: ciberkleid@pivotal.io
+paas-test-password: secret
+paas-test-org: S1Pdemo12
+paas-test-space-prefix: scp-test
 
-<span class="comment"># stage values</span>
-<span class="key">paas-stage-api-url</span>: <span class="string"><span class="content">https://api.run.pivotal.io</span></span>
-<span class="key">paas-stage-username</span>: <span class="string"><span class="content">ciberkleid@pivotal.io</span></span>
-<span class="key">paas-stage-password</span>: <span class="string"><span class="content">my-super-secret-password</span></span>
-<span class="key">paas-stage-org</span>: <span class="string"><span class="content">S1Pdemo12</span></span>
-<span class="key">paas-stage-space</span>: <span class="string"><span class="content">scp-stage</span></span>
+# stage values
+paas-stage-api-url: https://api.run.pivotal.io
+paas-stage-username: ciberkleid@pivotal.io
+paas-stage-password: my-super-secret-password
+paas-stage-org: S1Pdemo12
+paas-stage-space: scp-stage
 
-<span class="comment"># prod values</span>
-<span class="key">paas-prod-api-url</span>: <span class="string"><span class="content">https://api.run.pivotal.io</span></span>
-<span class="key">paas-prod-username</span>: <span class="string"><span class="content">ciberkleid@pivotal.io</span></span>
-<span class="key">paas-prod-password</span>: <span class="string"><span class="content">my-super-secret-password</span></span>
-<span class="key">paas-prod-org</span>: <span class="string"><span class="content">S1Pdemo12</span></span>
-<span class="key">paas-prod-space</span>: <span class="string"><span class="content">scp-prod</span></span></code></pre>
+# prod values
+paas-prod-api-url: https://api.run.pivotal.io
+paas-prod-username: ciberkleid@pivotal.io
+paas-prod-password: my-super-secret-password
+paas-prod-org: S1Pdemo12
+paas-prod-space: scp-prod</code></pre>
 </div>
 </div>
 </div>
@@ -980,87 +979,87 @@ cf create-space scp-prod</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml">  <span class="tag">&lt;profiles&gt;</span>
-    <span class="tag">&lt;profile&gt;</span>
-      <span class="tag">&lt;id&gt;</span>default<span class="tag">&lt;/id&gt;</span>
-      <span class="tag">&lt;activation&gt;</span>
-        <span class="tag">&lt;activeByDefault&gt;</span>true<span class="tag">&lt;/activeByDefault&gt;</span>
-      <span class="tag">&lt;/activation&gt;</span>
-      <span class="tag">&lt;build&gt;</span>
-        <span class="tag">&lt;plugins&gt;</span>
-          <span class="tag">&lt;plugin&gt;</span>
-            <span class="tag">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/groupId&gt;</span>
-            <span class="tag">&lt;artifactId&gt;</span>maven-surefire-plugin<span class="tag">&lt;/artifactId&gt;</span>
-            <span class="tag">&lt;configuration&gt;</span>
-              <span class="tag">&lt;includes&gt;</span>
-                <span class="tag">&lt;include&gt;</span>**/*Tests.java<span class="tag">&lt;/include&gt;</span>
-                <span class="tag">&lt;include&gt;</span>**/*Test.java<span class="tag">&lt;/include&gt;</span>
-              <span class="tag">&lt;/includes&gt;</span>
-              <span class="tag">&lt;excludes&gt;</span>
-                <span class="tag">&lt;exclude&gt;</span>**/smoke/**<span class="tag">&lt;/exclude&gt;</span>
-                <span class="tag">&lt;exclude&gt;</span>**/e2e/**<span class="tag">&lt;/exclude&gt;</span>
-              <span class="tag">&lt;/excludes&gt;</span>
-            <span class="tag">&lt;/configuration&gt;</span>
-          <span class="tag">&lt;/plugin&gt;</span>
-          <span class="tag">&lt;plugin&gt;</span>
-            <span class="tag">&lt;groupId&gt;</span>org.springframework.boot<span class="tag">&lt;/groupId&gt;</span>
-            <span class="tag">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
-          <span class="tag">&lt;/plugin&gt;</span>
-        <span class="tag">&lt;/plugins&gt;</span>
-      <span class="tag">&lt;/build&gt;</span>
-    <span class="tag">&lt;/profile&gt;</span>
-    <span class="tag">&lt;profile&gt;</span>
-      <span class="tag">&lt;id&gt;</span>apicompatibility<span class="tag">&lt;/id&gt;</span>
-      <span class="tag">&lt;build&gt;</span>
-        <span class="tag">&lt;plugins&gt;</span>
-          <span class="tag">&lt;plugin&gt;</span>
-            <span class="tag">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/groupId&gt;</span>
-            <span class="tag">&lt;artifactId&gt;</span>maven-surefire-plugin<span class="tag">&lt;/artifactId&gt;</span>
-            <span class="tag">&lt;configuration&gt;</span>
-              <span class="tag">&lt;includes&gt;</span>
-                <span class="tag">&lt;include&gt;</span>**/contracttests/**/*Tests.java<span class="tag">&lt;/include&gt;</span>
-                <span class="tag">&lt;include&gt;</span>**/contracttests/**/*Test.java<span class="tag">&lt;/include&gt;</span>
-              <span class="tag">&lt;/includes&gt;</span>
-            <span class="tag">&lt;/configuration&gt;</span>
-          <span class="tag">&lt;/plugin&gt;</span>
-        <span class="tag">&lt;/plugins&gt;</span>
-      <span class="tag">&lt;/build&gt;</span>
-    <span class="tag">&lt;/profile&gt;</span>
-    <span class="tag">&lt;profile&gt;</span>
-      <span class="tag">&lt;id&gt;</span>smoke<span class="tag">&lt;/id&gt;</span>
-      <span class="tag">&lt;build&gt;</span>
-        <span class="tag">&lt;plugins&gt;</span>
-          <span class="tag">&lt;plugin&gt;</span>
-            <span class="tag">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/groupId&gt;</span>
-            <span class="tag">&lt;artifactId&gt;</span>maven-surefire-plugin<span class="tag">&lt;/artifactId&gt;</span>
-            <span class="tag">&lt;configuration&gt;</span>
-              <span class="tag">&lt;includes&gt;</span>
-                <span class="tag">&lt;include&gt;</span>smoke/**/*Tests.java<span class="tag">&lt;/include&gt;</span>
-                <span class="tag">&lt;include&gt;</span>smoke/**/*Test.java<span class="tag">&lt;/include&gt;</span>
-              <span class="tag">&lt;/includes&gt;</span>
-            <span class="tag">&lt;/configuration&gt;</span>
-          <span class="tag">&lt;/plugin&gt;</span>
-        <span class="tag">&lt;/plugins&gt;</span>
-      <span class="tag">&lt;/build&gt;</span>
-    <span class="tag">&lt;/profile&gt;</span>
-    <span class="tag">&lt;profile&gt;</span>
-      <span class="tag">&lt;id&gt;</span>e2e<span class="tag">&lt;/id&gt;</span>
-      <span class="tag">&lt;build&gt;</span>
-        <span class="tag">&lt;plugins&gt;</span>
-          <span class="tag">&lt;plugin&gt;</span>
-            <span class="tag">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/groupId&gt;</span>
-            <span class="tag">&lt;artifactId&gt;</span>maven-surefire-plugin<span class="tag">&lt;/artifactId&gt;</span>
-            <span class="tag">&lt;configuration&gt;</span>
-              <span class="tag">&lt;includes&gt;</span>
-                <span class="tag">&lt;include&gt;</span>e2e/**/*Tests.java<span class="tag">&lt;/include&gt;</span>
-                <span class="tag">&lt;include&gt;</span>e2e/**/*Test.java<span class="tag">&lt;/include&gt;</span>
-              <span class="tag">&lt;/includes&gt;</span>
-            <span class="tag">&lt;/configuration&gt;</span>
-          <span class="tag">&lt;/plugin&gt;</span>
-        <span class="tag">&lt;/plugins&gt;</span>
-      <span class="tag">&lt;/build&gt;</span>
-    <span class="tag">&lt;/profile&gt;</span>
-  <span class="tag">&lt;/profiles&gt;</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">  &lt;profiles&gt;
+    &lt;profile&gt;
+      &lt;id&gt;default&lt;/id&gt;
+      &lt;activation&gt;
+        &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+      &lt;/activation&gt;
+      &lt;build&gt;
+        &lt;plugins&gt;
+          &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+            &lt;configuration&gt;
+              &lt;includes&gt;
+                &lt;include&gt;**/*Tests.java&lt;/include&gt;
+                &lt;include&gt;**/*Test.java&lt;/include&gt;
+              &lt;/includes&gt;
+              &lt;excludes&gt;
+                &lt;exclude&gt;**/smoke/**&lt;/exclude&gt;
+                &lt;exclude&gt;**/e2e/**&lt;/exclude&gt;
+              &lt;/excludes&gt;
+            &lt;/configuration&gt;
+          &lt;/plugin&gt;
+          &lt;plugin&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+          &lt;/plugin&gt;
+        &lt;/plugins&gt;
+      &lt;/build&gt;
+    &lt;/profile&gt;
+    &lt;profile&gt;
+      &lt;id&gt;apicompatibility&lt;/id&gt;
+      &lt;build&gt;
+        &lt;plugins&gt;
+          &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+            &lt;configuration&gt;
+              &lt;includes&gt;
+                &lt;include&gt;**/contracttests/**/*Tests.java&lt;/include&gt;
+                &lt;include&gt;**/contracttests/**/*Test.java&lt;/include&gt;
+              &lt;/includes&gt;
+            &lt;/configuration&gt;
+          &lt;/plugin&gt;
+        &lt;/plugins&gt;
+      &lt;/build&gt;
+    &lt;/profile&gt;
+    &lt;profile&gt;
+      &lt;id&gt;smoke&lt;/id&gt;
+      &lt;build&gt;
+        &lt;plugins&gt;
+          &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+            &lt;configuration&gt;
+              &lt;includes&gt;
+                &lt;include&gt;smoke/**/*Tests.java&lt;/include&gt;
+                &lt;include&gt;smoke/**/*Test.java&lt;/include&gt;
+              &lt;/includes&gt;
+            &lt;/configuration&gt;
+          &lt;/plugin&gt;
+        &lt;/plugins&gt;
+      &lt;/build&gt;
+    &lt;/profile&gt;
+    &lt;profile&gt;
+      &lt;id&gt;e2e&lt;/id&gt;
+      &lt;build&gt;
+        &lt;plugins&gt;
+          &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+            &lt;configuration&gt;
+              &lt;includes&gt;
+                &lt;include&gt;e2e/**/*Tests.java&lt;/include&gt;
+                &lt;include&gt;e2e/**/*Test.java&lt;/include&gt;
+              &lt;/includes&gt;
+            &lt;/configuration&gt;
+          &lt;/plugin&gt;
+        &lt;/plugins&gt;
+      &lt;/build&gt;
+    &lt;/profile&gt;
+  &lt;/profiles&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -1098,35 +1097,35 @@ cf create-space scp-prod</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">io.pivotal</span>;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.pivotal;
 
-<span class="keyword">import</span> <span class="include">org.junit.Test</span>;
-<span class="keyword">import</span> <span class="include">org.junit.runner.RunWith</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.beans.factory.annotation.Autowired</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.boot.test.context.SpringBootTest</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.test.context.junit4.SpringRunner</span>;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-<span class="keyword">import</span> <span class="include">org.springframework.jdbc.core.JdbcTemplate</span>;
-<span class="keyword">import</span> <span class="include">static</span> <span class="include">org.assertj.core.api.Assertions.assertThat</span>;
+import org.springframework.jdbc.core.JdbcTemplate;
+import static org.assertj.core.api.Assertions.assertThat;
 
-<span class="keyword">import</span> <span class="include">static</span> <span class="include">org.junit.Assert</span>.*;
+import static org.junit.Assert.*;
 
-<span class="annotation">@RunWith</span>(SpringRunner.class)
-<span class="annotation">@SpringBootTest</span>(classes = FortuneServiceApplication.class)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">FortuneServiceApplicationTests</span> {
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = FortuneServiceApplication.class)
+public class FortuneServiceApplicationTests {
 
-    <span class="annotation">@Test</span>
-    <span class="directive">public</span> <span class="type">void</span> contextLoads() <span class="directive">throws</span> <span class="exception">Exception</span> {
+    @Test
+    public void contextLoads() throws Exception {
 
     }
 
-    <span class="annotation">@Autowired</span>
-    <span class="directive">private</span> JdbcTemplate template;
+    @Autowired
+    private JdbcTemplate template;
 
-    <span class="annotation">@Test</span>
-    <span class="directive">public</span> <span class="type">void</span> testDefaultSettings() <span class="directive">throws</span> <span class="exception">Exception</span> {
-        assertThat(<span class="local-variable">this</span>.template.queryForObject(<span class="string"><span class="delimiter">&quot;</span><span class="content">SELECT COUNT(*) from FORTUNE</span><span class="delimiter">&quot;</span></span>,
-                <span class="predefined-type">Integer</span>.class)).isEqualTo(<span class="integer">7</span>);
+    @Test
+    public void testDefaultSettings() throws Exception {
+        assertThat(this.template.queryForObject("SELECT COUNT(*) from FORTUNE",
+                Integer.class)).isEqualTo(7);
     }
 
 }</code></pre>
@@ -1166,38 +1165,38 @@ cf create-space scp-prod</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">smoke</span>;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package smoke;
 
-<span class="keyword">import</span> <span class="include">org.assertj.core.api.BDDAssertions</span>;
-<span class="keyword">import</span> <span class="include">org.junit.Test</span>;
-<span class="keyword">import</span> <span class="include">org.junit.runner.RunWith</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.beans.factory.annotation.Value</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.boot.test.context.SpringBootTest</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.http.ResponseEntity</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.test.context.junit4.SpringRunner</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.web.client.RestTemplate</span>;
+import org.assertj.core.api.BDDAssertions;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
 
-<span class="annotation">@RunWith</span>(SpringRunner.class)
-<span class="annotation">@SpringBootTest</span>(classes = SmokeTests.class,
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = SmokeTests.class,
         webEnvironment = SpringBootTest.WebEnvironment.NONE)
-<span class="annotation">@EnableAutoConfiguration</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">SmokeTests</span> {
+@EnableAutoConfiguration
+public class SmokeTests {
 
-        <span class="annotation">@Value</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">${application.url}</span><span class="delimiter">&quot;</span></span>) <span class="predefined-type">String</span> applicationUrl;
+	@Value("${application.url}") String applicationUrl;
 
-        RestTemplate restTemplate = <span class="keyword">new</span> RestTemplate();
+	RestTemplate restTemplate = new RestTemplate();
 
-        <span class="annotation">@Test</span>
-        <span class="directive">public</span> <span class="type">void</span> should_return_a_fortune() {
-                ResponseEntity&lt;<span class="predefined-type">String</span>&gt; response = <span class="local-variable">this</span>.restTemplate
-                                .getForEntity(<span class="string"><span class="delimiter">&quot;</span><span class="content">http://</span><span class="delimiter">&quot;</span></span> + <span class="local-variable">this</span>.applicationUrl + <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="predefined-type">String</span>.class);
+	@Test
+	public void should_return_a_fortune() {
+		ResponseEntity&lt;String&gt; response = this.restTemplate
+				.getForEntity("http://" + this.applicationUrl + "/", String.class);
 
-                BDDAssertions.then(response.getStatusCodeValue()).isEqualTo(<span class="integer">200</span>);
+		BDDAssertions.then(response.getStatusCodeValue()).isEqualTo(200);
 
-                <span class="comment">// Filter out the known Hystrix fallback response</span>
-                BDDAssertions.then(response.getBody()).doesNotContain(<span class="string"><span class="delimiter">&quot;</span><span class="content">The fortuneteller will be back soon.</span><span class="delimiter">&quot;</span></span>);
-        }
+		// Filter out the known Hystrix fallback response
+		BDDAssertions.then(response.getBody()).doesNotContain("The fortuneteller will be back soon.");
+	}
 
 }</code></pre>
 </div>
@@ -1226,42 +1225,42 @@ cf create-space scp-prod</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">e2e</span>;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package e2e;
 
-<span class="keyword">import</span> <span class="include">org.assertj.core.api.BDDAssertions</span>;
-<span class="keyword">import</span> <span class="include">org.junit.Test</span>;
-<span class="keyword">import</span> <span class="include">org.junit.runner.RunWith</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.beans.factory.annotation.Value</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.boot.test.context.SpringBootTest</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.http.ResponseEntity</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.test.context.junit4.SpringRunner</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.web.client.RestTemplate</span>;
+import org.assertj.core.api.BDDAssertions;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
 
-<span class="annotation">@RunWith</span>(SpringRunner.class)
-<span class="annotation">@SpringBootTest</span>(classes = E2eTests.class,
-                webEnvironment = SpringBootTest.WebEnvironment.NONE)
-<span class="annotation">@EnableAutoConfiguration</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">E2eTests</span> {
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = E2eTests.class,
+		webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@EnableAutoConfiguration
+public class E2eTests {
 
-        <span class="comment">// The app is running in CF but the tests are executed from Concourse worker,</span>
-        <span class="comment">// so the test will deduce the url to greeting-ui: it will assume the same host</span>
-        <span class="comment">// as fortune-service, and simply replace &quot;fortune-service&quot; with &quot;greeting-ui&quot; in the url</span>
+	// The app is running in CF but the tests are executed from Concourse worker,
+	// so the test will deduce the url to greeting-ui: it will assume the same host
+	// as fortune-service, and simply replace "fortune-service" with "greeting-ui" in the url
 
-        <span class="annotation">@Value</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">${application.url}</span><span class="delimiter">&quot;</span></span>) <span class="predefined-type">String</span> applicationUrl;
+	@Value("${application.url}") String applicationUrl;
 
-        RestTemplate restTemplate = <span class="keyword">new</span> RestTemplate();
+	RestTemplate restTemplate = new RestTemplate();
 
-        <span class="annotation">@Test</span>
-        <span class="directive">public</span> <span class="type">void</span> should_return_a_fortune() {
-                ResponseEntity&lt;<span class="predefined-type">String</span>&gt; response = <span class="local-variable">this</span>.restTemplate
-                                .getForEntity(<span class="string"><span class="delimiter">&quot;</span><span class="content">http://</span><span class="delimiter">&quot;</span></span> + <span class="local-variable">this</span>.applicationUrl.replace(<span class="string"><span class="delimiter">&quot;</span><span class="content">fortune-service</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">greeting-ui</span><span class="delimiter">&quot;</span></span>) + <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="predefined-type">String</span>.class);
+	@Test
+	public void should_return_a_fortune() {
+		ResponseEntity&lt;String&gt; response = this.restTemplate
+				.getForEntity("http://" + this.applicationUrl.replace("fortune-service", "greeting-ui") + "/", String.class);
 
-                BDDAssertions.then(response.getStatusCodeValue()).isEqualTo(<span class="integer">200</span>);
+		BDDAssertions.then(response.getStatusCodeValue()).isEqualTo(200);
 
-                <span class="comment">// Filter out the known Hystrix fallback responses from both fortune and greeting</span>
-                BDDAssertions.then(response.getBody()).doesNotContain(<span class="string"><span class="delimiter">&quot;</span><span class="content">This fortune is no good. Try another.</span><span class="delimiter">&quot;</span></span>).doesNotContain(<span class="string"><span class="delimiter">&quot;</span><span class="content">The fortuneteller will be back soon.</span><span class="delimiter">&quot;</span></span>);
-        }
+		// Filter out the known Hystrix fallback responses from both fortune and greeting
+		BDDAssertions.then(response.getBody()).doesNotContain("This fortune is no good. Try another.").doesNotContain("The fortuneteller will be back soon.");
+	}
 
 }</code></pre>
 </div>
@@ -1281,19 +1280,19 @@ cf create-space scp-prod</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">io.pivotal</span>;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.pivotal;
 
-<span class="keyword">import</span> <span class="include">org.junit.Test</span>;
-<span class="keyword">import</span> <span class="include">org.junit.runner.RunWith</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.boot.test.context.SpringBootTest</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.test.context.junit4.SpringRunner</span>;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-<span class="annotation">@RunWith</span>(SpringRunner.class)
-<span class="annotation">@SpringBootTest</span>(classes = GreetingUIApplication.class)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">GreetingUIApplicationTests</span> {
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = GreetingUIApplication.class)
+public class GreetingUIApplicationTests {
 
-    <span class="annotation">@Test</span>
-    <span class="directive">public</span> <span class="type">void</span> contextLoads() <span class="directive">throws</span> <span class="exception">Exception</span> {
+    @Test
+    public void contextLoads() throws Exception {
 
     }
 
@@ -1334,37 +1333,37 @@ cf create-space scp-prod</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">smoke</span>;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package smoke;
 
-<span class="keyword">import</span> <span class="include">org.assertj.core.api.BDDAssertions</span>;
-<span class="keyword">import</span> <span class="include">org.junit.Test</span>;
-<span class="keyword">import</span> <span class="include">org.junit.runner.RunWith</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.beans.factory.annotation.Value</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.boot.test.context.SpringBootTest</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.http.ResponseEntity</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.test.context.junit4.SpringRunner</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.web.client.RestTemplate</span>;
+import org.assertj.core.api.BDDAssertions;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
 
-<span class="annotation">@RunWith</span>(SpringRunner.class)
-<span class="annotation">@SpringBootTest</span>(classes = SmokeTests.class,
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = SmokeTests.class,
         webEnvironment = SpringBootTest.WebEnvironment.NONE)
-<span class="annotation">@EnableAutoConfiguration</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">SmokeTests</span> {
+@EnableAutoConfiguration
+public class SmokeTests {
 
-    <span class="annotation">@Value</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">${application.url}</span><span class="delimiter">&quot;</span></span>) <span class="predefined-type">String</span> applicationUrl;
+    @Value("${application.url}") String applicationUrl;
 
-    RestTemplate restTemplate = <span class="keyword">new</span> RestTemplate();
+    RestTemplate restTemplate = new RestTemplate();
 
-    <span class="annotation">@Test</span>
-    <span class="directive">public</span> <span class="type">void</span> should_return_a_fallback_fortune() {
-        ResponseEntity&lt;<span class="predefined-type">String</span>&gt; response = <span class="local-variable">this</span>.restTemplate
-                .getForEntity(<span class="string"><span class="delimiter">&quot;</span><span class="content">http://</span><span class="delimiter">&quot;</span></span> + <span class="local-variable">this</span>.applicationUrl + <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="predefined-type">String</span>.class);
+    @Test
+    public void should_return_a_fallback_fortune() {
+        ResponseEntity&lt;String&gt; response = this.restTemplate
+                .getForEntity("http://" + this.applicationUrl + "/", String.class);
 
-        BDDAssertions.then(response.getStatusCodeValue()).isEqualTo(<span class="integer">200</span>);
+        BDDAssertions.then(response.getStatusCodeValue()).isEqualTo(200);
 
-        <span class="comment">// Expect the hystrix fallback response</span>
-        BDDAssertions.then(response.getBody()).contains(<span class="string"><span class="delimiter">&quot;</span><span class="content">This fortune is no good. Try another.</span><span class="delimiter">&quot;</span></span>);
+        // Expect the hystrix fallback response
+        BDDAssertions.then(response.getBody()).contains("This fortune is no good. Try another.");
     }
 
 }</code></pre>
@@ -1394,38 +1393,38 @@ cf create-space scp-prod</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">e2e</span>;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package e2e;
 
-<span class="keyword">import</span> <span class="include">org.assertj.core.api.BDDAssertions</span>;
-<span class="keyword">import</span> <span class="include">org.junit.Test</span>;
-<span class="keyword">import</span> <span class="include">org.junit.runner.RunWith</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.beans.factory.annotation.Value</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.boot.test.context.SpringBootTest</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.http.ResponseEntity</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.test.context.junit4.SpringRunner</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.web.client.RestTemplate</span>;
+import org.assertj.core.api.BDDAssertions;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
 
-<span class="annotation">@RunWith</span>(SpringRunner.class)
-<span class="annotation">@SpringBootTest</span>(classes = E2eTests.class,
-                webEnvironment = SpringBootTest.WebEnvironment.NONE)
-<span class="annotation">@EnableAutoConfiguration</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">E2eTests</span> {
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = E2eTests.class,
+		webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@EnableAutoConfiguration
+public class E2eTests {
 
-        <span class="annotation">@Value</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">${application.url}</span><span class="delimiter">&quot;</span></span>) <span class="predefined-type">String</span> applicationUrl;
+	@Value("${application.url}") String applicationUrl;
 
-        RestTemplate restTemplate = <span class="keyword">new</span> RestTemplate();
+	RestTemplate restTemplate = new RestTemplate();
 
-        <span class="annotation">@Test</span>
-        <span class="directive">public</span> <span class="type">void</span> should_return_a_fortune() {
-                ResponseEntity&lt;<span class="predefined-type">String</span>&gt; response = <span class="local-variable">this</span>.restTemplate
-                                .getForEntity(<span class="string"><span class="delimiter">&quot;</span><span class="content">http://</span><span class="delimiter">&quot;</span></span> + <span class="local-variable">this</span>.applicationUrl + <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="predefined-type">String</span>.class);
+	@Test
+	public void should_return_a_fortune() {
+		ResponseEntity&lt;String&gt; response = this.restTemplate
+				.getForEntity("http://" + this.applicationUrl + "/", String.class);
 
-                BDDAssertions.then(response.getStatusCodeValue()).isEqualTo(<span class="integer">200</span>);
+		BDDAssertions.then(response.getStatusCodeValue()).isEqualTo(200);
 
-                <span class="comment">// Filter out the known Hystrix fallback response</span>
-                BDDAssertions.then(response.getBody()).doesNotContain(<span class="string"><span class="delimiter">&quot;</span><span class="content">This fortune is no good. Try another.</span><span class="delimiter">&quot;</span></span>);
-        }
+		// Filter out the known Hystrix fallback response
+		BDDAssertions.then(response.getBody()).doesNotContain("This fortune is no good. Try another.");
+	}
 
 }</code></pre>
 </div>
@@ -1451,11 +1450,11 @@ cf create-space scp-prod</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml">    <span class="tag">&lt;dependency&gt;</span>
-      <span class="tag">&lt;groupId&gt;</span>org.flywaydb<span class="tag">&lt;/groupId&gt;</span>
-      <span class="tag">&lt;artifactId&gt;</span>flyway-core<span class="tag">&lt;/artifactId&gt;</span>
-    <span class="tag">&lt;/dependency&gt;</span>
-    <span class="tag">&lt;dependency&gt;</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">    &lt;dependency&gt;
+      &lt;groupId&gt;org.flywaydb&lt;/groupId&gt;
+      &lt;artifactId&gt;flyway-core&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -1482,24 +1481,24 @@ cf create-space scp-prod</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="sql"><span class="class">CREATE</span> <span class="type">TABLE</span> fortune (
-  id <span class="predefined-type">BIGINT</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span> <span class="directive">AUTO_INCREMENT</span>,
-  <span class="predefined-type">text</span> <span class="predefined-type">varchar</span>(<span class="integer">255</span>) <span class="keyword">not</span> <span class="predefined-constant">null</span>
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">CREATE TABLE fortune (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  text varchar(255) not null
 );
 
-<span class="class">INSERT</span> <span class="class">INTO</span> fortune (<span class="predefined-type">text</span>) <span class="keyword">VALUES</span> (<span class="string"><span class="delimiter">'</span><span class="content">Do what works.</span><span class="delimiter">'</span></span>);
+INSERT INTO fortune (text) VALUES ('Do what works.');
 
-<span class="class">INSERT</span> <span class="class">INTO</span> fortune (<span class="predefined-type">text</span>) <span class="keyword">VALUES</span> (<span class="string"><span class="delimiter">'</span><span class="content">Do the right thing.</span><span class="delimiter">'</span></span>);
+INSERT INTO fortune (text) VALUES ('Do the right thing.');
 
-<span class="class">INSERT</span> <span class="class">INTO</span> fortune (<span class="predefined-type">text</span>) <span class="keyword">VALUES</span> (<span class="string"><span class="delimiter">'</span><span class="content">Always be kind.</span><span class="delimiter">'</span></span>);
+INSERT INTO fortune (text) VALUES ('Always be kind.');
 
-<span class="class">INSERT</span> <span class="class">INTO</span> fortune (<span class="predefined-type">text</span>) <span class="keyword">VALUES</span> (<span class="string"><span class="delimiter">'</span><span class="content">You learn from your mistakes... You will learn a lot today.</span><span class="delimiter">'</span></span>);
+INSERT INTO fortune (text) VALUES ('You learn from your mistakes... You will learn a lot today.');
 
-<span class="class">INSERT</span> <span class="class">INTO</span> fortune (<span class="predefined-type">text</span>) <span class="keyword">VALUES</span> (<span class="string"><span class="delimiter">'</span><span class="content">You can always find happiness at work on Friday.</span><span class="delimiter">'</span></span>);
+INSERT INTO fortune (text) VALUES ('You can always find happiness at work on Friday.');
 
-<span class="class">INSERT</span> <span class="class">INTO</span> fortune (<span class="predefined-type">text</span>) <span class="keyword">VALUES</span> (<span class="string"><span class="delimiter">'</span><span class="content">You will be hungry again in one hour.</span><span class="delimiter">'</span></span>);
+INSERT INTO fortune (text) VALUES ('You will be hungry again in one hour.');
 
-<span class="class">INSERT</span> <span class="class">INTO</span> fortune (<span class="predefined-type">text</span>) <span class="keyword">VALUES</span> (<span class="string"><span class="delimiter">'</span><span class="content">Today will be an awesome day!</span><span class="delimiter">'</span></span>);</code></pre>
+INSERT INTO fortune (text) VALUES ('Today will be an awesome day!');</code></pre>
 </div>
 </div>
 </div>
@@ -1514,10 +1513,10 @@ cf create-space scp-prod</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="yml"><span class="key">spring</span>:
-  <span class="key">jpa</span>:
-    <span class="key">hibernate</span>:
-      <span class="key">ddl-auto</span>: <span class="string"><span class="content">validate</span></span></code></pre>
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate</code></pre>
 </div>
 </div>
 </div>
@@ -1532,20 +1531,20 @@ cf create-space scp-prod</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="yml"><span class="head"><span class="head">---</span></span>
-<span class="key">applications</span>:
-- <span class="string"><span class="content">name: fortune-service</span></span>
-  <span class="key">timeout</span>: <span class="string"><span class="content">120</span></span>
-  <span class="key">services</span>:
-  - <span class="string"><span class="content">fortune-db</span></span>
-  - <span class="string"><span class="content">config-server</span></span>
-  - <span class="string"><span class="content">cloud-bus</span></span>
-  - <span class="string"><span class="content">service-registry</span></span>
-  - <span class="string"><span class="content">circuit-breaker-dashboard</span></span>
-  <span class="key">env</span>:
-    <span class="key">SPRING_PROFILES_ACTIVE</span>: <span class="string"><span class="content">flyway</span></span>
-    <span class="key">JAVA_OPTS</span>: <span class="string"><span class="content">-Djava.security.egd=file:///dev/urandom</span></span>
-    <span class="key">TRUST_CERTS</span>: <span class="string"><span class="content">api.run.pivotal.io</span></span></code></pre>
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">---
+applications:
+- name: fortune-service
+  timeout: 120
+  services:
+  - fortune-db
+  - config-server
+  - cloud-bus
+  - service-registry
+  - circuit-breaker-dashboard
+  env:
+    SPRING_PROFILES_ACTIVE: flyway
+    JAVA_OPTS: -Djava.security.egd=file:///dev/urandom
+    TRUST_CERTS: api.run.pivotal.io</code></pre>
 </div>
 </div>
 </div>
@@ -1560,18 +1559,18 @@ cf create-space scp-prod</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Bean</span>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
     CommandLineRunner loadDatabase(FortuneRepository fortuneRepo) {
-        <span class="keyword">return</span> args -&gt; {
-<span class="comment">//            logger.debug(&quot;loading database..&quot;);</span>
-<span class="comment">//            fortuneRepo.save(new Fortune(1L, &quot;Do what works.&quot;));</span>
-<span class="comment">//            fortuneRepo.save(new Fortune(2L, &quot;Do the right thing.&quot;));</span>
-<span class="comment">//            fortuneRepo.save(new Fortune(3L, &quot;Always be kind.&quot;));</span>
-<span class="comment">//            fortuneRepo.save(new Fortune(4L, &quot;You learn from your mistakes... You will learn a lot today.&quot;));</span>
-<span class="comment">//            fortuneRepo.save(new Fortune(5L, &quot;You can always find happiness at work on Friday.&quot;));</span>
-<span class="comment">//            fortuneRepo.save(new Fortune(6L, &quot;You will be hungry again in one hour.&quot;));</span>
-<span class="comment">//            fortuneRepo.save(new Fortune(7L, &quot;Today will be an awesome day!&quot;));</span>
-            logger.debug(<span class="string"><span class="delimiter">&quot;</span><span class="content">record count: {}</span><span class="delimiter">&quot;</span></span>, fortuneRepo.count());
+        return args -&gt; {
+//            logger.debug("loading database..");
+//            fortuneRepo.save(new Fortune(1L, "Do what works."));
+//            fortuneRepo.save(new Fortune(2L, "Do the right thing."));
+//            fortuneRepo.save(new Fortune(3L, "Always be kind."));
+//            fortuneRepo.save(new Fortune(4L, "You learn from your mistakes... You will learn a lot today."));
+//            fortuneRepo.save(new Fortune(5L, "You can always find happiness at work on Friday."));
+//            fortuneRepo.save(new Fortune(6L, "You will be hungry again in one hour."));
+//            fortuneRepo.save(new Fortune(7L, "Today will be an awesome day!"));
+            logger.debug("record count: {}", fortuneRepo.count());
             fortuneRepo.findAll().forEach(x -&gt; logger.debug(x.toString()));
         };
 
@@ -1587,14 +1586,14 @@ cf create-space scp-prod</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">//    public Fortune() {</span>
-<span class="comment">//    }</span>
-<span class="comment">//</span>
-<span class="comment">//    public Fortune(Long id, String text) {</span>
-<span class="comment">//        super();</span>
-<span class="comment">//        this.id = id;</span>
-<span class="comment">//        this.text = text;</span>
-<span class="comment">//    }</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">//    public Fortune() {
+//    }
+//
+//    public Fortune(Long id, String text) {
+//        super();
+//        this.id = id;
+//        this.text = text;
+//    }</code></pre>
 </div>
 </div>
 </div>
@@ -1743,19 +1742,19 @@ cf create-space scp-prod</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">org.springframework.cloud.contract.spec.Contract</span>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
-    description(<span class="string"><span class="delimiter">&quot;&quot;&quot;</span><span class="content">
+    description("""
 should return a fortune string
-</span><span class="delimiter">&quot;&quot;&quot;</span></span>)
+""")
     request {
         method GET()
-        url <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>
+        url "/"
     }
     response {
-        status <span class="integer">200</span>
-        body <span class="string"><span class="delimiter">&quot;</span><span class="content">new fortune</span><span class="delimiter">&quot;</span></span>
+        status 200
+        body "new fortune"
     }
 }</code></pre>
 </div>
@@ -1785,11 +1784,11 @@ should return a fortune string
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml">    <span class="tag">&lt;dependency&gt;</span>
-      <span class="tag">&lt;groupId&gt;</span>org.springframework.cloud<span class="tag">&lt;/groupId&gt;</span>
-      <span class="tag">&lt;artifactId&gt;</span>spring-cloud-starter-contract-verifier<span class="tag">&lt;/artifactId&gt;</span>
-      <span class="tag">&lt;scope&gt;</span>test<span class="tag">&lt;/scope&gt;</span>
-    <span class="tag">&lt;/dependency&gt;</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-cloud-starter-contract-verifier&lt;/artifactId&gt;
+      &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -1811,19 +1810,19 @@ should return a fortune string
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">io.pivotal.fortune</span>;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.pivotal.fortune;
 
-<span class="keyword">import</span> <span class="include">io.restassured.module.mockmvc.RestAssuredMockMvc</span>;
-<span class="keyword">import</span> <span class="include">org.junit.Before</span>;
-<span class="keyword">import</span> <span class="include">org.mockito.BDDMockito</span>;
+import io.restassured.module.mockmvc.RestAssuredMockMvc;
+import org.junit.Before;
+import org.mockito.BDDMockito;
 
-<span class="directive">public</span> <span class="type">class</span> <span class="class">BaseClass</span> {
+public class BaseClass {
 
-    <span class="annotation">@Before</span>
-    <span class="directive">public</span> <span class="type">void</span> setup() {
+    @Before
+    public void setup() {
         FortuneService service = BDDMockito.mock(FortuneService.class);
-        BDDMockito.given(service.getFortune()).willReturn(<span class="string"><span class="delimiter">&quot;</span><span class="content">foo fortune</span><span class="delimiter">&quot;</span></span>);
-        RestAssuredMockMvc.standaloneSetup(<span class="keyword">new</span> FortuneController(service));
+        BDDMockito.given(service.getFortune()).willReturn("foo fortune");
+        RestAssuredMockMvc.standaloneSetup(new FortuneController(service));
     }
 }</code></pre>
 </div>
@@ -1843,11 +1842,11 @@ should return a fortune string
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml">  <span class="tag">&lt;properties&gt;</span>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">  &lt;properties&gt;
 ...
-    <span class="tag">&lt;spring-cloud-contract.version&gt;</span>1.2.1.RELEASE<span class="tag">&lt;/spring-cloud-contract.version&gt;</span>
+    &lt;spring-cloud-contract.version&gt;1.2.1.RELEASE&lt;/spring-cloud-contract.version&gt;
 ...
-<span class="tag">&lt;/properties&gt;</span></code></pre>
+&lt;/properties&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -1878,45 +1877,45 @@ should return a fortune string
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml">    <span class="tag">&lt;profile&gt;</span>
-      <span class="tag">&lt;id&gt;</span>default<span class="tag">&lt;/id&gt;</span>
-      <span class="tag">&lt;activation&gt;</span>
-        <span class="tag">&lt;activeByDefault&gt;</span>true<span class="tag">&lt;/activeByDefault&gt;</span>
-      <span class="tag">&lt;/activation&gt;</span>
-      <span class="tag">&lt;build&gt;</span>
-        <span class="tag">&lt;plugins&gt;</span>
-          <span class="tag">&lt;plugin&gt;</span>
-            <span class="tag">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/groupId&gt;</span>
-            <span class="tag">&lt;artifactId&gt;</span>maven-surefire-plugin<span class="tag">&lt;/artifactId&gt;</span>
-            <span class="tag">&lt;configuration&gt;</span>
-              <span class="tag">&lt;includes&gt;</span>
-                <span class="tag">&lt;include&gt;</span>**/*Tests.java<span class="tag">&lt;/include&gt;</span>
-                <span class="tag">&lt;include&gt;</span>**/*Test.java<span class="tag">&lt;/include&gt;</span>
-              <span class="tag">&lt;/includes&gt;</span>
-              <span class="tag">&lt;excludes&gt;</span>
-                <span class="tag">&lt;exclude&gt;</span>**/smoke/**<span class="tag">&lt;/exclude&gt;</span>
-                <span class="tag">&lt;exclude&gt;</span>**/e2e/**<span class="tag">&lt;/exclude&gt;</span>
-              <span class="tag">&lt;/excludes&gt;</span>
-            <span class="tag">&lt;/configuration&gt;</span>
-          <span class="tag">&lt;/plugin&gt;</span>
-          <span class="tag">&lt;plugin&gt;</span>
-            <span class="tag">&lt;groupId&gt;</span>org.springframework.boot<span class="tag">&lt;/groupId&gt;</span>
-            <span class="tag">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
-          <span class="tag">&lt;/plugin&gt;</span>
-          <span class="comment">&lt;!--Spring Cloud Contract maven plugin --&gt;</span>
-          <span class="tag">&lt;plugin&gt;</span>
-            <span class="tag">&lt;groupId&gt;</span>org.springframework.cloud<span class="tag">&lt;/groupId&gt;</span>
-            <span class="tag">&lt;artifactId&gt;</span>spring-cloud-contract-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
-            <span class="tag">&lt;version&gt;</span>${spring-cloud-contract.version}<span class="tag">&lt;/version&gt;</span>
-            <span class="tag">&lt;extensions&gt;</span>true<span class="tag">&lt;/extensions&gt;</span>
-            <span class="tag">&lt;configuration&gt;</span>
-              <span class="tag">&lt;baseClassForTests&gt;</span>io.pivotal.fortune.BaseClass<span class="tag">&lt;/baseClassForTests&gt;</span>
-              <span class="tag">&lt;basePackageForTests&gt;</span>io.pivotal.fortune.contracttests<span class="tag">&lt;/basePackageForTests&gt;</span>
-            <span class="tag">&lt;/configuration&gt;</span>
-          <span class="tag">&lt;/plugin&gt;</span>
-        <span class="tag">&lt;/plugins&gt;</span>
-      <span class="tag">&lt;/build&gt;</span>
-    <span class="tag">&lt;/profile&gt;</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">    &lt;profile&gt;
+      &lt;id&gt;default&lt;/id&gt;
+      &lt;activation&gt;
+        &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+      &lt;/activation&gt;
+      &lt;build&gt;
+        &lt;plugins&gt;
+          &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+            &lt;configuration&gt;
+              &lt;includes&gt;
+                &lt;include&gt;**/*Tests.java&lt;/include&gt;
+                &lt;include&gt;**/*Test.java&lt;/include&gt;
+              &lt;/includes&gt;
+              &lt;excludes&gt;
+                &lt;exclude&gt;**/smoke/**&lt;/exclude&gt;
+                &lt;exclude&gt;**/e2e/**&lt;/exclude&gt;
+              &lt;/excludes&gt;
+            &lt;/configuration&gt;
+          &lt;/plugin&gt;
+          &lt;plugin&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+          &lt;/plugin&gt;
+          &lt;!--Spring Cloud Contract maven plugin --&gt;
+          &lt;plugin&gt;
+            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-contract-maven-plugin&lt;/artifactId&gt;
+            &lt;version&gt;${spring-cloud-contract.version}&lt;/version&gt;
+            &lt;extensions&gt;true&lt;/extensions&gt;
+            &lt;configuration&gt;
+              &lt;baseClassForTests&gt;io.pivotal.fortune.BaseClass&lt;/baseClassForTests&gt;
+              &lt;basePackageForTests&gt;io.pivotal.fortune.contracttests&lt;/basePackageForTests&gt;
+            &lt;/configuration&gt;
+          &lt;/plugin&gt;
+        &lt;/plugins&gt;
+      &lt;/build&gt;
+    &lt;/profile&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -1980,42 +1979,42 @@ Package the project locally (run <code>mvn package</code>) to observe the tests,
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml">    <span class="tag">&lt;profile&gt;</span>
-      <span class="tag">&lt;id&gt;</span>apicompatibility<span class="tag">&lt;/id&gt;</span>
-      <span class="tag">&lt;build&gt;</span>
-        <span class="tag">&lt;plugins&gt;</span>
-          <span class="tag">&lt;plugin&gt;</span>
-            <span class="tag">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/groupId&gt;</span>
-            <span class="tag">&lt;artifactId&gt;</span>maven-surefire-plugin<span class="tag">&lt;/artifactId&gt;</span>
-            <span class="tag">&lt;configuration&gt;</span>
-              <span class="tag">&lt;includes&gt;</span>
-                <span class="tag">&lt;include&gt;</span>**/contracttests/**/*Tests.java<span class="tag">&lt;/include&gt;</span>
-                <span class="tag">&lt;include&gt;</span>**/contracttests/**/*Test.java<span class="tag">&lt;/include&gt;</span>
-              <span class="tag">&lt;/includes&gt;</span>
-            <span class="tag">&lt;/configuration&gt;</span>
-          <span class="tag">&lt;/plugin&gt;</span>
-          <span class="comment">&lt;!--Spring Cloud Contract maven plugin --&gt;</span>
-          <span class="tag">&lt;plugin&gt;</span>
-            <span class="tag">&lt;groupId&gt;</span>org.springframework.cloud<span class="tag">&lt;/groupId&gt;</span>
-            <span class="tag">&lt;artifactId&gt;</span>spring-cloud-contract-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
-            <span class="tag">&lt;version&gt;</span>${spring-cloud-contract.version}<span class="tag">&lt;/version&gt;</span>
-            <span class="tag">&lt;extensions&gt;</span>true<span class="tag">&lt;/extensions&gt;</span>
-            <span class="tag">&lt;configuration&gt;</span>
-              <span class="tag">&lt;contractsRepositoryUrl&gt;</span>${repo.with.binaries}<span class="tag">&lt;/contractsRepositoryUrl&gt;</span>
-              <span class="tag">&lt;contractDependency&gt;</span>
-                <span class="tag">&lt;groupId&gt;</span>${project.groupId}<span class="tag">&lt;/groupId&gt;</span>
-                <span class="tag">&lt;artifactId&gt;</span>${project.artifactId}<span class="tag">&lt;/artifactId&gt;</span>
-                <span class="tag">&lt;classifier&gt;</span>stubs<span class="tag">&lt;/classifier&gt;</span>
-                <span class="tag">&lt;version&gt;</span>${latest.production.version}<span class="tag">&lt;/version&gt;</span>
-              <span class="tag">&lt;/contractDependency&gt;</span>
-              <span class="tag">&lt;contractsPath&gt;</span>/<span class="tag">&lt;/contractsPath&gt;</span>
-              <span class="tag">&lt;baseClassForTests&gt;</span>io.pivotal.fortune.BaseClass<span class="tag">&lt;/baseClassForTests&gt;</span>
-              <span class="tag">&lt;basePackageForTests&gt;</span>io.pivotal.fortune.contracttests<span class="tag">&lt;/basePackageForTests&gt;</span>
-            <span class="tag">&lt;/configuration&gt;</span>
-          <span class="tag">&lt;/plugin&gt;</span>
-        <span class="tag">&lt;/plugins&gt;</span>
-      <span class="tag">&lt;/build&gt;</span>
-    <span class="tag">&lt;/profile&gt;</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">    &lt;profile&gt;
+      &lt;id&gt;apicompatibility&lt;/id&gt;
+      &lt;build&gt;
+        &lt;plugins&gt;
+          &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+            &lt;configuration&gt;
+              &lt;includes&gt;
+                &lt;include&gt;**/contracttests/**/*Tests.java&lt;/include&gt;
+                &lt;include&gt;**/contracttests/**/*Test.java&lt;/include&gt;
+              &lt;/includes&gt;
+            &lt;/configuration&gt;
+          &lt;/plugin&gt;
+          &lt;!--Spring Cloud Contract maven plugin --&gt;
+          &lt;plugin&gt;
+            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-contract-maven-plugin&lt;/artifactId&gt;
+            &lt;version&gt;${spring-cloud-contract.version}&lt;/version&gt;
+            &lt;extensions&gt;true&lt;/extensions&gt;
+            &lt;configuration&gt;
+              &lt;contractsRepositoryUrl&gt;${repo.with.binaries}&lt;/contractsRepositoryUrl&gt;
+              &lt;contractDependency&gt;
+                &lt;groupId&gt;${project.groupId}&lt;/groupId&gt;
+                &lt;artifactId&gt;${project.artifactId}&lt;/artifactId&gt;
+                &lt;classifier&gt;stubs&lt;/classifier&gt;
+                &lt;version&gt;${latest.production.version}&lt;/version&gt;
+              &lt;/contractDependency&gt;
+              &lt;contractsPath&gt;/&lt;/contractsPath&gt;
+              &lt;baseClassForTests&gt;io.pivotal.fortune.BaseClass&lt;/baseClassForTests&gt;
+              &lt;basePackageForTests&gt;io.pivotal.fortune.contracttests&lt;/basePackageForTests&gt;
+            &lt;/configuration&gt;
+          &lt;/plugin&gt;
+        &lt;/plugins&gt;
+      &lt;/build&gt;
+    &lt;/profile&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -2093,11 +2092,11 @@ Package the project locally (run <code>mvn package</code>) to observe the tests,
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
- <span class="tag">&lt;groupId&gt;</span>org.springframework.cloud<span class="tag">&lt;/groupId&gt;</span>
- <span class="tag">&lt;artifactId&gt;</span>spring-cloud-starter-contract-stub-runner<span class="tag">&lt;/artifactId&gt;</span>
- <span class="tag">&lt;scope&gt;</span>test<span class="tag">&lt;/scope&gt;</span>
-<span class="tag">&lt;/dependency&gt;</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+ &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+ &lt;artifactId&gt;spring-cloud-starter-contract-stub-runner&lt;/artifactId&gt;
+ &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -2115,35 +2114,35 @@ Package the project locally (run <code>mvn package</code>) to observe the tests,
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">io.pivotal.fortune</span>;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.pivotal.fortune;
 
-<span class="keyword">import</span> <span class="include">io.pivotal.GreetingUIApplication</span>;
-<span class="keyword">import</span> <span class="include">org.assertj.core.api.BDDAssertions</span>;
-<span class="keyword">import</span> <span class="include">org.junit.Test</span>;
-<span class="keyword">import</span> <span class="include">org.junit.runner.RunWith</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.beans.factory.annotation.Autowired</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.boot.test.context.SpringBootTest</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.test.context.junit4.SpringRunner</span>;
+import io.pivotal.GreetingUIApplication;
+import org.assertj.core.api.BDDAssertions;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
-<span class="annotation">@RunWith</span>(SpringRunner.class)
-<span class="annotation">@SpringBootTest</span>(classes = GreetingUIApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE,
-        properties = {<span class="string"><span class="delimiter">&quot;</span><span class="content">spring.application.name=greeting-ui</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">spring.cloud.circuit.breaker.enabled=false</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">hystrix.stream.queue.enabled=false</span><span class="delimiter">&quot;</span></span>})
-<span class="annotation">@AutoConfigureStubRunner</span>(ids = {<span class="string"><span class="delimiter">&quot;</span><span class="content">io.pivotal:fortune-service:1.0.0.M1-20180102_203542-VERSION</span><span class="delimiter">&quot;</span></span>},
-        repositoryRoot = <span class="string"><span class="delimiter">&quot;</span><span class="content">${REPO_WITH_BINARIES}</span><span class="delimiter">&quot;</span></span>
-        <span class="comment">//workOffline = true</span>
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = GreetingUIApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE,
+        properties = {"spring.application.name=greeting-ui", "spring.cloud.circuit.breaker.enabled=false", "hystrix.stream.queue.enabled=false"})
+@AutoConfigureStubRunner(ids = {"io.pivotal:fortune-service:1.0.0.M1-20180102_203542-VERSION"},
+        repositoryRoot = "${REPO_WITH_BINARIES}"
+        //workOffline = true
 )
 
-<span class="directive">public</span> <span class="type">class</span> <span class="class">FortuneServiceTests</span> {
+public class FortuneServiceTests {
 
-    <span class="annotation">@Autowired</span> FortuneService fortuneService;
+    @Autowired FortuneService fortuneService;
 
-    <span class="annotation">@Test</span>
-    <span class="directive">public</span> <span class="type">void</span> shouldSendRequestToFortune() {
-        <span class="comment">// when</span>
-        <span class="predefined-type">String</span> fortune = fortuneService.getFortune();
-        <span class="comment">// then</span>
-        BDDAssertions.then(fortune).isEqualTo(<span class="string"><span class="delimiter">&quot;</span><span class="content">foo fortune</span><span class="delimiter">&quot;</span></span>);
+    @Test
+    public void shouldSendRequestToFortune() {
+        // when
+        String fortune = fortuneService.getFortune();
+        // then
+        BDDAssertions.then(fortune).isEqualTo("foo fortune");
     }
 
 }</code></pre>
@@ -2244,7 +2243,7 @@ Setting <code>workOffline=true</code> (commented out but shown earlier for infor
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash"># Edit to match your Bintray URL and M2 repo ID setting (check your ~/.m2/settings.xml file)
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Edit to match your Bintray URL and M2 repo ID setting (check your ~/.m2/settings.xml file)
 MAVEN_REPO_URL=https://api.bintray.com/maven/ciberkleid/maven-repo/cloudfoundry-stub-runner-boot
 MAVEN_REPO_ID=bintray
 
@@ -2253,7 +2252,7 @@ git clone https://github.com/spring-cloud-samples/cloudfoundry-stub-runner-boot.
 cd cloudfoundry-stub-runner-boot
 
 # Build and upload
-./mvnw clean deploy -Ddistribution.management.release.url=&quot;${MAVEN_REPO_URL}&quot; -Ddistribution.management.release.id=&quot;${MAVEN_REPO_ID}&quot;</code></pre>
+./mvnw clean deploy -Ddistribution.management.release.url="${MAVEN_REPO_URL}" -Ddistribution.management.release.id="${MAVEN_REPO_ID}"</code></pre>
 </div>
 </div>
 </div>
@@ -2283,16 +2282,16 @@ cd cloudfoundry-stub-runner-boot
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="yml"><span class="head"><span class="head">---</span></span>
-<span class="key">applications</span>:
-- <span class="string"><span class="content">name: stubrunner</span></span>
-  <span class="key">timeout</span>: <span class="string"><span class="content">120</span></span>
-  <span class="key">services</span>:
-  - <span class="string"><span class="content">service-registry</span></span>
-  <span class="key">env</span>:
-    <span class="key">JAVA_OPTS</span>: <span class="string"><span class="content">-Djava.security.egd=file:///dev/urandom</span></span>
-    <span class="key">TRUST_CERTS</span>: <span class="string"><span class="content">api.run.pivotal.io</span></span>
-<span class="head"><span class="head">---</span></span>-</code></pre>
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">---
+applications:
+- name: stubrunner
+  timeout: 120
+  services:
+  - service-registry
+  env:
+    JAVA_OPTS: -Djava.security.egd=file:///dev/urandom
+    TRUST_CERTS: api.run.pivotal.io
+----</code></pre>
 </div>
 </div>
 </div>
@@ -2307,10 +2306,10 @@ cd cloudfoundry-stub-runner-boot
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="yml">    - <span class="string"><span class="content">name: stubrunner</span></span>
-      <span class="key">type</span>: <span class="string"><span class="content">stubrunner</span></span>
-      <span class="key">coordinates</span>: <span class="string"><span class="content">io.pivotal:cloudfoundry-stub-runner-boot:0.0.1.M1</span></span>
-      <span class="key">pathToManifest</span>: <span class="string"><span class="content">cloud-pipelines/manifest-stubrunner.yml</span></span></code></pre>
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">    - name: stubrunner
+      type: stubrunner
+      coordinates: io.pivotal:cloudfoundry-stub-runner-boot:0.0.1.M1
+      pathToManifest: cloud-pipelines/manifest-stubrunner.yml</code></pre>
 </div>
 </div>
 </div>
@@ -2344,11 +2343,11 @@ cd cloudfoundry-stub-runner-boot
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml">  <span class="tag">&lt;properties&gt;</span>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">  &lt;properties&gt;
 ...
-    <span class="comment">&lt;!--Tell stub runner app to start this stub--&gt;</span>
-    <span class="tag">&lt;stubrunner.ids&gt;</span>io.pivotal:fortune-service:1.0.0.M1-20180102_203542-VERSION:stubs:10000<span class="tag">&lt;/stubrunner.ids&gt;</span>
-  <span class="tag">&lt;/properties&gt;</span></code></pre>
+    &lt;!--Tell stub runner app to start this stub--&gt;
+    &lt;stubrunner.ids&gt;io.pivotal:fortune-service:1.0.0.M1-20180102_203542-VERSION:stubs:10000&lt;/stubrunner.ids&gt;
+  &lt;/properties&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -2420,38 +2419,38 @@ You can automate the port configuration by Cloud Pipelines in the future such th
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">smoke</span>;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package smoke;
 
-<span class="keyword">import</span> <span class="include">org.assertj.core.api.BDDAssertions</span>;
-<span class="keyword">import</span> <span class="include">org.junit.Test</span>;
-<span class="keyword">import</span> <span class="include">org.junit.runner.RunWith</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.beans.factory.annotation.Value</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.boot.test.context.SpringBootTest</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.http.ResponseEntity</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.test.context.junit4.SpringRunner</span>;
-<span class="keyword">import</span> <span class="include">org.springframework.web.client.RestTemplate</span>;
+import org.assertj.core.api.BDDAssertions;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
 
-<span class="annotation">@RunWith</span>(SpringRunner.class)
-<span class="annotation">@SpringBootTest</span>(classes = SmokeTests.class,
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = SmokeTests.class,
         webEnvironment = SpringBootTest.WebEnvironment.NONE)
-<span class="annotation">@EnableAutoConfiguration</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">SmokeTests</span> {
+@EnableAutoConfiguration
+public class SmokeTests {
 
-        <span class="annotation">@Value</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">${application.url}</span><span class="delimiter">&quot;</span></span>) <span class="predefined-type">String</span> applicationUrl;
+	@Value("${application.url}") String applicationUrl;
 
-        RestTemplate restTemplate = <span class="keyword">new</span> RestTemplate();
+	RestTemplate restTemplate = new RestTemplate();
 
-        <span class="annotation">@Test</span>
-        <span class="directive">public</span> <span class="type">void</span> should_return_a_fortune() {
-                ResponseEntity&lt;<span class="predefined-type">String</span>&gt; response = <span class="local-variable">this</span>.restTemplate
-                                .getForEntity(<span class="string"><span class="delimiter">&quot;</span><span class="content">http://</span><span class="delimiter">&quot;</span></span> + <span class="local-variable">this</span>.applicationUrl + <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, <span class="predefined-type">String</span>.class);
+	@Test
+	public void should_return_a_fortune() {
+		ResponseEntity&lt;String&gt; response = this.restTemplate
+				.getForEntity("http://" + this.applicationUrl + "/", String.class);
 
-                BDDAssertions.then(response.getStatusCodeValue()).isEqualTo(<span class="integer">200</span>);
+		BDDAssertions.then(response.getStatusCodeValue()).isEqualTo(200);
 
-                <span class="comment">// Filter out the known Hystrix fallback response</span>
-                BDDAssertions.then(response.getBody()).doesNotContain(<span class="string"><span class="delimiter">&quot;</span><span class="content">This fortune is no good. Try another.</span><span class="delimiter">&quot;</span></span>);
-        }
+		// Filter out the known Hystrix fallback response
+		BDDAssertions.then(response.getBody()).doesNotContain("This fortune is no good. Try another.");
+	}
 
 }</code></pre>
 </div>
@@ -2619,5 +2618,8 @@ You can automate the port configuration by Cloud Pipelines in the future such th
 </div>
 </div>
 </div>
+<link rel="stylesheet" href="js/highlight/styles/atom-one-dark-reasonable.min.css">
+<script src="js/highlight/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>

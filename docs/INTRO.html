@@ -8,7 +8,6 @@
 <title>Introduction</title>
 <link rel="stylesheet" href="css/spring.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="css/coderay-asciidoctor.css">
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -161,26 +160,26 @@ You can also register your own implementation. See the
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash"># root URL of the SCM server's API
-export CRAWLER_ROOTURL=&quot;${CRAWLER_ROOTURL:-https://github.com}&quot;
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># root URL of the SCM server's API
+export CRAWLER_ROOTURL="${CRAWLER_ROOTURL:-https://github.com}"
 # username to connect to the API
-export CRAWLER_USERNAME=&quot;${CRAWLER_USERNAME:-}&quot;
+export CRAWLER_USERNAME="${CRAWLER_USERNAME:-}"
 # password to connect to the API
-export CRAWLER_PASSWORD=&quot;${CRAWLER_PASSWORD:-}&quot;
+export CRAWLER_PASSWORD="${CRAWLER_PASSWORD:-}"
 # token to connect to the API
-export CRAWLER_TOKEN=&quot;${CRAWLER_TOKEN:-}&quot;
+export CRAWLER_TOKEN="${CRAWLER_TOKEN:-}"
 # pattern to exclude certain projects
-export CRAWLER_REPOPROJECTSEXCLUDEPATTERN=&quot;${CRAWLER_REPOPROJECTSEXCLUDEPATTERN:-}&quot;
+export CRAWLER_REPOPROJECTSEXCLUDEPATTERN="${CRAWLER_REPOPROJECTSEXCLUDEPATTERN:-}"
 # type of SCM repo server (GITHUB, GITLAB, BITBUCKET, OTHER). Can be resolved from URL
-export CRAWLER_REPOTYPE=&quot;${CRAWLER_REPOTYPE:-}&quot;
+export CRAWLER_REPOTYPE="${CRAWLER_REPOTYPE:-}"
 # name of the pipeline descriptor
-export CRAWLER_ORG=&quot;${CRAWLER_ORG:-}&quot;
+export CRAWLER_ORG="${CRAWLER_ORG:-}"
 # organization / project name
-export CRAWLER_PIPELINEDESCRIPTOR=&quot;${CRAWLER_PIPELINEDESCRIPTOR:-}&quot;
+export CRAWLER_PIPELINEDESCRIPTOR="${CRAWLER_PIPELINEDESCRIPTOR:-}"
 # alias to be used by FLY CLI to set the pipeline
-export CRAWLER_ALIAS=&quot;${CRAWLER_ALIAS:-}&quot;
+export CRAWLER_ALIAS="${CRAWLER_ALIAS:-}"
 # credentials file to be used by FLY CLI to set the pipeline
-export CRAWLER_CREDENTIALS=&quot;${CRAWLER_CREDENTIALS:-}&quot;</code></pre>
+export CRAWLER_CREDENTIALS="${CRAWLER_CREDENTIALS:-}"</code></pre>
 </div>
 </div>
 </div>
@@ -192,44 +191,44 @@ export CRAWLER_CREDENTIALS=&quot;${CRAWLER_CREDENTIALS:-}&quot;</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">        The arguments for this script will be taken in the order:
-        Arguments, System Properties, Environment Variables
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">	The arguments for this script will be taken in the order:
+	Arguments, System Properties, Environment Variables
 
-        Arguments:
-        0 - rootUrl - root URL of the SCM server's API
-        1 - username - username to connect to the API
-        2 - password - password to connect to the API
-        3 - token - token to connect to the API
-        4 - repoProjectsExcludePattern - pattern to exclude certain projects
-        5 - repoType - type of SCM repo server (GITHUB, GITLAB, BITBUCKET, OTHER)
-        6 - org - organization / project name
-        7 - pipelineDescriptor - name of the pipeline descriptor
-        8 - alias - alias to be used by FLY CLI to set the pipeline
-        9 - credentials - credentials file to be used by FLY CLI to set the pipeline
+	Arguments:
+	0 - rootUrl - root URL of the SCM server's API
+	1 - username - username to connect to the API
+	2 - password - password to connect to the API
+	3 - token - token to connect to the API
+	4 - repoProjectsExcludePattern - pattern to exclude certain projects
+	5 - repoType - type of SCM repo server (GITHUB, GITLAB, BITBUCKET, OTHER)
+	6 - org - organization / project name
+	7 - pipelineDescriptor - name of the pipeline descriptor
+	8 - alias - alias to be used by FLY CLI to set the pipeline
+	9 - credentials - credentials file to be used by FLY CLI to set the pipeline
 
-        System props with the name equal to arguments (e.g. rootUrl)
-        Environment variables are upper case arguments with CRAWLER_ prefix (e.g. CRAWLER_ROOTURL)
+	System props with the name equal to arguments (e.g. rootUrl)
+	Environment variables are upper case arguments with CRAWLER_ prefix (e.g. CRAWLER_ROOTURL)
 
-        E.g. of calling the script
+	E.g. of calling the script
 
-        #!/bin/bash
+	#!/bin/bash
 
-        set -o errexit
-        set -o errtrace
-        set -o pipefail
+	set -o errexit
+	set -o errtrace
+	set -o pipefail
 
-        export CRAWLER_ROOTURL=&quot;https://github.com&quot;
-        export CRAWLER_USERNAME=&quot;username&quot;
-        export CRAWLER_PASSWORD=&quot;password&quot;
-        export CRAWLER_TOKEN=&quot;&quot;
-        export CRAWLER_REPOPROJECTSEXCLUDEPATTERN=&quot;&quot;
-        export CRAWLER_REPOTYPE=&quot;&quot;
-        export CRAWLER_ORG=&quot;my-org&quot;
-        export CRAWLER_PIPELINEDESCRIPTOR=&quot;my-pipelines.yml&quot;
-        export CRAWLER_ALIAS=&quot;alias&quot;
-        export CRAWLER_CREDENTIALS=&quot;credentials-cf.yml&quot;
+	export CRAWLER_ROOTURL="https://github.com"
+	export CRAWLER_USERNAME="username"
+	export CRAWLER_PASSWORD="password"
+	export CRAWLER_TOKEN=""
+	export CRAWLER_REPOPROJECTSEXCLUDEPATTERN=""
+	export CRAWLER_REPOTYPE=""
+	export CRAWLER_ORG="my-org"
+	export CRAWLER_PIPELINEDESCRIPTOR="my-pipelines.yml"
+	export CRAWLER_ALIAS="alias"
+	export CRAWLER_CREDENTIALS="credentials-cf.yml"
 
-        ./set_pipeline_crawler.sh</code></pre>
+	./set_pipeline_crawler.sh</code></pre>
 </div>
 </div>
 </div>
@@ -238,5 +237,8 @@ export CRAWLER_CREDENTIALS=&quot;${CRAWLER_CREDENTIALS:-}&quot;</code></pre>
 </div>
 </div>
 </div>
+<link rel="stylesheet" href="js/highlight/styles/atom-one-dark-reasonable.min.css">
+<script src="js/highlight/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>

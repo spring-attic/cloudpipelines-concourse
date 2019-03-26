@@ -8,7 +8,6 @@
 <title>Concourse Pipeline (Kubernetes)</title>
 <link rel="stylesheet" href="css/spring.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="css/coderay-asciidoctor.css">
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -139,7 +138,7 @@ cluster, run the following command to install the Concourse cluster in your K8S 
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">$ helm install stable/concourse --name concourse</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ helm install stable/concourse --name concourse</code></pre>
 </div>
 </div>
 </div>
@@ -151,7 +150,7 @@ cluster, run the following command to install the Concourse cluster in your K8S 
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">1. Concourse can be accessed:
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">1. Concourse can be accessed:
 
   * Within your cluster, at the following DNS name at port 8080:
 
@@ -159,8 +158,8 @@ cluster, run the following command to install the Concourse cluster in your K8S 
 
   * From outside the cluster, run these commands in the same shell:
 
-    export POD_NAME=$(kubectl get pods --namespace default -l &quot;app=concourse-web&quot; -o jsonpath=&quot;{.items[0].metadata.name}&quot;)
-    echo &quot;Visit http://127.0.0.1:8080 to use Concourse&quot;
+    export POD_NAME=$(kubectl get pods --namespace default -l "app=concourse-web" -o jsonpath="{.items[0].metadata.name}")
+    echo "Visit http://127.0.0.1:8080 to use Concourse"
     kubectl port-forward --namespace default $POD_NAME 8080:8080
 
 2. Login with the following credentials
@@ -183,7 +182,7 @@ cluster, run the following command to install the Concourse cluster in your K8S 
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">$ helm install --name artifactory --set artifactory.image.repository=docker.bintray.io/jfrog/artifactory-oss stable/artifactory</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ helm install --name artifactory --set artifactory.image.repository=docker.bintray.io/jfrog/artifactory-oss stable/artifactory</code></pre>
 </div>
 </div>
 </div>
@@ -195,7 +194,7 @@ cluster, run the following command to install the Concourse cluster in your K8S 
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">NOTES:
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NOTES:
 Congratulations. You have just deployed JFrog Artifactory Pro!
 
 1. Get the Artifactory URL by running these commands:
@@ -253,7 +252,7 @@ a user name of <code>admin</code> and a password of <code>password</code>.</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">fly --version</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">fly --version</code></pre>
 </div>
 </div>
 </div>
@@ -280,7 +279,7 @@ auth token.</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">$ kubectl get secret $(kubectl get secret | grep default-token | awk '{print $1}') -o jsonpath='{.data.ca\.crt}' | base64 --decode</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ kubectl get secret $(kubectl get secret | grep default-token | awk '{print $1}') -o jsonpath='{.data.ca\.crt}' | base64 --decode</code></pre>
 </div>
 </div>
 </div>
@@ -292,7 +291,7 @@ auth token.</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">$ kubectl get secret $(kubectl get secret | grep default-token | awk '{print $1}') -o jsonpath='{.data.token}' | base64 --decode</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ kubectl get secret $(kubectl get secret | grep default-token | awk '{print $1}') -o jsonpath='{.data.token}' | base64 --decode</code></pre>
 </div>
 </div>
 </div>
@@ -310,8 +309,8 @@ auth token.</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">$ export POD_NAME=$(kubectl get pods --namespace default -l &quot;app=concourse-web&quot; -o jsonpath=&quot;{.items[0].metadata.name}&quot;)
-$ echo &quot;Visit http://127.0.0.1:8080 to use Concourse&quot;
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ export POD_NAME=$(kubectl get pods --namespace default -l "app=concourse-web" -o jsonpath="{.items[0].metadata.name}")
+$ echo "Visit http://127.0.0.1:8080 to use Concourse"
 $ kubectl port-forward --namespace default $POD_NAME 8080:8080
 Visit http://127.0.0.1:8080 to use Concourse</code></pre>
 </div>
@@ -325,7 +324,7 @@ Visit http://127.0.0.1:8080 to use Concourse</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">$ fly -t k8s login -c http://localhost:8080 -u concourse -p concourse</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ fly -t k8s login -c http://localhost:8080 -u concourse -p concourse</code></pre>
 </div>
 </div>
 </div>
@@ -337,7 +336,7 @@ Visit http://127.0.0.1:8080 to use Concourse</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">$ ./set_pipeline.sh github-webhook k8s credentials-k8s.yml</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./set_pipeline.sh github-webhook k8s credentials-k8s.yml</code></pre>
 </div>
 </div>
 </div>
@@ -453,5 +452,8 @@ Visit http://127.0.0.1:8080 to use Concourse</code></pre>
 </div>
 </div>
 </div>
+<link rel="stylesheet" href="js/highlight/styles/atom-one-dark-reasonable.min.css">
+<script src="js/highlight/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>

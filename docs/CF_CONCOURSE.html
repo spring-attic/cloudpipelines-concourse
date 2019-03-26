@@ -8,7 +8,6 @@
 <title>Concourse Pipeline (Cloud Foundry)</title>
 <link rel="stylesheet" href="css/spring.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="css/coderay-asciidoctor.css">
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -142,7 +141,7 @@ opinionated sample pipeline one that you can use in your company.</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">git clone https://github.com/CloudPipelines/concourse
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git clone https://github.com/CloudPipelines/concourse
 cd concourse/demo
 ./setup_docker_compose.sh
 ./start.sh 192.168.99.100</code></pre>
@@ -171,7 +170,7 @@ The following listing shows the script:</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">git clone https://github.com/CloudPipelines/concourse
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git clone https://github.com/CloudPipelines/concourse
 cd concourse
 ./tools/deploy-infra.sh</code></pre>
 </div>
@@ -222,7 +221,7 @@ If that happens, <a href="#resources">clear some apps from PCF Dev and continue<
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">username: user
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">username: user
 password: pass
 email: user
 org: pcfdev-org
@@ -239,7 +238,7 @@ api: api.local.pcfdev.io</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">cf dev start</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cf dev start</code></pre>
 </div>
 </div>
 </div>
@@ -251,7 +250,7 @@ api: api.local.pcfdev.io</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">cf login -a https://api.local.pcfdev.io --skip-ssl-validation -u admin -p admin -o pcfdev-org
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cf login -a https://api.local.pcfdev.io --skip-ssl-validation -u admin -p admin -o pcfdev-org
 
 cf create-space pcfdev-test
 cf set-space-role user pcfdev-org pcfdev-test SpaceDeveloper
@@ -284,7 +283,7 @@ cf set-space-role user pcfdev-org pcfdev-prod SpaceDeveloper</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">fly --version</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">fly --version</code></pre>
 </div>
 </div>
 </div>
@@ -415,7 +414,7 @@ Docker Machine IP.</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">./login.sh 192.168.99.100</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./login.sh 192.168.99.100</code></pre>
 </div>
 </div>
 </div>
@@ -427,7 +426,7 @@ Docker Machine IP.</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">./set_pipeline.sh</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./set_pipeline.sh</code></pre>
 </div>
 </div>
 </div>
@@ -547,5 +546,8 @@ You can override these values in exactly that order (for example <code>./set-pip
 </div>
 </div>
 </div>
+<link rel="stylesheet" href="js/highlight/styles/atom-one-dark-reasonable.min.css">
+<script src="js/highlight/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>
