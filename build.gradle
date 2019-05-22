@@ -27,7 +27,7 @@ version = project.findProperty("newVersion") ?: project.findProperty("defaultVer
 
 repositories {
 	jcenter()
-	maven { url "http://rubygems-proxy.torquebox.org/releases/" }
+	maven { url "https://rubygems-proxy.torquebox.org/releases/" }
 	maven { url "https://repo.spring.io/libs-snapshot-local" }
 	maven { url "https://repo.spring.io/libs-milestone-local" }
 	maven { url "https://repo.spring.io/libs-release-local" }
