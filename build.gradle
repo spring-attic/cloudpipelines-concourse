@@ -52,7 +52,8 @@ jruby {
 
 task generateScriptsReadme(type: JRubyExec) {
 	script "${projectDir}/tools/coalesce-readme.rb"
-	scriptArgs "-i ${projectDir}/src/tasks/BASH_SCRIPTS.adoc", "-o ${projectDir}/src/tasks/README.adoc"
+	scriptArgs "-i ${projectDir}/src/tasks/BASH_SCRIPTS.adoc", "-o ${projectDir}/src/tasks/README.adoc"// don't run on CI
+	enabled = !System.getenv("JENKINS_HOME")
 }
 
 generateDocs.dependsOn(generateScriptsReadme)
