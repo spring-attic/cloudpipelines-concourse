@@ -16,17 +16,13 @@ repositories {
 	jcenter()
 }
 
-ext {
-	projectCrawlerVersion = "1.0.0.BUILD-SNAPSHOT"
-	jacksonVersion = "2.9.5"
-}
-
 version = project.findProperty("newVersion") ?: project.findProperty("defaultVersion")
 
 // Scripts docs generation
 
 repositories {
 	jcenter()
+	// no https for rubgems :(
 	maven { url "http://rubygems-proxy.torquebox.org/releases/" }
 	maven { url "https://repo.spring.io/libs-snapshot-local" }
 	maven { url "https://repo.spring.io/libs-milestone-local" }
@@ -39,7 +35,7 @@ import com.github.jrubygradle.JRubyExec
 dependencies {
 	jrubyExec "rubygems:asciidoctor:1.5.8"
 
-	compile "org.codehaus.groovy:groovy-all:2.4.15"
+	compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
 	compile "io.cloudpipelines:project-crawler:${projectCrawlerVersion}"
 	compile "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
 	compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"

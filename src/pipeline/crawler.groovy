@@ -4,13 +4,13 @@
 	@Grab(group = 'io.cloudpipelines', module = 'project-crawler', version = '1.0.0.BUILD-SNAPSHOT', transitive = false, changing = true),
 	@Grab(group = 'ch.qos.logback', module = 'logback-classic', version='1.2.3'),
 	@Grab(group = 'commons-logging', module = 'commons-logging', version = '1.2'),
-	@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.9.4'),
-	@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.9.4'),
-	@Grab(group = 'com.fasterxml.jackson.dataformat', module = 'jackson-dataformat-yaml', version = '2.9.4'),
-	@Grab(group = 'com.jcabi', module = 'jcabi-github', version = '0.41'),
-	@Grab(group = 'org.glassfish', module = 'javax.json', version = '1.0.4'),
+	@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.9.9'),
+	@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.9.9.1'),
+	@Grab(group = 'com.fasterxml.jackson.dataformat', module = 'jackson-dataformat-yaml', version = '2.9.9'),
+	@Grab(group = 'com.jcabi', module = 'jcabi-github', version = '1.0'),
+	@Grab(group = 'org.glassfish', module = 'javax.json', version = '1.1.4'),
 	@Grab(group = 'org.gitlab', module = 'java-gitlab-api', version = '4.0.0'),
-	@Grab(group = 'com.squareup.okhttp3', module = 'okhttp', version = '3.11.0')
+	@Grab(group = 'com.squareup.okhttp3', module = 'okhttp', version = '4.0.1')
 ])
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper

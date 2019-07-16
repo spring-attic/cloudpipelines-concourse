@@ -29,7 +29,7 @@ export CRAWLER_CREDENTIALS="${CRAWLER_CREDENTIALS:-}"
 
 echo "Will verify if Groovy is installed"
 export GROOVY_BIN="${GROOVY_BIN:-groovy}"
-export GROOVY_VERSION="${GROOVY_VERSION:-2.5.2}"
+export GROOVY_VERSION="${GROOVY_VERSION:-2.5.7}"
 export GROOVY_DOWNLOAD_URL="${GROOVY_DOWNLOAD_URL:-https://bintray.com/artifact/download/groovy/maven/apache-groovy-binary-${GROOVY_VERSION}.zip}"
 "${GROOVY_BIN}" --version && GROOVY_INSTALLED="true" || echo "Groovy is missing!"
 if [[ "${GROOVY_INSTALLED}" != "true" ]]; then
