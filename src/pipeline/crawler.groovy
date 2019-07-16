@@ -93,7 +93,7 @@ void updatePropsAndRun(Repository repository) {
 		.replaceAll("[^a-zA-Z0-9\\.\\-]", "_") + ".yml")
 	newCreds.text =
 		new File(propOrEnv("credentials")).text
-			.replaceAll("app-url.*", "app-url: " + repository.clone_url)
+			.replaceAll("app-url.*", "app-url: " + repository.ssh_url ?: repository.clone_url)
 			.replaceAll("app-branch.*", "app-branch: " + repository.requestedBranch ?: "master")
 	def sout = new StringBuilder(), serr = new StringBuilder()
 	def proc = "fly -t ${propOrEnv("alias")} sp -p ${repository.name} -c pipeline.yml -l ${newCreds.absolutePath} -n".execute()

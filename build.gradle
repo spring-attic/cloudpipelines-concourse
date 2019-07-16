@@ -12,10 +12,6 @@ apply plugin: 'maven-publish'
 apply from: 'gradle/bash.gradle'
 apply from: 'gradle/docs.gradle'
 
-repositories {
-	jcenter()
-}
-
 version = project.findProperty("newVersion") ?: project.findProperty("defaultVersion")
 
 // Scripts docs generation
