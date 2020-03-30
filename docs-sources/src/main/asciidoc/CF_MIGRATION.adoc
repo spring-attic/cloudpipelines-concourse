@@ -223,7 +223,7 @@ Push the changes you made in the preceding step to GitHub. You should be pushing
 
 ===== 1.6 Add a Cloud Pipelines Credentials File
 
-In `$SCP_HOME/credentials`, make two copies of the `$SCP_HOME/spring-cloud-pipelines/concourse/credentials-sample-cf.yml` file. Rename them as `credentials-fortune-service.yml` and `credentials-greeting-ui.yml`.
+In `$SCP_HOME/credentials`, make two copies of the `$SCP_HOME/concourse/src/pipeline/credentials-sample-cf.yml` file. Rename them as `credentials-fortune-service.yml` and `credentials-greeting-ui.yml`.
 
 CAUTION: These files will contain credentials to your GitHub repository, your Bintray repository, and your Cloud Foundry foundation. Hence, we opt to put them in a separate directory. You may choose to store these files in a private Git repository, but do not push them to a public repository.
 
