@@ -1,6 +1,6 @@
 = Cloud Pipelines Concourse
 
 This project contains setup for Concourse that reuses the scripts defined in
-https://github.com/CloudPipelines/scripts[Cloud Pipelines Scripts] repo.
+https://cloud.spring.io/cloudpipelines-scripts/[Cloud Pipelines Scripts] repo.
 
-You can check out the `docs` folder for the documentation. The deployed docs are available https://cloudpipelines.github.io/concourse/[here]
+You can check out the `docs` folder for the documentation. The deployed docs are available https://cloud.spring.io/cloudpipelines-concourse/[here]
