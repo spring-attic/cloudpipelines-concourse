@@ -1,3 +1,5 @@
+# cloudpipelines-concourse is no longer actively maintained by VMware, Inc.
+
 = Cloud Pipelines Concourse
 
 This project contains setup for Concourse that reuses the scripts defined in
